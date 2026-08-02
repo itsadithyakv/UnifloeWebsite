@@ -1,0 +1,70 @@
+.container {
+  position: relative;
+  display: inline-grid;
+  min-width: max-content;
+  vertical-align: baseline;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  max-width: none !important;
+  padding: 0 !important;
+  color: inherit;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.sizer,
+.visual {
+  grid-area: 1 / 1;
+  max-width: none !important;
+  padding: 0 !important;
+  color: inherit;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.visual {
+  display: inline-block;
+  transform-origin: left center;
+}
+
+.counting {
+  animation: count-up-speed 780ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, filter, opacity;
+}
+
+@keyframes count-up-speed {
+  0% {
+    opacity: 0.42;
+    filter: blur(5px);
+    transform: translateY(11px) scaleY(0.97);
+  }
+
+  32% {
+    opacity: 0.82;
+    filter: blur(2.4px);
+    transform: translateY(-2px) scaleY(1.015);
+  }
+
+  68% {
+    opacity: 0.96;
+    filter: blur(0.8px);
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .counting {
+    animation: none;
+  }
+}
