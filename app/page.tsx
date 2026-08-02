@@ -24,7 +24,7 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { pilotPlans } from "./data/site-content";
+import { pilotPlans, totalModuleCount } from "./data/site-content";
 
 const pitchModuleGroups = [
   { title: "Academics & LMS", Icon: BookOpenCheck },
@@ -52,7 +52,6 @@ const roleCards = [
 ];
 
 export const metadata: Metadata = {
-  title: "One platform to run your entire school",
   description:
     "Connect academics, administration, communication, finance, compliance, and digital learning with Unifloe.",
 };
@@ -139,7 +138,7 @@ export default function Home() {
             <article className="pitch-card pitch-modules">
               <div className="modules-intro">
                 <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3></div></div>
-                <div className="module-count"><strong>65</strong><span>available<br />modules</span></div>
+                <div className="module-count"><strong>{totalModuleCount}</strong><span>available<br />modules</span></div>
                 <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
               </div>
               <div className="module-family-list">

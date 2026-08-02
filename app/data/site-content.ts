@@ -1,5 +1,7 @@
 export type NavItem = { label: string; href: string };
 
+export const totalModuleCount = 65;
+
 export type FeatureModule = {
   name: string;
   summary: string;

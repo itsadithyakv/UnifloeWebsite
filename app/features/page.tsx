@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpenCheck, Building2, ClipboardCheck, GraduationCap, Landmark, UsersRound } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
-import { featureGroups } from "../data/site-content";
+import { featureGroups, totalModuleCount } from "../data/site-content";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -18,8 +18,6 @@ const groupIcons = {
   governance: Landmark,
 };
 
-const moduleCount = featureGroups.reduce((total, group) => total + group.modules.length, 0);
-
 export default function FeaturesPage() {
   return (
     <main id="main-content">
@@ -28,16 +26,16 @@ export default function FeaturesPage() {
         <div className="features-hero-inner section-shell">
           <div className="features-hero-copy" data-reveal>
             <h1>Every school workflow.<br /><span>One connected system.</span></h1>
-            <p>Explore {moduleCount} modules across six connected areas.</p>
+            <p>Explore {totalModuleCount} modules across six connected areas.</p>
           </div>
-          <div className="features-platform-card" data-reveal aria-label={`${moduleCount} Unifloe modules across six connected areas`}>
+          <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six connected areas`}>
             <div className="features-platform-head">
               <span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/brand/logoUnifloeNoBG.png" width="30" height="30" alt="" />
                 Unifloe platform
               </span>
-              <strong>{moduleCount}<small>modules</small></strong>
+              <strong>{totalModuleCount}<small>modules</small></strong>
             </div>
             <div className="features-platform-grid">
               {featureGroups.map((group) => {

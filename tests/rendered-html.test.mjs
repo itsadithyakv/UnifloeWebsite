@@ -10,11 +10,12 @@ import {
 const root = new URL("../", import.meta.url);
 
 async function render(pathname = "/") {
+  const canonicalPathname = pathname === "/" || pathname.endsWith("/") ? pathname : `${pathname}/`;
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
+  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${canonicalPathname}`);
   const { default: worker } = await import(workerUrl.href);
   return worker.fetch(
-    new Request(new URL(pathname, "http://localhost"), {
+    new Request(new URL(canonicalPathname, "http://localhost"), {
       headers: { accept: "text/html", host: "localhost" },
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
@@ -98,6 +99,22 @@ test("serves both logo variants directly and renders the staggered navigation sh
   assert.doesNotMatch(html, /_vinext\/image|_next\/image/);
 });
 
+test("uses the Unifloe mark as the favicon and keeps browser titles concise", async () => {
+  const pages = await Promise.all(["/", "/features", "/pricing", "/contact"].map((path) => render(path).then((response) => response.text())));
+  await Promise.all([
+    access(new URL("public/favicon.ico", root)),
+    access(new URL("public/favicon.png", root)),
+    access(new URL("public/apple-touch-icon.png", root)),
+  ]);
+  const expectedTitles = ["Unifloe", "Features | Unifloe", "Pricing | Unifloe", "Contact | Unifloe"];
+  for (const [index, html] of pages.entries()) {
+    assert.match(html, new RegExp(`<title>${expectedTitles[index].replace(/[|]/g, "\\|")}<\\/title>`));
+    assert.match(html, /href="\/favicon\.ico\?v=3"/);
+    assert.match(html, /href="\/favicon\.png\?v=3"/);
+    assert.doesNotMatch(html, /https:\/\/unifloe\.app\/favicon/);
+  }
+});
+
 test("renders the four-part home pitch and compact contact privacy treatment", async () => {
   const [home, contact] = await Promise.all([
     render("/").then((response) => response.text()),
@@ -158,6 +175,9 @@ test("uses the real product capture in a full-width home hero", async () => {
   assert.match(globalCss, /--hero-tilt-y/);
   assert.doesNotMatch(pageSource, /hero section-shell/);
   assert.match(globalCss, /\.hero\s*\{[\s\S]*?width:\s*100%/);
+  assert.match(globalCss, /\.hero::after\s*\{[\s\S]*?height:\s*clamp\(120px, 15vw, 190px\)[\s\S]*?linear-gradient\(180deg/);
+  assert.match(globalCss, /\.hero-dot-grid\s*\{[\s\S]*?mask-image:\s*linear-gradient\(180deg/);
+  assert.match(globalCss, /\.trust-strip\s*\{[\s\S]*?position:\s*relative;[\s\S]*?margin:\s*-46px auto 112px/);
 });
 
 test("uses optimized profile avatars and defers below-fold rendering work", async () => {
@@ -205,20 +225,27 @@ test("reinitializes reveal motion after navigation and keeps the menu below the 
   assert.match(menuCss, /\.preLayers,\s*\.panel\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?top:\s*var\(--menu-viewport-top/);
   assert.match(menuCss, /width:\s*min\(1520px, calc\(100% - 40px\)\)/);
   assert.match(menuSource, /getBoundingClientRect\(\)\.bottom/);
+  assert.match(menuSource, /const headerHeight = wrapper\.offsetHeight/);
+  assert.match(menuSource, /Math\.max\(headerHeight, bottom\)/);
+  assert.match(menuCss, /\.wrapper\[data-open\]\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?inset:\s*0 0 auto/);
   assert.match(menuCss, /overflow-x:\s*clip/);
   assert.match(globalCss, /overflow-x:\s*(?:hidden|clip)/);
   assert.doesNotMatch(menuCss, /logoTile/);
 });
 
 test("keeps the phone layout spaced and the mobile menu viewport-safe", async () => {
-  const [globalCss, menuCss, menuSource] = await Promise.all([
+  const [globalCss, menuCss, menuSource, headerSource] = await Promise.all([
     readFile(new URL("app/globals.css", root), "utf8"),
     readFile(new URL("app/components/StaggeredMenu.module.css", root), "utf8"),
     readFile(new URL("app/components/StaggeredMenu.tsx", root), "utf8"),
+    readFile(new URL("app/components/SiteHeader.tsx", root), "utf8"),
   ]);
   assert.match(globalCss, /@media \(max-width: 420px\)/);
   assert.match(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)/);
-  assert.match(globalCss, /\.pilot-bar\s*\{\s*display:\s*none/);
+  assert.doesNotMatch(headerSource, /pilot-bar|pilot-pulse|Pilot applications are open/);
+  assert.doesNotMatch(globalCss, /\.pilot-bar|\.pilot-pulse/);
+  assert.match(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)[\s\S]*?\.final-cta\s*\{[^}]*margin-bottom:\s*56px/);
+  assert.match(globalCss, /@media \(max-width: 760px\)[\s\S]*?\.final-cta\s*\{[^}]*margin-bottom:\s*48px/);
   assert.doesNotMatch(globalCss, /\.split-heading h2 br\s*\{\s*display:\s*none/);
   assert.match(menuCss, /height:\s*calc\(100dvh - var\(--menu-viewport-top/);
   assert.match(menuCss, /\(max-width: 1180px\) and \(orientation: portrait\)/);
@@ -253,7 +280,8 @@ test("renders the feature system hero, aligned selector, and animated disclosure
     readFile(new URL("app/globals.css", root), "utf8"),
   ]);
   assert.match(html, /Unifloe platform/);
-  assert.match(html, /24<small>modules/);
+  assert.match(html, /65<small>modules/);
+  assert.doesNotMatch(html, /24<small>modules/);
   assert.doesNotMatch(pageSource, /<details/);
   assert.match(accordionSource, /AnimatePresence/);
   assert.match(accordionSource, /blur\(9px\)/);
@@ -270,6 +298,24 @@ test("validates contact form values", () => {
   });
   assert.match(invalidErrors.email, /valid email/);
   assert.match(invalidErrors.phone, /valid phone/);
+});
+
+test("shows useful contact examples without pre-filling visitor data", async () => {
+  const [contact, formSource] = await Promise.all([
+    render("/contact").then((response) => response.text()),
+    readFile(new URL("app/components/ContactForm.tsx", root), "utf8"),
+  ]);
+  for (const value of [
+    "Demo Public School",
+    "Ananya Sharma",
+    "ananya@demopublicschool.example",
+    "+91 98765 43210",
+    "Bengaluru, Karnataka",
+  ]) assert.match(contact, new RegExp(value.replace(/[+]/g, "\\+")));
+  assert.match(formSource, /interest:\s*interestOptions\.includes\(initialInterest\) \? initialInterest : "general-demo"/);
+  assert.match(formSource, /consent:\s*false/);
+  assert.match(formSource, /schoolName:\s*""/);
+  assert.match(formSource, /contactName:\s*""/);
 });
 
 test("builds a fixed EmailJS payload and detects honeypot submissions", () => {
@@ -295,4 +341,30 @@ test("removes disposable starter files and keeps brand assets", async () => {
   ]);
   assert.match(layout, /og\.png/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+});
+
+test("configures a request-independent static production export", async () => {
+  const [nextConfig, layout] = await Promise.all([
+    readFile(new URL("next.config.ts", root), "utf8"),
+    readFile(new URL("app/layout.tsx", root), "utf8"),
+  ]);
+  assert.match(nextConfig, /output:\s*"export"/);
+  assert.match(nextConfig, /trailingSlash:\s*true/);
+  assert.match(layout, /new URL\("https:\/\/unifloe\.app"\)/);
+  assert.match(layout, /export const metadata:\s*Metadata/);
+  assert.doesNotMatch(layout, /next\/headers|headers\(\)|generateMetadata/);
+});
+
+test("emits Caddy-ready HTML for every public route", async () => {
+  const exportedPages = [
+    ["dist/client/index.html", "One platform to run your"],
+    ["dist/client/features/index.html", "Every school workflow"],
+    ["dist/client/pricing/index.html", "Start with a pilot"],
+    ["dist/client/contact/index.html", "Start a useful conversation"],
+  ];
+  for (const [path, expectedText] of exportedPages) {
+    const html = await readFile(new URL(path, root), "utf8");
+    assert.match(html, new RegExp(expectedText));
+  }
+  await access(new URL("dist/client/404.html", root));
 });

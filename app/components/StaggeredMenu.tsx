@@ -40,8 +40,10 @@ export function StaggeredMenu({
   const syncViewportTop = useCallback(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
-    const bottom = Math.max(0, Math.min(window.innerHeight, wrapper.getBoundingClientRect().bottom));
-    wrapper.style.setProperty("--menu-viewport-top", `${bottom}px`);
+    const headerHeight = wrapper.offsetHeight;
+    const bottom = Math.min(window.innerHeight, wrapper.getBoundingClientRect().bottom);
+    const viewportTop = Math.max(headerHeight, bottom);
+    wrapper.style.setProperty("--menu-viewport-top", `${viewportTop}px`);
   }, []);
 
   const closeMenu = useCallback(() => {
