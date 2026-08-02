@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     siteName: "Unifloe",
     title: "Unifloe | One platform to run your entire school",
     description: "A connected ERP + LMS for modern Indian schools.",
-    images: [{ url: new URL("/og.png", metadataBase), width: 1536, height: 1024, alt: "Unifloe — one platform to run your entire school" }],
+    images: [{ url: new URL("/og.jpg", metadataBase), width: 1200, height: 630, alt: "Unifloe — one platform to run your entire school" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Unifloe | One platform to run your entire school",
     description: "A connected ERP + LMS for modern Indian schools.",
-    images: [new URL("/og.png", metadataBase)],
+    images: [new URL("/og.jpg", metadataBase)],
   },
 };
 

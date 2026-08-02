@@ -335,11 +335,13 @@ test("removes disposable starter files and keeps brand assets", async () => {
   await assert.rejects(access(new URL("app/_sites-preview", root)));
   await access(new URL("public/brand/logoUnifloeNoBG.png", root));
   await access(new URL("public/fonts/Gilroy-Regular.woff", root));
+  await access(new URL("public/og.jpg", root));
   const [layout, packageJson] = await Promise.all([
     readFile(new URL("app/layout.tsx", root), "utf8"),
     readFile(new URL("package.json", root), "utf8"),
   ]);
-  assert.match(layout, /og\.png/);
+  assert.match(layout, /og\.jpg/);
+  assert.match(layout, /width: 1200, height: 630/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
 
