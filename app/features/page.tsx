@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpenCheck, Building2, ClipboardCheck, GraduationCap, Landmark, UsersRound } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
 import { featureGroups, totalModuleCount } from "../data/site-content";
+import { createPageMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Features",
-  description: "Explore Unifloe’s connected academic, administrative, campus, communication, compliance, and LMS capabilities.",
-};
+export const metadata = createPageMetadata("/features/");
 
 const groupIcons = {
   academics: BookOpenCheck,
@@ -26,7 +23,7 @@ export default function FeaturesPage() {
         <div className="features-hero-inner section-shell">
           <div className="features-hero-copy" data-reveal>
             <h1>Every school workflow.<br /><span>One connected system.</span></h1>
-            <p>Explore {totalModuleCount} modules across six connected areas.</p>
+            <p>Explore {totalModuleCount} registered modules across six connected areas.</p>
           </div>
           <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six connected areas`}>
             <div className="features-platform-head">
@@ -79,6 +76,10 @@ export default function FeaturesPage() {
           );
         })}
       </div>
+      <aside className="section-shell feature-scope-note" data-reveal>
+        <p><strong>Implementation scope stays explicit.</strong> Some modules use dedicated workspaces, others share grouped workflows, and configurable catalogue surfaces are confirmed during onboarding.</p>
+        <Link className="text-link" href="/about">How Unifloe describes product maturity <ArrowRight aria-hidden="true" /></Link>
+      </aside>
       <section className="section-shell inline-cta" data-reveal><div><h2>Choose the workflows that matter first.</h2><p>Begin with essentials. Expand when ready.</p></div><Link className="button" href="/contact">Build your Unifloe roadmap <ArrowRight aria-hidden="true" /></Link></section>
     </main>
   );

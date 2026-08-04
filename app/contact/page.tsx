@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
+import Link from "next/link";
 import { Clock3, Mail, MapPin, MessageCircleMore, Phone, ShieldCheck } from "lucide-react";
 import { ContactForm } from "../components/ContactForm";
+import { createPageMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Book a tailored Unifloe demo or apply for the one-year school pilot programme.",
-};
+export const metadata = createPageMetadata("/contact/");
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ interest?: string | string[] }> }) {
   const params = await searchParams;
@@ -19,7 +17,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <p>A focused conversation around your workflows, scale, and priorities.</p>
           <div className="contact-benefits" data-reveal-group>
             <div><span><Clock3 aria-hidden="true" /></span><div><strong>Relevant from the start</strong><p>Your priorities, not a generic tour.</p></div></div>
-            <div><span><MapPin aria-hidden="true" /></span><div><strong>Built for Indian schools</strong><p>Local structures, pricing, and data residency.</p></div></div>
+            <div><span><MapPin aria-hidden="true" /></span><div><strong>Built for Indian schools</strong><p>Local structures, pricing, and readiness workflows.</p></div></div>
             <div><span><MessageCircleMore aria-hidden="true" /></span><div><strong>A practical path</strong><p>Pilot first, then scale when ready.</p></div></div>
           </div>
           <div className="contact-direct" data-reveal>
@@ -40,6 +38,18 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <li><span>02</span><div><strong>Fixed recipient</strong><p>Sent only to the configured Unifloe inbox.</p></div></li>
           <li><span>03</span><div><strong>Your consent</strong><p>Required before an enquiry can be submitted.</p></div></li>
         </ol>
+      </section>
+      <section className="section-shell contact-next" aria-labelledby="contact-next-heading">
+        <div className="section-heading" data-reveal>
+          <h2 id="contact-next-heading">What happens after you contact PaperKite?</h2>
+          <p>A useful first conversation, followed by a clearly defined next step.</p>
+        </div>
+        <div className="contact-next-grid" data-reveal-group>
+          <article><span>01</span><h3>Share the school context</h3><p>Tell us your board, location, student strength, current tools and the workflows creating the most friction.</p></article>
+          <article><span>02</span><h3>See a relevant product path</h3><p>PaperKite maps the demo to your priorities and distinguishes dedicated, grouped and configurable product surfaces.</p></article>
+          <article><span>03</span><h3>Agree scope before onboarding</h3><p>If there is a fit, pilot modules, capacity, responsibilities, integrations and rollout steps are confirmed before work begins.</p></article>
+        </div>
+        <p className="contact-region-note">Bengaluru is Unifloe&apos;s initial pilot focus. <Link href="/school-erp-bengaluru">Review Bengaluru onboarding availability</Link>.</p>
       </section>
     </main>
   );

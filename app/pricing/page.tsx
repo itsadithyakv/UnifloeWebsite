@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, CircleHelp, Layers3, Plus, Sparkles, UsersRound } from "lucide-react";
 import { PriceCounter } from "../components/Counter";
 import { pilotPlans, standardPlans } from "../data/site-content";
+import { createPageMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Pricing",
-  description: "Explore Unifloe’s one-year pilot offers and annual Starter, Growth, and Enterprise plans for Indian schools.",
-};
+export const metadata = createPageMetadata("/pricing/");
 
 export default function PricingPage() {
   return (

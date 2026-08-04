@@ -11,7 +11,7 @@ export function SiteHeader() {
   return (
     <StaggeredMenu
       items={menuItems}
-      logoUrl="/brand/logoUnifloeNoBG.png"
+      logoUrl="/brand/logoUnifloeNoBG-96.png"
       colors={["#dce9ff", "#79aaff", "#1a61f3"]}
       accentColor="#1a61f3"
       displayItemNumbering

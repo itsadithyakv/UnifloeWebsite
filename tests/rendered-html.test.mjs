@@ -10,13 +10,18 @@ import {
 const root = new URL("../", import.meta.url);
 
 async function render(pathname = "/") {
-  const canonicalPathname = pathname === "/" || pathname.endsWith("/") ? pathname : `${pathname}/`;
+  const isMetadataRoute = pathname.endsWith(".txt") || pathname.endsWith(".xml");
+  const canonicalPathname = pathname === "/" || pathname.endsWith("/") || isMetadataRoute ? pathname : `${pathname}/`;
+  return requestUrl(new URL(canonicalPathname, "http://localhost"));
+}
+
+async function requestUrl(url) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${canonicalPathname}`);
+  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${url.toString()}`);
   const { default: worker } = await import(workerUrl.href);
   return worker.fetch(
-    new Request(new URL(canonicalPathname, "http://localhost"), {
-      headers: { accept: "text/html", host: "localhost" },
+    new Request(url, {
+      headers: { accept: "text/html" },
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
@@ -24,13 +29,23 @@ async function render(pathname = "/") {
 }
 
 const routeCases = [
-  ["/", "One platform to run your", "Book a free demo"],
-  ["/features", "Every school workflow", "Academics &amp; LMS"],
-  ["/pricing", "Start with a pilot", "₹30,000"],
-  ["/contact", "Let’s map Unifloe", "Start a useful conversation"],
+  ["/", "A modern school", "Book a free demo", "Unifloe | Modern School ERP &amp; LMS for Indian Schools"],
+  ["/features", "Every school workflow", "Academics &amp; LMS", "Features for School ERP &amp; LMS | Unifloe"],
+  ["/pricing", "Start with a pilot", "₹30,000", "School ERP Pricing &amp; Pilot Plans | Unifloe"],
+  ["/contact", "Let’s map Unifloe", "Start a useful conversation", "Book a School ERP Demo | Unifloe"],
+  ["/about", "built and operated by PaperKite", "Practical progress", "About Unifloe and PaperKite | Unifloe"],
+  ["/school-erp-software-india", "School ERP software built", "Roll out the workflows", "School ERP Software for Indian Schools | Unifloe"],
+  ["/school-lms", "school LMS connected", "Keep teaching and learning connected", "School LMS for Connected Learning | Unifloe"],
+  ["/for-cbse-schools", "connected ERP and LMS for CBSE", "Nursery to Grade 12", "ERP &amp; LMS for CBSE Schools | Unifloe"],
+  ["/attendance-management", "Attendance workflows connected", "Audited corrections", "School Attendance Management Software | Unifloe"],
+  ["/fee-management", "School fee management", "School-owned collections", "School Fee Management Software | Unifloe"],
+  ["/exam-management", "Exam and assessment workflows", "Question workflows", "School Exam Management Software | Unifloe"],
+  ["/apaar-readiness", "Support APAAR readiness", "Consent-aware", "APAAR Readiness for Schools | Unifloe"],
+  ["/data-privacy", "Privacy-conscious workflows", "Tenant boundaries", "School Data Privacy &amp; DPDP Readiness | Unifloe"],
+  ["/school-erp-bengaluru", "support for Bengaluru schools", "Initial pilot region", "School ERP Software in Bengaluru | Unifloe"],
 ];
 
-for (const [pathname, heading, detail] of routeCases) {
+for (const [pathname, heading, detail, title] of routeCases) {
   test(`server-renders ${pathname}`, async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200);
@@ -38,6 +53,7 @@ for (const [pathname, heading, detail] of routeCases) {
     const html = await response.text();
     assert.match(html, new RegExp(heading));
     assert.match(html, new RegExp(detail));
+    assert.match(html, new RegExp(`<title>${title.replace(/[|]/g, "\\|")}<\\/title>`));
     assert.match(html, /Unifloe/);
     assert.match(html, /Book a free demo/);
     assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/i);
@@ -83,7 +99,7 @@ test("uses a stable blurred count-up treatment for displayed prices", async () =
 });
 
 test("keeps the visual hierarchy free of promotional pre-heading pills", async () => {
-  const pages = await Promise.all(["/", "/features", "/pricing", "/contact"].map((path) => render(path).then((response) => response.text())));
+  const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
   const html = pages.join("\n");
   assert.doesNotMatch(html, /Built for modern Indian schools|Everything working together|Tell us about your school|section-chip|plan-badge|class="kicker"/i);
   assert.match(html, /data-reveal/);
@@ -92,27 +108,114 @@ test("keeps the visual hierarchy free of promotional pre-heading pills", async (
 test("serves both logo variants directly and renders the staggered navigation shell", async () => {
   const response = await render("/");
   const html = await response.text();
-  assert.match(html, /src="\/brand\/logoUnifloeNoBG\.png"/);
-  assert.match(html, /src="\/brand\/logoUnifloeNoBgWhite\.png"/);
+  assert.match(html, /src="\/brand\/logoUnifloeNoBG-96\.png"/);
+  assert.match(html, /src="\/brand\/logoUnifloeNoBgWhite-96\.png"/);
   assert.match(html, /aria-controls="staggered-menu-panel"/);
   assert.match(html, />Menu</);
   assert.doesNotMatch(html, /_vinext\/image|_next\/image/);
 });
 
-test("uses the Unifloe mark as the favicon and keeps browser titles concise", async () => {
-  const pages = await Promise.all(["/", "/features", "/pricing", "/contact"].map((path) => render(path).then((response) => response.text())));
+test("emits unique metadata, self-canonicals, one H1, and indexable robots on every public page", async () => {
+  const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
   await Promise.all([
     access(new URL("public/favicon.ico", root)),
     access(new URL("public/favicon.png", root)),
     access(new URL("public/apple-touch-icon.png", root)),
   ]);
-  const expectedTitles = ["Unifloe", "Features | Unifloe", "Pricing | Unifloe", "Contact | Unifloe"];
+  const titles = new Set();
+  const descriptions = new Set();
   for (const [index, html] of pages.entries()) {
-    assert.match(html, new RegExp(`<title>${expectedTitles[index].replace(/[|]/g, "\\|")}<\\/title>`));
-    assert.match(html, /href="\/favicon\.ico\?v=3"/);
-    assert.match(html, /href="\/favicon\.png\?v=3"/);
-    assert.doesNotMatch(html, /https:\/\/unifloe\.app\/favicon/);
+    const [pathname, , , expectedTitle] = routeCases[index];
+    const title = html.match(/<title>(.*?)<\/title>/s)?.[1];
+    const description = html.match(/<meta[^>]+name="description"[^>]+content="([^"]+)"/)?.[1];
+    const canonicalPath = pathname === "/" ? "/" : `${pathname}/`;
+    assert.equal(title, expectedTitle);
+    assert.ok(description);
+    assert.equal((description ?? "").length >= 120, true);
+    assert.match(html, new RegExp(`<link[^>]+rel="canonical"[^>]+href="https:\/\/unifloe\\.app${canonicalPath.replace(/\//g, "\\/")}"`));
+    assert.match(html, /<meta[^>]+name="robots"[^>]+content="[^"]*index[^"]*follow[^"]*"/);
+    assert.equal((html.match(/<h1(?:\s[^>]*)?>/g) ?? []).length, 1);
+    assert.match(html, /href="https:\/\/unifloe\.app\/favicon\.ico\?v=3"/);
+    assert.match(html, /href="https:\/\/unifloe\.app\/favicon\.png\?v=3"/);
+    assert.doesNotMatch(html, /name="keywords"/);
+    titles.add(title);
+    descriptions.add(description);
   }
+  assert.equal(titles.size, routeCases.length);
+  assert.equal(descriptions.size, routeCases.length);
+});
+
+test("serves a public robots policy and a canonical-only sitemap", async () => {
+  const [robotsResponse, sitemapResponse] = await Promise.all([render("/robots.txt"), render("/sitemap.xml")]);
+  assert.equal(robotsResponse.status, 200);
+  assert.match(robotsResponse.headers.get("content-type") ?? "", /^text\/plain\b/i);
+  const robots = await robotsResponse.text();
+  assert.match(robots, /User-Agent: \*/);
+  assert.match(robots, /Allow: \//);
+  assert.match(robots, /Disallow: \/api\//);
+  assert.match(robots, /Host: https:\/\/unifloe\.app/);
+  assert.match(robots, /Sitemap: https:\/\/unifloe\.app\/sitemap\.xml/);
+  assert.doesNotMatch(robots, /Disallow: \/(?:\r?\n|$)/);
+
+  assert.equal(sitemapResponse.status, 200);
+  assert.match(sitemapResponse.headers.get("content-type") ?? "", /application\/xml/i);
+  const sitemap = await sitemapResponse.text();
+  const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+  const expected = routeCases.map(([pathname]) => `https://unifloe.app${pathname === "/" ? "/" : `${pathname}/`}`);
+  assert.deepEqual(urls, expected);
+  assert.equal(new Set(urls).size, routeCases.length);
+  assert.doesNotMatch(sitemap, /\/api\/|\/login\/|\/dashboard\/|\/workspace\/|\/modules\/|\/admin\//);
+  assert.doesNotMatch(sitemap, /<lastmod>|<changefreq>|<priority>/);
+});
+
+test("emits valid homepage Organization and SoftwareApplication JSON-LD", async () => {
+  const html = await render("/").then((response) => response.text());
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  assert.equal(blocks.length, 2);
+  assert.deepEqual(blocks.map((block) => block["@type"]), ["Organization", "SoftwareApplication"]);
+  assert.equal(blocks[0].url, "https://unifloe.app/");
+  assert.equal(blocks[0].parentOrganization.name, "PaperKite");
+  assert.equal(blocks[0].email, "mailto:adithya@unifloe.app");
+  assert.equal(blocks[0].telephone, "+919686110206");
+  assert.equal(blocks[1].provider["@id"], "https://unifloe.app/#organization");
+  assert.doesNotMatch(JSON.stringify(blocks), /aggregateRating|review|award|sameAs|certif/i);
+});
+
+test("keeps internal marketing links within the canonical public route set", async () => {
+  const allowed = new Set(routeCases.map(([pathname]) => pathname));
+  for (const [pathname] of routeCases) {
+    const html = await render(pathname).then((response) => response.text());
+    const hrefs = [...html.matchAll(/<a[^>]+href="(\/[^"#?]*)[^\"]*"/g)].map((match) => match[1]);
+    for (const href of hrefs) {
+      const normalized = href === "/" ? "/" : href.replace(/\/$/, "");
+      assert.ok(allowed.has(normalized), `${pathname} links to unknown marketing route ${href}`);
+    }
+  }
+});
+
+test("redirects exact HTTP and www production hosts to apex HTTPS without affecting previews", async () => {
+  const cases = [
+    ["http://unifloe.app/features/?source=test", "https://unifloe.app/features/?source=test"],
+    ["http://www.unifloe.app/pricing/", "https://unifloe.app/pricing/"],
+    ["https://www.unifloe.app/contact/", "https://unifloe.app/contact/"],
+  ];
+  for (const [source, destination] of cases) {
+    const response = await requestUrl(new URL(source));
+    assert.equal(response.status, 308);
+    assert.equal(response.headers.get("location"), destination);
+  }
+  assert.equal((await requestUrl(new URL("https://preview.example/about/"))).status, 200);
+});
+
+test("returns a useful noindex 404 without a homepage canonical", async () => {
+  const response = await render("/missing-seo-audit-page");
+  assert.equal(response.status, 404);
+  const html = await response.text();
+  assert.match(html, /This page has moved beyond the timetable/);
+  assert.match(html, /<meta[^>]+(?:name="robots"[^>]+content="noindex, nofollow"|content="noindex, nofollow"[^>]+name="robots")/);
+  assert.doesNotMatch(html, /rel="canonical"/);
+  assert.match(html, /href="\/features"/);
+  assert.match(html, /href="\/contact"/);
 });
 
 test("renders the four-part home pitch and compact contact privacy treatment", async () => {
@@ -121,16 +224,20 @@ test("renders the four-part home pitch and compact contact privacy treatment", a
     render("/contact").then((response) => response.text()),
   ]);
   for (const value of [
-    "One place for every", "Your school. Your identity.", "Compliance-ready by design.",
+    "One place for every", "Your school. Your identity.", "Readiness-focused by design.",
     "Enable only what you need.", "Powerful without being expensive.",
-    "APAAR-ready records", "Founding School Starter Plan",
+    "APAAR readiness", "Founding School Starter Plan",
     "Direct founder support", "Start at",
   ]) assert.match(home, new RegExp(value.replace(/[.]/g, "\\.")));
+  assert.match(home, /₹1[\s\S]*?per student[\s\S]*?per month[\s\S]*?₹8,000[\s\S]*?per year/);
   assert.doesNotMatch(home, /APAAR certified|official APAAR certification/i);
+  assert.doesNotMatch(home, /Data hosted in India|India-hosted|DPDP-aligned/i);
   assert.doesNotMatch(home, /Structured for the evolving|Modern school software for practical|Supports APAAR-related workflows|Attendance, timetables, assignments/);
   assert.doesNotMatch(home, /Connected operating map|School pulse/);
   assert.doesNotMatch(home, /Not another tool/);
   assert.match(contact, /Your enquiry stays an enquiry/);
+  assert.match(contact, /What happens after you contact PaperKite/);
+  assert.match(contact, /Bengaluru is Unifloe(?:'|&#x27;)s initial pilot focus/);
   assert.doesNotMatch(contact, /Clear purpose\. Minimal information/);
 });
 
@@ -155,8 +262,13 @@ test("uses the real product capture in a full-width home hero", async () => {
     readFile(new URL("app/components/HeroProduct.tsx", root), "utf8"),
     readFile(new URL("app/globals.css", root), "utf8"),
   ]);
-  await access(new URL("public/herosectionphoto.png", root));
-  assert.match(home, /src="\/herosectionphoto\.png"/);
+  await Promise.all([
+    access(new URL("public/herosectionphoto-960.webp", root)),
+    access(new URL("public/herosectionphoto-1600.webp", root)),
+  ]);
+  assert.match(home, /src="\/herosectionphoto-1600\.webp"/);
+  assert.match(home, /srcSet="\/herosectionphoto-960\.webp 960w, \/herosectionphoto-1600\.webp 1600w"/);
+  assert.match(home, /width="1600" height="871"/);
   assert.doesNotMatch(home, /Actual Unifloe workspace|One connected view|Built around DPDP/);
   assert.match(pageSource, /<section className="hero">/);
   assert.match(pageSource, /className="hero-dot-grid"[\s\S]*?dotSize=\{3\}[\s\S]*?baseColor="#e1eaf7"[\s\S]*?activeColor="#0057ff"[\s\S]*?activeScale=\{2\.4\}[\s\S]*?proximity=\{165\}/);
@@ -268,7 +380,8 @@ test("uses a purpose-built portrait layout instead of a compressed desktop hero"
 
 test("keeps product and compliance language present", async () => {
   const [home, features] = await Promise.all([render("/").then((response) => response.text()), render("/features").then((response) => response.text())]);
-  for (const value of ["DPDP-aligned", "APAAR-ready", "Data hosted in India"]) assert.match(home, new RegExp(value));
+  for (const value of ["Privacy-conscious workflows", "DPDP readiness", "Supports APAAR readiness", "Role-based access"]) assert.match(home, new RegExp(value));
+  assert.doesNotMatch(home, /DPDP-aligned|APAAR-ready|Data hosted in India|India-hosted/i);
   for (const value of ["Paper Set", "Hostel management", "Health &amp; wellbeing", "Custom school workflows", "Institution-branded experience"]) assert.match(features, new RegExp(value));
 });
 
@@ -281,6 +394,8 @@ test("renders the feature system hero, aligned selector, and animated disclosure
   ]);
   assert.match(html, /Unifloe platform/);
   assert.match(html, /65<small>modules/);
+  assert.match(html, /65(?:<!-- -->)? registered modules/);
+  assert.match(html, /Implementation scope stays explicit/);
   assert.doesNotMatch(html, /24<small>modules/);
   assert.doesNotMatch(pageSource, /<details/);
   assert.match(accordionSource, /AnimatePresence/);
@@ -333,40 +448,59 @@ test("builds a fixed EmailJS payload and detects honeypot submissions", () => {
 
 test("removes disposable starter files and keeps brand assets", async () => {
   await assert.rejects(access(new URL("app/_sites-preview", root)));
-  await access(new URL("public/brand/logoUnifloeNoBG.png", root));
-  await access(new URL("public/fonts/Gilroy-Regular.woff", root));
-  await access(new URL("public/og.jpg", root));
-  const [layout, packageJson] = await Promise.all([
+  await Promise.all([
+    access(new URL("public/brand/logoUnifloeNoBG.png", root)),
+    access(new URL("public/brand/logoUnifloeNoBG-96.png", root)),
+    access(new URL("public/brand/logoUnifloeNoBgWhite-96.png", root)),
+    access(new URL("public/fonts/Gilroy-Regular.woff", root)),
+    access(new URL("public/og.jpg", root)),
+    access(new URL("public/og-seo.png", root)),
+  ]);
+  const [layout, seoSource, packageJson] = await Promise.all([
     readFile(new URL("app/layout.tsx", root), "utf8"),
+    readFile(new URL("app/lib/seo.ts", root), "utf8"),
     readFile(new URL("package.json", root), "utf8"),
   ]);
-  assert.match(layout, /og\.jpg/);
+  assert.match(seoSource, /og-seo\.png/);
   assert.match(layout, /width: 1200, height: 630/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
 
 test("configures a request-independent static production export", async () => {
-  const [nextConfig, layout] = await Promise.all([
+  const [nextConfig, layout, seoSource] = await Promise.all([
     readFile(new URL("next.config.ts", root), "utf8"),
     readFile(new URL("app/layout.tsx", root), "utf8"),
+    readFile(new URL("app/lib/seo.ts", root), "utf8"),
   ]);
   assert.match(nextConfig, /output:\s*"export"/);
   assert.match(nextConfig, /trailingSlash:\s*true/);
-  assert.match(layout, /new URL\("https:\/\/unifloe\.app"\)/);
+  assert.match(seoSource, /siteOrigin = "https:\/\/unifloe\.app"/);
   assert.match(layout, /export const metadata:\s*Metadata/);
   assert.doesNotMatch(layout, /next\/headers|headers\(\)|generateMetadata/);
 });
 
 test("emits Caddy-ready HTML for every public route", async () => {
   const exportedPages = [
-    ["dist/client/index.html", "One platform to run your"],
+    ["dist/client/index.html", "A modern school"],
     ["dist/client/features/index.html", "Every school workflow"],
     ["dist/client/pricing/index.html", "Start with a pilot"],
     ["dist/client/contact/index.html", "Start a useful conversation"],
+    ["dist/client/about/index.html", "built and operated by PaperKite"],
+    ["dist/client/school-erp-software-india/index.html", "School ERP software built"],
+    ["dist/client/school-lms/index.html", "school LMS connected"],
+    ["dist/client/for-cbse-schools/index.html", "ERP and LMS for CBSE"],
+    ["dist/client/attendance-management/index.html", "Attendance workflows connected"],
+    ["dist/client/fee-management/index.html", "School fee management"],
+    ["dist/client/exam-management/index.html", "Exam and assessment workflows"],
+    ["dist/client/apaar-readiness/index.html", "Support APAAR readiness"],
+    ["dist/client/data-privacy/index.html", "Privacy-conscious workflows"],
+    ["dist/client/school-erp-bengaluru/index.html", "support for Bengaluru schools"],
   ];
   for (const [path, expectedText] of exportedPages) {
     const html = await readFile(new URL(path, root), "utf8");
     assert.match(html, new RegExp(expectedText));
   }
-  await access(new URL("dist/client/404.html", root));
+  const notFound = await readFile(new URL("dist/client/404.html", root), "utf8");
+  assert.match(notFound, /This page has moved beyond the timetable/);
+  assert.match(notFound, /noindex, nofollow/);
 });

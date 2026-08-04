@@ -1,6 +1,7 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
+import { robotsText, sitemapXml } from "../app/lib/seo";
 
 interface Env {
   ASSETS: Fetcher;
@@ -19,6 +20,28 @@ interface ExecutionContext {
   passThroughOnException(): void;
 }
 
+const canonicalHostname = "unifloe.app";
+
+export function canonicalRedirect(request: Request) {
+  const url = new URL(request.url);
+  const isCanonicalHost = url.hostname === canonicalHostname;
+  const isWwwHost = url.hostname === `www.${canonicalHostname}`;
+
+  if (!isWwwHost && !(isCanonicalHost && url.protocol === "http:")) return null;
+
+  url.protocol = "https:";
+  url.hostname = canonicalHostname;
+  url.port = "";
+
+  return new Response(null, {
+    status: 308,
+    headers: {
+      location: url.toString(),
+      "cache-control": "public, max-age=3600",
+    },
+  });
+}
+
 // Image security config. SVG sources with .svg extension auto-skip the
 // optimization endpoint on the client side (served directly, no proxy).
 // To route SVGs through the optimizer (with security headers), set
@@ -28,6 +51,20 @@ interface ExecutionContext {
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+    const redirect = canonicalRedirect(request);
+    if (redirect) return redirect;
+
+    if (url.pathname === "/robots.txt") {
+      return new Response(robotsText, {
+        headers: { "content-type": "text/plain; charset=utf-8" },
+      });
+    }
+
+    if (url.pathname === "/sitemap.xml") {
+      return new Response(sitemapXml, {
+        headers: { "content-type": "application/xml; charset=utf-8" },
+      });
+    }
 
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];

@@ -30,8 +30,41 @@ export type PricingPlan = {
 export const navigation: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
+  { label: "ERP for India", href: "/school-erp-software-india" },
+  { label: "School LMS", href: "/school-lms" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
+];
+
+export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> = [
+  {
+    title: "Product",
+    links: [
+      { label: "Features", href: "/features" },
+      { label: "Pricing & pilots", href: "/pricing" },
+      { label: "School ERP for India", href: "/school-erp-software-india" },
+      { label: "Connected school LMS", href: "/school-lms" },
+      { label: "About Unifloe", href: "/about" },
+    ],
+  },
+  {
+    title: "School workflows",
+    links: [
+      { label: "For CBSE schools", href: "/for-cbse-schools" },
+      { label: "Attendance management", href: "/attendance-management" },
+      { label: "Fee management", href: "/fee-management" },
+      { label: "Exam management", href: "/exam-management" },
+      { label: "Bengaluru schools", href: "/school-erp-bengaluru" },
+    ],
+  },
+  {
+    title: "Readiness & contact",
+    links: [
+      { label: "APAAR readiness", href: "/apaar-readiness" },
+      { label: "School data privacy", href: "/data-privacy" },
+      { label: "Book a demo", href: "/contact" },
+    ],
+  },
 ];
 
 export const featureGroups: FeatureGroup[] = [
@@ -230,7 +263,7 @@ export const standardPlans: PricingPlan[] = [
     cadence: "per year",
     audience: "For modern schools building one connected operating layer.",
     capacity: "700 students included",
-    highlights: ["Core ERP + LMS platform", "Role-based experiences", "India-hosted data", "Add up to 1,000 students"],
+    highlights: ["Core ERP + LMS platform", "Role-based experiences", "Privacy-conscious workflows", "Add up to 1,000 students"],
     cta: "Discuss Starter",
     href: "/contact?interest=starter",
   },

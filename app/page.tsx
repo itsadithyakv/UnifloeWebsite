@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PriceCounter } from "./components/Counter";
 import { DotGrid } from "./components/DotGrid";
@@ -25,6 +24,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import { pilotPlans, totalModuleCount } from "./data/site-content";
+import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
   { title: "Academics & LMS", Icon: BookOpenCheck },
@@ -51,14 +51,41 @@ const roleCards = [
   { role: "Parents & students", title: "A calmer experience", copy: "Learning, progress, payments, and official updates.", Icon: HeartHandshake },
 ];
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata("/");
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteOrigin}/#organization`,
+  name: "Unifloe",
+  url: `${siteOrigin}/`,
+  logo: `${siteOrigin}/brand/logoUnifloeNoBG.png`,
+  email: "mailto:adithya@unifloe.app",
+  telephone: "+919686110206",
+  parentOrganization: {
+    "@type": "Organization",
+    name: "PaperKite",
+  },
+};
+
+const softwareApplicationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": `${siteOrigin}/#software`,
+  name: "Unifloe",
+  url: `${siteOrigin}/`,
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
   description:
-    "Connect academics, administration, communication, finance, compliance, and digital learning with Unifloe.",
+    "A modern school ERP and LMS for Indian schools, connecting attendance, academics, fees, communication and campus operations.",
+  provider: { "@id": `${siteOrigin}/#organization` },
 };
 
 export default function Home() {
   return (
     <main id="main-content">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(softwareApplicationJsonLd) }} />
       <section className="hero">
         <DotGrid
           className="hero-dot-grid"
@@ -70,16 +97,16 @@ export default function Home() {
           proximity={165}
         />
         <div className="hero-copy" data-reveal>
-          <h1>One platform to run your <span>entire school.</span></h1>
-          <p className="hero-lead">One connected ERP + LMS for academics, administration, communication, and compliance.</p>
+          <h1>A modern school <span>ERP and LMS</span> built for Indian schools</h1>
+          <p className="hero-lead">Bring attendance, academics, fees, communication and campus operations into one connected platform.</p>
           <div className="hero-actions">
             <Link className="button" href="/contact">Book a free demo <ArrowRight aria-hidden="true" /></Link>
             <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
           </div>
           <div className="hero-proof" aria-label="Key platform commitments">
-            <span><ShieldCheck aria-hidden="true" /> DPDP-aligned design</span>
-            <span><DatabaseZap aria-hidden="true" /> Data hosted in India</span>
-            <span><GraduationCap aria-hidden="true" /> APAAR-ready records</span>
+            <span><ShieldCheck aria-hidden="true" /> Privacy-conscious workflows</span>
+            <span><DatabaseZap aria-hidden="true" /> Role-based access</span>
+            <span><GraduationCap aria-hidden="true" /> Supports APAAR readiness</span>
           </div>
         </div>
         <HeroProduct />
@@ -115,7 +142,7 @@ export default function Home() {
             </article>
 
             <article className="pitch-card pitch-compliance">
-              <div className="pitch-card-title"><span><ShieldCheck aria-hidden="true" /></span><div><h3>Compliance-ready by design.</h3></div></div>
+                <div className="pitch-card-title"><span><ShieldCheck aria-hidden="true" /></span><div><h3>Readiness-focused by design.</h3></div></div>
                 <div className="student-record-preview">
                   <div className="student-record-head">
                     <div className="record-avatar-stack" aria-hidden="true">
@@ -132,13 +159,13 @@ export default function Home() {
                 <div className="student-record-row"><span>Consent & permissions</span><strong>Traceable</strong></div>
                 <div className="student-record-row"><span>Approvals & history</span><strong>Recorded</strong></div>
               </div>
-              <div className="pitch-spec-list pitch-spec-light"><span>APAAR-ready records</span><span>UDISE+</span><span>Holistic Progress Cards</span><span>Consent records</span><span>Approvals</span><span>Audit trails</span></div>
+              <div className="pitch-spec-list pitch-spec-light"><span>APAAR readiness</span><span>UDISE+ readiness</span><span>Holistic Progress Cards</span><span>Consent records</span><span>Approvals</span><span>Audit trails</span></div>
             </article>
 
             <article className="pitch-card pitch-modules">
               <div className="modules-intro">
                 <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3></div></div>
-                <div className="module-count"><strong>{totalModuleCount}</strong><span>available<br />modules</span></div>
+                <div className="module-count"><strong>{totalModuleCount}</strong><span>registered<br />modules</span></div>
                 <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
               </div>
               <div className="module-family-list">
@@ -148,7 +175,8 @@ export default function Home() {
 
             <article className="pitch-card pitch-value">
               <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Powerful without being expensive.</h3></div></div><div className="start-free-badge">Start at <PriceCounter text="₹0" /></div></div>
-              <div className="founding-price"><strong><PriceCounter text="₹8,000" /></strong><span>per year</span></div>
+              <div className="founding-price"><strong><PriceCounter text="₹1" /></strong><span>per student<br />per month</span></div>
+              <div className="founding-price-annual"><PriceCounter text="₹8,000" /><span>per year</span></div>
               <p className="founding-plan-name">Founding School Starter Plan</p>
               <ul className="founding-plan-list">
                 {foundingPlanHighlights.map((highlight) => <li key={highlight}><Check aria-hidden="true" />{highlight}</li>)}
@@ -176,8 +204,9 @@ export default function Home() {
         <div className="compliance-panel" data-reveal>
           <div className="compliance-copy">
             <h2>Built around responsible school data.</h2>
-            <p>Clear access, organised consent, structured records, and India-based data residency.</p>
-            <div className="compliance-points"><span>DPDP-aligned</span><span>APAAR-ready</span><span>UDISE+ support</span><span>Role-based access</span></div>
+            <p>Clear access, organised consent, structured records, and audited high-impact changes.</p>
+            <div className="compliance-points"><span>DPDP readiness</span><span>APAAR readiness</span><span>UDISE+ support</span><span>Role-based access</span></div>
+            <div className="compliance-links"><Link href="/data-privacy">School data privacy <ArrowRight aria-hidden="true" /></Link><Link href="/apaar-readiness">APAAR readiness <ArrowRight aria-hidden="true" /></Link></div>
           </div>
           <div className="compliance-orb" aria-hidden="true"><ShieldCheck /><span className="orb-ring orb-ring-one" /><span className="orb-ring orb-ring-two" /></div>
         </div>

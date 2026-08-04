@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Host: https://unifloe.app
+Sitemap: https://unifloe.app/sitemap.xml

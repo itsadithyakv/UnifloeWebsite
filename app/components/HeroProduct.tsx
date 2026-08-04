@@ -69,11 +69,14 @@ export function HeroProduct() {
       <figure ref={screenshotRef} className="hero-screenshot">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/herosectionphoto.png"
-          width="2048"
-          height="1100"
+          src="/herosectionphoto-1600.webp"
+          srcSet="/herosectionphoto-960.webp 960w, /herosectionphoto-1600.webp 1600w"
+          sizes="(max-width: 760px) 118vw, (max-width: 1180px) calc(100vw - 64px), 70vw"
+          width="1600"
+          height="871"
           alt="The Unifloe dashboard with attendance, assignments, library status, and a weekly timetable"
           fetchPriority="high"
+          decoding="async"
         />
       </figure>
     </div>
