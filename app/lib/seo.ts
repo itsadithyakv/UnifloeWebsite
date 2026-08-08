@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, MetadataRoute } from "next";
 
 export const siteOrigin = "https://unifloe.app";
 export const siteUrl = new URL(siteOrigin);
@@ -71,27 +71,6 @@ export const publicRoutes = [
     h1: "A connected ERP and LMS for CBSE schools",
   },
   {
-    path: "/attendance-management/",
-    title: "School Attendance Management Software | Unifloe",
-    description:
-      "Manage class registers, attendance policies, corrections, student leave and reports with role-aware workflows connected to academic structure.",
-    h1: "Attendance workflows connected to the whole school",
-  },
-  {
-    path: "/fee-management/",
-    title: "School Fee Management Software | Unifloe",
-    description:
-      "Create school fee obligations, track dues and payments, issue receipts, manage concessions and report collections with role-aware workflows.",
-    h1: "School fee management with clearer financial workflows",
-  },
-  {
-    path: "/exam-management/",
-    title: "School Exam Management Software | Unifloe",
-    description:
-      "Plan school exams, manage assessments and marks, build question papers, publish results and connect report-card workflows to student records.",
-    h1: "Exam and assessment workflows connected to student records",
-  },
-  {
     path: "/apaar-readiness/",
     title: "APAAR Readiness for Schools | Unifloe",
     description:
@@ -105,14 +84,14 @@ export const publicRoutes = [
       "Explore privacy-conscious school data workflows with tenant boundaries, role-based access, consent records, audit history and private files.",
     h1: "Privacy-conscious workflows for school data",
   },
-  {
-    path: "/school-erp-bengaluru/",
-    title: "School ERP Software in Bengaluru | Unifloe",
-    description:
-      "Explore Unifloe's Bengaluru pilot and onboarding support for schools seeking a connected ERP and LMS with direct PaperKite guidance.",
-    h1: "School ERP and LMS support for Bengaluru schools",
-  },
 ] as const satisfies readonly PublicRoute[];
+
+export const permanentRedirects = {
+  "/attendance-management/": "/features/#attendance-workflows",
+  "/fee-management/": "/features/#fee-workflows",
+  "/exam-management/": "/features/#assessment-workflows",
+  "/school-erp-bengaluru/": "/school-erp-software-india/#bengaluru-pilot",
+} as const satisfies Record<`/${string}/`, `/${string}`>;
 
 const publicRouteMap = new Map<string, PublicRoute>(publicRoutes.map((route) => [route.path, route]));
 
@@ -173,19 +152,31 @@ export function serializeJsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
+export const robotsPolicy = {
+  rules: {
+    userAgent: "*",
+    allow: "/",
+    disallow: ["/api/"],
+  },
+  sitemap: `${siteOrigin}/sitemap.xml`,
+} satisfies MetadataRoute.Robots;
+
+export const sitemapEntries = publicRoutes.map((route) => ({
+  url: canonicalUrl(route.path),
+})) satisfies MetadataRoute.Sitemap;
+
 export const robotsText = [
-  "User-Agent: *",
-  "Allow: /",
-  "Disallow: /api/",
-  `Host: ${siteOrigin}`,
-  `Sitemap: ${siteOrigin}/sitemap.xml`,
+  `User-Agent: ${robotsPolicy.rules.userAgent}`,
+  `Allow: ${robotsPolicy.rules.allow}`,
+  ...robotsPolicy.rules.disallow.map((path) => `Disallow: ${path}`),
+  `Sitemap: ${robotsPolicy.sitemap}`,
   "",
 ].join("\n");
 
 export const sitemapXml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...publicRoutes.map((route) => `  <url><loc>${canonicalUrl(route.path)}</loc></url>`),
+  ...sitemapEntries.map((entry) => `  <url><loc>${entry.url}</loc></url>`),
   "</urlset>",
   "",
 ].join("\n");

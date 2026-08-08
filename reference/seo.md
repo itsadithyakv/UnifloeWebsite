@@ -4,7 +4,7 @@
 
 The only canonical production origin is `https://unifloe.app`. Canonical page URLs use a trailing slash because the site is built with `trailingSlash: true`.
 
-Requests for `http://unifloe.app`, `http://www.unifloe.app`, and `https://www.unifloe.app` are redirected by the Cloudflare Worker to the equivalent apex HTTPS URL. The current Caddy deployment must apply the same host redirect before the apex domain can be considered fully canonical.
+Requests for `http://unifloe.app`, `http://www.unifloe.app`, and `https://www.unifloe.app` are redirected by the Worker to the equivalent apex HTTPS URL. The checked-in Caddy configuration proxies both hosts to that Worker and forwards the original protocol, so apex HTTPS requests render normally while HTTP and `www` requests receive the canonical redirect.
 
 ## Indexable public routes
 
@@ -16,12 +16,21 @@ Requests for `http://unifloe.app`, `http://www.unifloe.app`, and `https://www.un
 - `https://unifloe.app/school-erp-software-india/`
 - `https://unifloe.app/school-lms/`
 - `https://unifloe.app/for-cbse-schools/`
-- `https://unifloe.app/attendance-management/`
-- `https://unifloe.app/fee-management/`
-- `https://unifloe.app/exam-management/`
 - `https://unifloe.app/apaar-readiness/`
 - `https://unifloe.app/data-privacy/`
-- `https://unifloe.app/school-erp-bengaluru/`
+
+The LMS route remains indexable because it documents distinct assignment, submission, feedback, class/subject authorization, realtime-fallback, and protected-learning-data behavior. The CBSE route remains indexable because it documents a distinct Nursery-to-Grade-12 stage model, CBSE-first demo structure, assignment-scoped academics, and board/government-affiliation disclaimers.
+
+## Consolidated routes and permanent redirects
+
+The following previously deployed pages were merged because their useful content was stronger as part of a broader product page:
+
+- `/attendance-management/` → `/features/#attendance-workflows`
+- `/fee-management/` → `/features/#fee-workflows`
+- `/exam-management/` → `/features/#assessment-workflows`
+- `/school-erp-bengaluru/` → `/school-erp-software-india/#bengaluru-pilot`
+
+These URLs return `308 Permanent Redirect`, are absent from `publicRoutes` and the sitemap, and are not linked as standalone navigation destinations.
 
 The sitemap is generated from the typed `publicRoutes` registry in `app/lib/seo.ts`. It intentionally omits `lastModified`, change frequency, and priority values because the repository does not have a reliable content-publication timestamp source.
 
@@ -55,10 +64,12 @@ To add a new marketing page:
 
 - Robots URL: `https://unifloe.app/robots.txt`
 - Sitemap URL: `https://unifloe.app/sitemap.xml`
-- Robots policy: allow the public site, disallow `/api/`, declare the canonical host, and reference the sitemap.
+- Robots policy: allow the public site, disallow `/api/`, and reference the sitemap. It intentionally has no `Host` directive; canonical URLs and permanent redirects enforce the preferred origin.
 - Sitemap policy: include exactly the canonical public route registry and no API, private, redirect, error, or duplicate URL.
 
-The Next.js metadata routes are served by the built Worker. A deployment that serves only `dist/client` through Caddy must be updated to run or proxy the Worker metadata routes; do not maintain a second handwritten XML file.
+The Next.js metadata routes are served by the built vinext Worker. `npm start` binds that Worker to `127.0.0.1:3000`, and the checked-in `Caddyfile` reverse-proxies both `unifloe.app` and `www.unifloe.app` to it. Caddy must not serve `dist/client` directly: proxying every request ensures `/robots.txt`, `/sitemap.xml`, canonical-host redirects, consolidated-route redirects, pages and assets all use the same Worker entry point.
+
+The repository does not keep handwritten `public/robots.txt` or `public/sitemap.xml` copies. `app/robots.ts`, `app/sitemap.ts` and the shared typed SEO registry remain the metadata sources; the Worker adapter emits them before trailing-slash normalization.
 
 ## Structured data
 
@@ -93,4 +104,9 @@ curl https://unifloe.app/sitemap.xml
 
 ## Google Search Console
 
-Submit `https://unifloe.app/sitemap.xml`. Use URL Inspection and request indexing for the 14 canonical public URLs listed above. Verify `robots.txt`, but do not request indexing for it.
+1. Submit `https://unifloe.app/sitemap.xml` once.
+2. Request indexing for `https://unifloe.app/`.
+3. Request indexing for `https://unifloe.app/features/`, `https://unifloe.app/pricing/`, `https://unifloe.app/school-erp-software-india/`, and `https://unifloe.app/apaar-readiness/`.
+4. Allow Google to discover the remaining indexable pages through the sitemap and internal links.
+
+Verify `robots.txt`, but do not submit it for indexing. Do not request indexing for the permanent-redirect URLs.

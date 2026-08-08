@@ -12,12 +12,10 @@ The public-facing website for Unifloe, a connected ERP and LMS for modern Indian
 - `/school-erp-software-india` — connected ERP and LMS for Indian schools
 - `/school-lms` — assignments, materials, assessment, and feedback
 - `/for-cbse-schools` — CBSE-first academic use cases
-- `/attendance-management` — attendance policy, registers, corrections, and leave
-- `/fee-management` — school-owned fee and collection workflows
-- `/exam-management` — exams, question papers, marks, and reports
 - `/apaar-readiness` — readiness, consent, and status workflows
 - `/data-privacy` — privacy-conscious school data controls
-- `/school-erp-bengaluru` — initial Bengaluru pilot and onboarding availability
+
+Detailed attendance, fee, and exam workflows are consolidated into `/features`. Bengaluru pilot and onboarding information is consolidated into `/school-erp-software-india`. Their previously deployed URLs return permanent redirects.
 
 SEO conventions, canonical routes, robots, sitemap, structured data, and Search Console verification are documented in [`reference/seo.md`](./reference/seo.md).
 
@@ -38,3 +36,5 @@ npx tsc --noEmit --incremental false
 npm test
 npm run build
 ```
+
+Production Caddy deployments run `npm start` on `127.0.0.1:3000` and use the checked-in `Caddyfile` to proxy every request through the vinext Worker. This keeps metadata routes and permanent redirects on the same application path as the rendered pages.

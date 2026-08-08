@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpenCheck, Building2, ClipboardCheck, GraduationCap, Landmark, UsersRound } from "lucide-react";
+import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, ClipboardCheck, FileCheck2, GraduationCap, Landmark, UsersRound } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
 import { featureGroups, totalModuleCount } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
@@ -14,6 +14,30 @@ const groupIcons = {
   campus: Building2,
   governance: Landmark,
 };
+
+const workflowDeepDives = [
+  {
+    id: "attendance-workflows",
+    icon: CalendarCheck2,
+    title: "Attendance, corrections and student leave",
+    copy: "Attendance sessions retain their policy version, collection window, section, subject or period context and owning teacher. Faculty work within assigned registers; disputed records move through a Head Admin or Principal decision with audit history instead of silent editing.",
+    points: ["Effective-dated attendance policies", "Assignment-scoped registers", "Correction approval history", "Student leave separated from staff and hostel leave"],
+  },
+  {
+    id: "fee-workflows",
+    icon: BadgeIndianRupee,
+    title: "School-owned fees and collection boundaries",
+    copy: "Authorized finance teams can manage obligations, schedules, dues, payments, receipts, concessions and outstanding balances. Family-fee collections remain in a separately configured school-owned payment scope, distinct from PaperKite subscription billing.",
+    points: ["Fee obligations and due schedules", "Payments and receipts", "Concession approvals", "School-scoped collection reporting"],
+  },
+  {
+    id: "assessment-workflows",
+    icon: FileCheck2,
+    title: "Exams, question papers and result publication",
+    copy: "Academic structure connects exam planning, assessment components, question libraries, marks and report cards. Faculty authority follows assigned subjects and sections, while broader review, correction and publication decisions remain controlled and auditable.",
+    points: ["Reusable question classification", "Paper sets and marking guides", "Marks and grade history", "Authorized report-card publication"],
+  },
+] as const;
 
 export default function FeaturesPage() {
   return (
@@ -80,6 +104,25 @@ export default function FeaturesPage() {
         <p><strong>Implementation scope stays explicit.</strong> Some modules use dedicated workspaces, others share grouped workflows, and configurable catalogue surfaces are confirmed during onboarding.</p>
         <Link className="text-link" href="/about">How Unifloe describes product maturity <ArrowRight aria-hidden="true" /></Link>
       </aside>
+      <section className="section-shell workflow-deep-dives" aria-labelledby="workflow-deep-dives-heading">
+        <div className="section-heading" data-reveal>
+          <h2 id="workflow-deep-dives-heading">How connected workflows operate</h2>
+          <p>Detailed product boundaries for three high-value school processes.</p>
+        </div>
+        <div className="workflow-deep-dive-grid" data-reveal-group>
+          {workflowDeepDives.map((workflow) => {
+            const Icon = workflow.icon;
+            return (
+              <article id={workflow.id} key={workflow.id}>
+                <div className="icon-tile"><Icon aria-hidden="true" /></div>
+                <h3>{workflow.title}</h3>
+                <p>{workflow.copy}</p>
+                <ul>{workflow.points.map((point) => <li key={point}>{point}</li>)}</ul>
+              </article>
+            );
+          })}
+        </div>
+      </section>
       <section className="section-shell inline-cta" data-reveal><div><h2>Choose the workflows that matter first.</h2><p>Begin with essentials. Expand when ready.</p></div><Link className="button" href="/contact">Build your Unifloe roadmap <ArrowRight aria-hidden="true" /></Link></section>
     </main>
   );

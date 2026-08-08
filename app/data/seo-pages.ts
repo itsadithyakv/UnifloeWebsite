@@ -3,6 +3,7 @@ export type SeoPageContent = {
   intro: string;
   highlights: Array<{ title: string; copy: string }>;
   sections: Array<{
+    id?: string;
     title: string;
     paragraphs: string[];
     points?: string[];
@@ -95,6 +96,20 @@ export const seoPages = {
           "Final scope, configured modules, integrations and onboarding milestones are agreed before rollout. Generic catalogue surfaces are not presented as completed specialized implementations.",
         ],
       },
+      {
+        id: "bengaluru-pilot",
+        title: "Bengaluru pilot and onboarding support",
+        paragraphs: [
+          "Bengaluru is Unifloe's initial region for guided school pilots. PaperKite uses those conversations to map each school's board and stage structure, student capacity, current systems, highest-friction workflows and the people responsible for each process.",
+          "Pilot modules, implementation shape, onboarding responsibilities and review milestones are agreed before work begins. Availability and timelines are confirmed directly; Unifloe does not claim a physical Bengaluru office or unpublished customer network.",
+        ],
+        points: [
+          "Direct workflow-discovery conversations",
+          "School structure and capacity review",
+          "Defined pilot modules and responsibilities",
+          "Onboarding milestones and success review",
+        ],
+      },
     ],
     related: [
       { href: "/features", label: "Explore ERP and LMS features", copy: "See how registered modules are grouped across the school." },
@@ -142,8 +157,8 @@ export const seoPages = {
       },
     ],
     related: [
-      { href: "/exam-management", label: "Exam management", copy: "Connect question, assessment, marks and report-card workflows." },
-      { href: "/attendance-management", label: "Attendance management", copy: "Use class and assignment context across the academic day." },
+      { href: "/features#assessment-workflows", label: "Assessment workflows", copy: "Connect questions, marks and report-card decisions to academic records." },
+      { href: "/features#attendance-workflows", label: "Attendance workflows", copy: "Use class, assignment, correction and leave context across the academic day." },
       { href: "/features", label: "All platform features", copy: "Review the wider academic and school operations catalogue." },
     ],
     cta: { title: "See the LMS in your school's context.", copy: "Choose the classes and learning workflows that should lead a pilot.", href: "/contact", label: "Book an LMS demo" },
@@ -189,145 +204,10 @@ export const seoPages = {
     notice: "Unifloe is an independent PaperKite product. It is not affiliated with or approved by CBSE, the Government of India, APAAR or UDISE+.",
     related: [
       { href: "/apaar-readiness", label: "APAAR readiness", copy: "Review structured records, consent and readiness checks." },
-      { href: "/exam-management", label: "Exam management", copy: "See connected assessment and report-card workflows." },
+      { href: "/features#assessment-workflows", label: "Assessment workflows", copy: "See connected assessment, marks and report-card decisions." },
       { href: "/school-erp-software-india", label: "School ERP for India", copy: "Explore the wider operating system for Indian schools." },
     ],
     cta: { title: "Map Unifloe to your CBSE school.", copy: "Discuss stages, sections, subjects and the workflows to include first.", href: "/contact", label: "Book a CBSE school demo" },
-  },
-  attendance: {
-    eyebrow: "Attendance management",
-    intro:
-      "Unifloe connects attendance registers, collection policies, correction approvals, student leave and role-scoped reports to the school's academic structure.",
-    highlights: [
-      { title: "Policy-aware registers", copy: "Collection windows can reflect hourly, morning-only or split-day attendance policies." },
-      { title: "Assignment-scoped faculty", copy: "Register ownership follows authorized class, section and subject assignments." },
-      { title: "Audited corrections", copy: "Disputed records move through a leadership decision instead of silent editing." },
-    ],
-    sections: [
-      {
-        title: "Give each register the right academic context",
-        paragraphs: [
-          "Attendance sessions carry their policy version, collection window, section, subject or period coverage and owning teacher. This preserves the meaning of historical records when a school changes its future attendance policy.",
-          "Faculty open registers for the students and teaching context they are assigned. Leadership roles can review broader patterns without turning a convenient dashboard into unrestricted raw-record access.",
-        ],
-      },
-      {
-        title: "Handle corrections and leave as real workflows",
-        paragraphs: [
-          "A correction request records the disputed session and supporting details. Head Admin or Principal roles can approve or reject it, and an approved change updates the authorized record with audit history.",
-          "Student attendance leave is kept separate from staff and hostel leave. A school can configure whether student leave requires approval while preserving the school, student and decision context.",
-        ],
-        points: [
-          "Effective-dated attendance policies",
-          "Register confirmation and ownership",
-          "Correction requests and leadership review",
-          "Student leave applications and reports",
-        ],
-      },
-      {
-        title: "Make attendance useful to each role",
-        paragraphs: [
-          "Students see only their own totals, subject breakdown, dated absence history, threshold guidance and permitted reports. Faculty focus on the registers they own, while leaders can review patterns and pending decisions.",
-          "Attendance context can also support dashboards, reporting and school communications without exposing student-level records on public or unauthenticated routes.",
-        ],
-      },
-    ],
-    related: [
-      { href: "/school-erp-software-india", label: "Connected school ERP", copy: "See how attendance fits the wider school structure." },
-      { href: "/for-cbse-schools", label: "CBSE school workflows", copy: "Review stages, classes and academic context." },
-      { href: "/data-privacy", label: "School data privacy", copy: "Understand tenant, role and audit boundaries." },
-    ],
-    cta: { title: "Review your school's attendance workflow.", copy: "Bring your current policy, register structure and correction process to a focused demo.", href: "/contact", label: "Book an attendance demo" },
-  },
-  fees: {
-    eyebrow: "Fee management",
-    intro:
-      "Unifloe supports school-owned fee obligations, dues, payments, receipts, concessions and reporting while keeping family-fee money separate from PaperKite subscription billing.",
-    highlights: [
-      { title: "School-owned collections", copy: "A school's family-fee gateway and reconciliation remain distinct from Unifloe subscription billing." },
-      { title: "Clear obligations", copy: "Charges, dues, concessions, receipts and payment history stay connected to authorized student records." },
-      { title: "Audited decisions", copy: "High-impact concessions and financial actions can use explicit approval and audit history." },
-    ],
-    sections: [
-      {
-        title: "Follow the full school fee journey",
-        paragraphs: [
-          "Authorized finance staff can create a student charge or derive a valid school fee obligation, then track dues, payments, receipts and outstanding balances. Family-facing views can show the records connected to the signed-in student without opening the wider finance workspace.",
-          "Concessions and other sensitive adjustments can follow school policy, approval and audit requirements rather than being handled as untraceable edits.",
-        ],
-        points: [
-          "Fee obligations and due schedules",
-          "Payments, receipts and outstanding balances",
-          "Concessions, approvals and audit context",
-          "School-scoped collection reporting",
-        ],
-      },
-      {
-        title: "Keep school money and platform billing separate",
-        paragraphs: [
-          "PaperKite subscription billing pays for the Unifloe platform. Family-fee payments belong to the school and use a separately configured, school-owned payment scope.",
-          "Platform billing credentials never authorize school fee collection. This separation is part of the product boundary and should remain clear during integration and onboarding discussions.",
-        ],
-      },
-      {
-        title: "Connect finance without broadening access",
-        paragraphs: [
-          "Financial views are role-aware and tenant-scoped. A dashboard summary does not grant access to every underlying transaction, and clients never receive payment secrets or database credentials.",
-          "Final gateway configuration, settlement behavior and participating finance workflows are confirmed with each school before rollout.",
-        ],
-      },
-    ],
-    related: [
-      { href: "/pricing", label: "Unifloe pricing", copy: "Compare platform pilot and annual subscription plans." },
-      { href: "/data-privacy", label: "Financial data boundaries", copy: "Review role, tenant and audit protections." },
-      { href: "/features", label: "Administration features", copy: "Explore finance alongside approvals and people workflows." },
-    ],
-    cta: { title: "Map fees and collections to your school policy.", copy: "Discuss obligations, approvals, family views and the required gateway boundary.", href: "/contact", label: "Book a fee workflow demo" },
-  },
-  exams: {
-    eyebrow: "Exam management",
-    intro:
-      "Unifloe connects exam planning, assessments, question workflows, marks, publication decisions and report cards to authorized classes and student records.",
-    highlights: [
-      { title: "Assessment planning", copy: "Organize exam calendars, subjects, components and academic context." },
-      { title: "Question workflows", copy: "Build reusable question libraries and prepare school-owned paper sets." },
-      { title: "Controlled publication", copy: "Marks and reports move through authorized release decisions and audit context." },
-    ],
-    sections: [
-      {
-        title: "Move from assessment structure to published results",
-        paragraphs: [
-          "Exam, gradebook, marks and report-card modules work from the school's academic structure. Faculty access follows assigned subjects and sections, while leadership receives the broader review and publication authority configured for the workflow.",
-          "Assessment components, marks and student history remain connected instead of being repeatedly transferred between paper registers and isolated files.",
-        ],
-      },
-      {
-        title: "Build school-owned questions and papers",
-        paragraphs: [
-          "Question libraries can classify content by grade, subject, chapter, topic, difficulty and marks. Review and approval steps help schools prepare reusable questions, editable paper sets, answer keys and marking guidance.",
-          "The product should be evaluated against the exact paper-setting and assessment flow a school intends to use. Registered catalogue surfaces are not assumed to be identical to every school's specialized process.",
-        ],
-        points: [
-          "Question classification and reusable libraries",
-          "Paper structures, answer keys and marking guides",
-          "Marks entry, grade calculations and history",
-          "Authorized result and report-card publication",
-        ],
-      },
-      {
-        title: "Protect student assessment records",
-        paragraphs: [
-          "Marks and reports are sensitive school data. Students read their own permitted records, faculty work within assignment scope, and protected corrections or releases use server-side authority checks.",
-          "High-impact academic changes create audit context so the school can review who acted, which learner or assessment was affected, and the outcome.",
-        ],
-      },
-    ],
-    related: [
-      { href: "/school-lms", label: "Connected school LMS", copy: "Link assessments to assignments, submissions and feedback." },
-      { href: "/for-cbse-schools", label: "CBSE school use cases", copy: "See assessment in a Nursery-to-Grade-12 structure." },
-      { href: "/features", label: "Academic modules", copy: "Review the wider academics and reporting catalogue." },
-    ],
-    cta: { title: "Walk through your exam cycle.", copy: "Use a demo to review planning, papers, marks, approvals and reports.", href: "/contact", label: "Book an exam workflow demo" },
   },
   apaar: {
     eyebrow: "APAAR readiness",
@@ -420,50 +300,5 @@ export const seoPages = {
       { href: "/contact", label: "Discuss your requirements", copy: "Bring your school's privacy and governance questions to a focused conversation." },
     ],
     cta: { title: "Make data-governance questions part of the demo.", copy: "Discuss tenant scope, access, consent, audit and rollout responsibilities.", href: "/contact", label: "Talk to PaperKite" },
-  },
-  bengaluru: {
-    eyebrow: "Bengaluru school pilot",
-    intro:
-      "Unifloe is initially focusing its school pilot and onboarding availability on Bengaluru, with direct PaperKite guidance from workflow discovery through rollout planning.",
-    highlights: [
-      { title: "Initial pilot region", copy: "Bengaluru schools are the first local focus for guided product conversations and pilot planning." },
-      { title: "Direct support", copy: "Schools can speak with PaperKite about their structure, priorities and rollout sequence." },
-      { title: "Defined pilot scope", copy: "Participating modules, capacity and onboarding steps are agreed before the pilot begins." },
-    ],
-    sections: [
-      {
-        title: "A local starting point for a connected school platform",
-        paragraphs: [
-          "Bengaluru schools often combine established academic processes with rapidly changing expectations for digital learning, family communication and operational visibility. Unifloe brings these areas into one configurable ERP and LMS.",
-          "The initial Bengaluru focus lets PaperKite keep early onboarding conversations direct and practical without claiming an office location, customer count or network of pilot schools that has not been published.",
-        ],
-      },
-      {
-        title: "Build the pilot around the school's priorities",
-        paragraphs: [
-          "A pilot conversation starts with the school board and stage structure, student strength, current systems, highest-friction workflows and the staff who own each process.",
-          "PaperKite then maps a realistic first set of modules, confirms what is dedicated, grouped or configurable in the current product, and agrees the onboarding scope before work begins.",
-        ],
-        points: [
-          "School structure and student capacity",
-          "Priority academic and operational workflows",
-          "Staff responsibility and approval paths",
-          "Pilot modules, onboarding and success review",
-        ],
-      },
-      {
-        title: "Contact Unifloe directly",
-        paragraphs: [
-          "Schools can call +91 9686110206 or email adithya@unifloe.app to discuss current Bengaluru onboarding availability. The public enquiry form asks only for business contact and school-fit information, not student records.",
-          "Availability, timelines and final scope are confirmed directly. This page does not claim a physical Bengaluru office or LocalBusiness presence.",
-        ],
-      },
-    ],
-    related: [
-      { href: "/school-erp-software-india", label: "School ERP for India", copy: "Explore the wider product and operating model." },
-      { href: "/pricing", label: "Pilot and annual pricing", copy: "Compare current capacity and rollout paths." },
-      { href: "/for-cbse-schools", label: "CBSE school use cases", copy: "Review CBSE-first academic structures and workflows." },
-    ],
-    cta: { title: "Check Bengaluru pilot availability.", copy: "Share your school size, priorities and preferred time for a product conversation.", href: "/contact", label: "Contact Unifloe" },
   },
 } as const satisfies Record<string, SeoPageContent>;

@@ -33,7 +33,7 @@ export function SeoLandingPage({ path, content }: { path: string; content: SeoPa
 
       <div className="section-shell seo-content">
         {content.sections.map((section, index) => (
-          <section className="seo-content-section" key={section.title} data-reveal>
+          <section className="seo-content-section" id={section.id} key={section.title} data-reveal>
             <div className="seo-section-heading">
               <span>{String(index + 1).padStart(2, "0")}</span>
               <div><p>{content.eyebrow}</p><h2>{section.title}</h2></div>

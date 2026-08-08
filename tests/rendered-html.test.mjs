@@ -15,13 +15,13 @@ async function render(pathname = "/") {
   return requestUrl(new URL(canonicalPathname, "http://localhost"));
 }
 
-async function requestUrl(url) {
+async function requestUrl(url, headers = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${url.toString()}`);
   const { default: worker } = await import(workerUrl.href);
   return worker.fetch(
     new Request(url, {
-      headers: { accept: "text/html" },
+      headers: { accept: "text/html", ...headers },
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
@@ -37,12 +37,8 @@ const routeCases = [
   ["/school-erp-software-india", "School ERP software built", "Roll out the workflows", "School ERP Software for Indian Schools | Unifloe"],
   ["/school-lms", "school LMS connected", "Keep teaching and learning connected", "School LMS for Connected Learning | Unifloe"],
   ["/for-cbse-schools", "connected ERP and LMS for CBSE", "Nursery to Grade 12", "ERP &amp; LMS for CBSE Schools | Unifloe"],
-  ["/attendance-management", "Attendance workflows connected", "Audited corrections", "School Attendance Management Software | Unifloe"],
-  ["/fee-management", "School fee management", "School-owned collections", "School Fee Management Software | Unifloe"],
-  ["/exam-management", "Exam and assessment workflows", "Question workflows", "School Exam Management Software | Unifloe"],
   ["/apaar-readiness", "Support APAAR readiness", "Consent-aware", "APAAR Readiness for Schools | Unifloe"],
   ["/data-privacy", "Privacy-conscious workflows", "Tenant boundaries", "School Data Privacy &amp; DPDP Readiness | Unifloe"],
-  ["/school-erp-bengaluru", "support for Bengaluru schools", "Initial pilot region", "School ERP Software in Bengaluru | Unifloe"],
 ];
 
 for (const [pathname, heading, detail, title] of routeCases) {
@@ -153,7 +149,7 @@ test("serves a public robots policy and a canonical-only sitemap", async () => {
   assert.match(robots, /User-Agent: \*/);
   assert.match(robots, /Allow: \//);
   assert.match(robots, /Disallow: \/api\//);
-  assert.match(robots, /Host: https:\/\/unifloe\.app/);
+  assert.doesNotMatch(robots, /^Host:/m);
   assert.match(robots, /Sitemap: https:\/\/unifloe\.app\/sitemap\.xml/);
   assert.doesNotMatch(robots, /Disallow: \/(?:\r?\n|$)/);
 
@@ -181,6 +177,27 @@ test("emits valid homepage Organization and SoftwareApplication JSON-LD", async 
   assert.doesNotMatch(JSON.stringify(blocks), /aggregateRating|review|award|sameAs|certif/i);
 });
 
+test("keeps the LMS and CBSE pages only with distinct, substantive product content", async () => {
+  const [lms, cbse] = await Promise.all([
+    render("/school-lms").then((response) => response.text()),
+    render("/for-cbse-schools").then((response) => response.text()),
+  ]);
+  for (const value of [
+    "Assignments, quizzes, tests, essays and materials",
+    "Student submissions and teacher feedback",
+    "non-realtime fallback",
+    "private, tenant-prefixed storage",
+  ]) assert.match(lms, new RegExp(value));
+  for (const value of [
+    "Nursery, LKG, UKG and Grades 1",
+    "Foundational, Preparatory, Middle and Secondary",
+    "Faculty assignment and class-teacher context",
+    "not affiliated with or approved by CBSE",
+  ]) assert.match(cbse, new RegExp(value));
+  assert.equal((lms.match(/<section class="seo-content-section"/g) ?? []).length >= 3, true);
+  assert.equal((cbse.match(/<section class="seo-content-section"/g) ?? []).length >= 3, true);
+});
+
 test("keeps internal marketing links within the canonical public route set", async () => {
   const allowed = new Set(routeCases.map(([pathname]) => pathname));
   for (const [pathname] of routeCases) {
@@ -204,7 +221,24 @@ test("redirects exact HTTP and www production hosts to apex HTTPS without affect
     assert.equal(response.status, 308);
     assert.equal(response.headers.get("location"), destination);
   }
+  const caddyForwarded = await requestUrl(new URL("http://unifloe.app/features/"), { "x-forwarded-proto": "https" });
+  assert.equal(caddyForwarded.status, 200);
   assert.equal((await requestUrl(new URL("https://preview.example/about/"))).status, 200);
+});
+
+test("permanently redirects consolidated routes to the closest retained content", async () => {
+  const cases = [
+    ["http://localhost/attendance-management/", "http://localhost/features/#attendance-workflows"],
+    ["http://localhost/fee-management/", "http://localhost/features/#fee-workflows"],
+    ["http://localhost/exam-management/", "http://localhost/features/#assessment-workflows"],
+    ["http://localhost/school-erp-bengaluru/", "http://localhost/school-erp-software-india/#bengaluru-pilot"],
+    ["https://www.unifloe.app/attendance-management/?source=old", "https://unifloe.app/features/?source=old#attendance-workflows"],
+  ];
+  for (const [source, destination] of cases) {
+    const response = await requestUrl(new URL(source));
+    assert.equal(response.status, 308);
+    assert.equal(response.headers.get("location"), destination);
+  }
 });
 
 test("returns a useful noindex 404 without a homepage canonical", async () => {
@@ -396,6 +430,13 @@ test("renders the feature system hero, aligned selector, and animated disclosure
   assert.match(html, /65<small>modules/);
   assert.match(html, /65(?:<!-- -->)? registered modules/);
   assert.match(html, /Implementation scope stays explicit/);
+  assert.match(html, /How connected workflows operate/);
+  assert.match(html, /Attendance, corrections and student leave/);
+  assert.match(html, /School-owned fees and collection boundaries/);
+  assert.match(html, /Exams, question papers and result publication/);
+  assert.match(html, /id="attendance-workflows"/);
+  assert.match(html, /id="fee-workflows"/);
+  assert.match(html, /id="assessment-workflows"/);
   assert.doesNotMatch(html, /24<small>modules/);
   assert.doesNotMatch(pageSource, /<details/);
   assert.match(accordionSource, /AnimatePresence/);
@@ -479,7 +520,7 @@ test("configures a request-independent static production export", async () => {
   assert.doesNotMatch(layout, /next\/headers|headers\(\)|generateMetadata/);
 });
 
-test("emits Caddy-ready HTML for every public route", async () => {
+test("exports retained pages while Caddy proxies all requests through the Worker", async () => {
   const exportedPages = [
     ["dist/client/index.html", "A modern school"],
     ["dist/client/features/index.html", "Every school workflow"],
@@ -489,17 +530,29 @@ test("emits Caddy-ready HTML for every public route", async () => {
     ["dist/client/school-erp-software-india/index.html", "School ERP software built"],
     ["dist/client/school-lms/index.html", "school LMS connected"],
     ["dist/client/for-cbse-schools/index.html", "ERP and LMS for CBSE"],
-    ["dist/client/attendance-management/index.html", "Attendance workflows connected"],
-    ["dist/client/fee-management/index.html", "School fee management"],
-    ["dist/client/exam-management/index.html", "Exam and assessment workflows"],
     ["dist/client/apaar-readiness/index.html", "Support APAAR readiness"],
     ["dist/client/data-privacy/index.html", "Privacy-conscious workflows"],
-    ["dist/client/school-erp-bengaluru/index.html", "support for Bengaluru schools"],
   ];
   for (const [path, expectedText] of exportedPages) {
     const html = await readFile(new URL(path, root), "utf8");
     assert.match(html, new RegExp(expectedText));
   }
+  for (const path of [
+    "dist/client/attendance-management/index.html",
+    "dist/client/fee-management/index.html",
+    "dist/client/exam-management/index.html",
+    "dist/client/school-erp-bengaluru/index.html",
+    "public/robots.txt",
+    "public/sitemap.xml",
+  ]) await assert.rejects(access(new URL(path, root)));
+
+  const [caddyfile, packageJson] = await Promise.all([
+    readFile(new URL("Caddyfile", root), "utf8"),
+    readFile(new URL("package.json", root), "utf8"),
+  ]);
+  assert.match(caddyfile, /reverse_proxy 127\.0\.0\.1:3000/);
+  assert.doesNotMatch(caddyfile, /file_server|root\s+\*?\s*dist\/client/);
+  assert.match(packageJson, /vinext start --host 127\.0\.0\.1 --port 3000/);
   const notFound = await readFile(new URL("dist/client/404.html", root), "utf8");
   assert.match(notFound, /This page has moved beyond the timetable/);
   assert.match(notFound, /noindex, nofollow/);

@@ -1,7 +1,7 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import { robotsText, sitemapXml } from "../app/lib/seo";
+import { normalizePublicPath, permanentRedirects, robotsText, sitemapXml } from "../app/lib/seo";
 
 interface Env {
   ASSETS: Fetcher;
@@ -26,12 +26,24 @@ export function canonicalRedirect(request: Request) {
   const url = new URL(request.url);
   const isCanonicalHost = url.hostname === canonicalHostname;
   const isWwwHost = url.hostname === `www.${canonicalHostname}`;
+  const forwardedProtocol = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const effectiveProtocol = forwardedProtocol ? `${forwardedProtocol}:` : url.protocol;
+  const legacyTarget = permanentRedirects[normalizePublicPath(url.pathname) as keyof typeof permanentRedirects];
+  const requiresCanonicalHost = isWwwHost || (isCanonicalHost && effectiveProtocol === "http:");
 
-  if (!isWwwHost && !(isCanonicalHost && url.protocol === "http:")) return null;
+  if (!requiresCanonicalHost && !legacyTarget) return null;
 
-  url.protocol = "https:";
-  url.hostname = canonicalHostname;
-  url.port = "";
+  if (isCanonicalHost || isWwwHost) {
+    url.protocol = "https:";
+    url.hostname = canonicalHostname;
+    url.port = "";
+  }
+
+  if (legacyTarget) {
+    const target = new URL(legacyTarget, url);
+    url.pathname = target.pathname;
+    url.hash = target.hash;
+  }
 
   return new Response(null, {
     status: 308,

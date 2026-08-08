@@ -48,18 +48,9 @@ export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> 
     ],
   },
   {
-    title: "School workflows",
+    title: "Schools & readiness",
     links: [
       { label: "For CBSE schools", href: "/for-cbse-schools" },
-      { label: "Attendance management", href: "/attendance-management" },
-      { label: "Fee management", href: "/fee-management" },
-      { label: "Exam management", href: "/exam-management" },
-      { label: "Bengaluru schools", href: "/school-erp-bengaluru" },
-    ],
-  },
-  {
-    title: "Readiness & contact",
-    links: [
       { label: "APAAR readiness", href: "/apaar-readiness" },
       { label: "School data privacy", href: "/data-privacy" },
       { label: "Book a demo", href: "/contact" },
