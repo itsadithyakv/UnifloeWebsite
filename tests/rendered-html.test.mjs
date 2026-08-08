@@ -359,7 +359,7 @@ test("gives pricing the feature hero art direction and a visual plan path", asyn
   assert.match(pricing, /Built around your school/);
 });
 
-test("reinitializes reveal motion after navigation and keeps the menu below the top bar", async () => {
+test("reinitializes reveal motion and opens the menu without pulling the page upward", async () => {
   const [motion, menuCss, menuSource, globalCss] = await Promise.all([
     readFile(new URL("app/components/ScrollMotion.tsx", root), "utf8"),
     readFile(new URL("app/components/StaggeredMenu.module.css", root), "utf8"),
@@ -373,7 +373,8 @@ test("reinitializes reveal motion after navigation and keeps the menu below the 
   assert.match(menuSource, /getBoundingClientRect\(\)\.bottom/);
   assert.match(menuSource, /const headerHeight = wrapper\.offsetHeight/);
   assert.match(menuSource, /Math\.max\(headerHeight, bottom\)/);
-  assert.match(menuCss, /\.wrapper\[data-open\]\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?inset:\s*0 0 auto/);
+  assert.match(menuCss, /\.wrapper\s*\{[\s\S]*?position:\s*sticky/);
+  assert.doesNotMatch(menuCss, /\.wrapper\[data-open\]/);
   assert.match(menuCss, /overflow-x:\s*clip/);
   assert.match(globalCss, /overflow-x:\s*(?:hidden|clip)/);
   assert.doesNotMatch(menuCss, /logoTile/);
