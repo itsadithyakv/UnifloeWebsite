@@ -379,6 +379,14 @@ test("uses optimized profile avatars and defers below-fold rendering work", asyn
   assert.doesNotMatch(packageJson, /"gsap"/);
 });
 
+test("allows the compliance panel shadow to paint beyond its content shell", async () => {
+  const globalCss = await readFile(new URL("app/globals.css", root), "utf8");
+  const contentVisibilityRules = [...globalCss.matchAll(/([^{}]+)\{\s*content-visibility:\s*auto;\s*\}/g)]
+    .map((match) => match[1]);
+  assert.equal(contentVisibilityRules.some((selectors) => selectors.includes(".compliance-section")), false);
+  assert.match(globalCss, /\.compliance-panel\s*\{[^}]*box-shadow:\s*var\(--shadow-raised\)/);
+});
+
 test("gives pricing the feature hero art direction and a visual plan path", async () => {
   const [pricing, pricingSource] = await Promise.all([
     render("/pricing").then((response) => response.text()),

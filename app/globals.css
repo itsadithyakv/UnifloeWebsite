@@ -1004,7 +1004,6 @@ h3 {
 /* Keep below-the-fold page work out of the critical rendering path. */
 .platform-intro,
 .roles-section,
-.compliance-section,
 .pilot-preview,
 .site-footer {
   content-visibility: auto;
@@ -1012,7 +1011,6 @@ h3 {
 
 .platform-intro { contain-intrinsic-size: 1500px; }
 .roles-section { contain-intrinsic-size: 710px; }
-.compliance-section { contain-intrinsic-size: 780px; }
 .pilot-preview { contain-intrinsic-size: 850px; }
 .site-footer { contain-intrinsic-size: 500px; }
 
