@@ -21,6 +21,12 @@ Requests for `http://unifloe.app`, `http://www.unifloe.app`, and `https://www.un
 
 The LMS route remains indexable because it documents distinct assignment, submission, feedback, class/subject authorization, realtime-fallback, and protected-learning-data behavior. The CBSE route remains indexable because it documents a distinct Nursery-to-Grade-12 stage model, CBSE-first demo structure, assignment-scoped academics, and board/government-affiliation disclaimers.
 
+## Primary visitor navigation
+
+The global header presents exactly five primary pages: Home, Features, Pricing, About, and Contact. The footer reinforces the same compact information architecture through the home logo plus links to Features, Pricing, About, and Contact.
+
+The five specialist SEO pages remain useful, indexable, canonical and listed in the sitemap, but they are intentionally excluded from the global header and footer so they do not crowd normal visitor navigation. They must remain substantial, server rendered and reachable directly; do not disguise them with hidden text or create additional doorway pages.
+
 ## Consolidated routes and permanent redirects
 
 The following previously deployed pages were merged because their useful content was stronger as part of a broader product page:
@@ -75,10 +81,20 @@ The repository does not keep handwritten `public/robots.txt` or `public/sitemap.
 
 The homepage emits visible-content-supported JSON-LD for:
 
+- `WebSite` - Unifloe at `https://unifloe.app/`, with `unifloe.app` as its domain alternate name and the Unifloe organization as publisher.
 - `Organization` — Unifloe, its canonical URL, real logo, verified phone/email, and PaperKite parent organization.
-- `SoftwareApplication` — Unifloe as a web educational application operated by that organization.
+- `SoftwareApplication` — Unifloe as a web educational application, part of the website and created/provided by that organization.
 
-JSON-LD is serialized with `<` escaped. Do not add ratings, reviews, awards, certifications, fabricated pricing, unsupported integrations, government affiliation, or social profiles.
+These entities share one `@graph` and the stable IDs `https://unifloe.app/#website`, `https://unifloe.app/#organization`, and `https://unifloe.app/#software`. JSON-LD is serialized with `<` escaped. Do not add ratings, reviews, awards, certifications, fabricated pricing, unsupported integrations, government affiliation, or social profiles.
+
+## Brand entity signals
+
+- The official product spelling is `Unifloe` and the official domain is `https://unifloe.app/`.
+- The homepage `WebSite`, `Organization`, and `SoftwareApplication` graph identifies Unifloe consistently and connects the product to its operator: PaperKite creates and operates Unifloe, a school ERP and LMS for Indian schools.
+- Consistent genuine third-party mentions help search engines establish Unifloe as a distinct entity. Every official profile should use the exact `Unifloe` spelling and link to `https://unifloe.app/`.
+- No verified official social or company-profile URL is currently stored in this repository, so the Organization has no `sameAs` entries. Add only verified URLs.
+- Useful future signals include a PaperKite website linking to Unifloe, an Unifloe LinkedIn company profile, PaperKite and founder LinkedIn profiles that mention and link to Unifloe, a PaperKite GitHub profile linking to the canonical site, and genuine pilot-school or partner mentions when they exist.
+- Never use `Uniflow` or `uniFLOW` as an alias, and never manufacture profiles, backlinks, testimonials or reviews.
 
 ## Verification
 
@@ -105,8 +121,10 @@ curl https://unifloe.app/sitemap.xml
 ## Google Search Console
 
 1. Submit `https://unifloe.app/sitemap.xml` once.
-2. Request indexing for `https://unifloe.app/`.
-3. Request indexing for `https://unifloe.app/features/`, `https://unifloe.app/pricing/`, `https://unifloe.app/school-erp-software-india/`, and `https://unifloe.app/apaar-readiness/`.
+2. After deploying the brand-entity update to `unifloe.app`, inspect `https://unifloe.app/` and test the live URL.
+3. Request re-indexing of the homepage once.
 4. Allow Google to discover the remaining indexable pages through the sitemap and internal links.
 
 Verify `robots.txt`, but do not submit it for indexing. Do not request indexing for the permanent-redirect URLs.
+
+Structured data and consistent entity references are only some of the signals Google uses. They strengthen brand recognition but cannot guarantee that spelling correction changes immediately.

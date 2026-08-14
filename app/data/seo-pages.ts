@@ -17,7 +17,7 @@ export const seoPages = {
   about: {
     eyebrow: "About Unifloe",
     intro:
-      "Unifloe is a multi-tenant school operating system built and operated by PaperKite. It brings academic, administrative, financial, communication and campus work into one role-aware product.",
+      "PaperKite creates and operates Unifloe, a school ERP and LMS built for Indian schools. Unifloe brings academic, administrative, financial, communication and campus work into one role-aware product.",
     highlights: [
       { title: "School-first product", copy: "Workflows start with the people, structures and responsibilities found inside a school." },
       { title: "Role-aware by design", copy: "Students, faculty, leaders and operational teams receive focused views backed by server-side permission checks." },
@@ -25,9 +25,9 @@ export const seoPages = {
     ],
     sections: [
       {
-        title: "One connected operating system for schools",
+        title: "PaperKite creates and operates Unifloe",
         paragraphs: [
-          "Schools often manage teaching, attendance, fees, requests, communication and campus services in separate tools. Unifloe is designed to connect those areas around a shared school structure instead of asking teams to repeatedly reconcile the same information.",
+          "Unifloe is PaperKite's school ERP and LMS for Indian schools. PaperKite develops and operates the product, while schools use Unifloe to connect teaching, attendance, fees, requests, communication and campus services around a shared school structure.",
           "The platform covers web and installable PWA experiences, with selected mobile journeys using the same authenticated school APIs. Each school retains its own identity, enabled modules, academic structure and data boundary.",
         ],
       },
@@ -54,8 +54,8 @@ export const seoPages = {
     ],
     related: [
       { href: "/features", label: "Explore the platform", copy: "Review Unifloe's registered academic, finance, campus and governance modules." },
-      { href: "/data-privacy", label: "Review data practices", copy: "See the product controls that support privacy-conscious school workflows." },
       { href: "/pricing", label: "Compare pilot paths", copy: "Start with a defined school pilot before a wider rollout." },
+      { href: "/contact", label: "Talk to PaperKite", copy: "Discuss your school priorities and the workflows to include first." },
     ],
     cta: { title: "See how PaperKite can map Unifloe to your school.", copy: "Share your priorities and receive a focused product conversation.", href: "/contact", label: "Book a school demo" },
   },

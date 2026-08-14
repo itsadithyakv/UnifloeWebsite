@@ -30,29 +30,23 @@ export type PricingPlan = {
 export const navigation: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
-  { label: "ERP for India", href: "/school-erp-software-india" },
-  { label: "School LMS", href: "/school-lms" },
   { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> = [
   {
-    title: "Product",
+    title: "Explore",
     links: [
       { label: "Features", href: "/features" },
       { label: "Pricing & pilots", href: "/pricing" },
-      { label: "School ERP for India", href: "/school-erp-software-india" },
-      { label: "Connected school LMS", href: "/school-lms" },
-      { label: "About Unifloe", href: "/about" },
     ],
   },
   {
-    title: "Schools & readiness",
+    title: "Company",
     links: [
-      { label: "For CBSE schools", href: "/for-cbse-schools" },
-      { label: "APAAR readiness", href: "/apaar-readiness" },
-      { label: "School data privacy", href: "/data-privacy" },
+      { label: "About Unifloe", href: "/about" },
       { label: "Book a demo", href: "/contact" },
     ],
   },

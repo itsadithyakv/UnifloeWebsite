@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Clock3, Mail, MapPin, MessageCircleMore, Phone, ShieldCheck } from "lucide-react";
 import { ContactForm } from "../components/ContactForm";
 import { createPageMetadata } from "../lib/seo";
@@ -49,7 +48,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <article><span>02</span><h3>See a relevant product path</h3><p>PaperKite maps the demo to your priorities and distinguishes dedicated, grouped and configurable product surfaces.</p></article>
           <article><span>03</span><h3>Agree scope before onboarding</h3><p>If there is a fit, pilot modules, capacity, responsibilities, integrations and rollout steps are confirmed before work begins.</p></article>
         </div>
-        <p className="contact-region-note">Bengaluru is Unifloe&apos;s initial pilot focus. <Link href="/school-erp-software-india#bengaluru-pilot">Review Bengaluru onboarding availability</Link>.</p>
+        <p className="contact-region-note">Bengaluru is Unifloe&apos;s initial pilot focus. Availability and onboarding timelines are confirmed during the product conversation.</p>
       </section>
     </main>
   );

@@ -53,39 +53,50 @@ const roleCards = [
 
 export const metadata = createPageMetadata("/");
 
-const organizationJsonLd = {
+const homepageJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${siteOrigin}/#organization`,
-  name: "Unifloe",
-  url: `${siteOrigin}/`,
-  logo: `${siteOrigin}/brand/logoUnifloeNoBG.png`,
-  email: "mailto:adithya@unifloe.app",
-  telephone: "+919686110206",
-  parentOrganization: {
-    "@type": "Organization",
-    name: "PaperKite",
-  },
-};
-
-const softwareApplicationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "@id": `${siteOrigin}/#software`,
-  name: "Unifloe",
-  url: `${siteOrigin}/`,
-  applicationCategory: "EducationalApplication",
-  operatingSystem: "Web",
-  description:
-    "A modern school ERP and LMS for Indian schools, connecting attendance, academics, fees, communication and campus operations.",
-  provider: { "@id": `${siteOrigin}/#organization` },
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteOrigin}/#website`,
+      url: `${siteOrigin}/`,
+      name: "Unifloe",
+      alternateName: ["unifloe.app"],
+      publisher: { "@id": `${siteOrigin}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteOrigin}/#organization`,
+      name: "Unifloe",
+      url: `${siteOrigin}/`,
+      logo: `${siteOrigin}/brand/logoUnifloeNoBG.png`,
+      email: "mailto:adithya@unifloe.app",
+      telephone: "+919686110206",
+      parentOrganization: {
+        "@type": "Organization",
+        name: "PaperKite",
+      },
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${siteOrigin}/#software`,
+      name: "Unifloe",
+      url: `${siteOrigin}/`,
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "Web",
+      description:
+        "A modern school ERP and LMS for Indian schools, connecting attendance, academics, fees, communication and campus operations.",
+      isPartOf: { "@id": `${siteOrigin}/#website` },
+      provider: { "@id": `${siteOrigin}/#organization` },
+      creator: { "@id": `${siteOrigin}/#organization` },
+    },
+  ],
 };
 
 export default function Home() {
   return (
     <main id="main-content">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(softwareApplicationJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(homepageJsonLd) }} />
       <section className="hero">
         <DotGrid
           className="hero-dot-grid"
@@ -98,7 +109,7 @@ export default function Home() {
         />
         <div className="hero-copy" data-reveal>
           <h1>A modern school <span>ERP and LMS</span> built for Indian schools</h1>
-          <p className="hero-lead">Bring attendance, academics, fees, communication and campus operations into one connected platform.</p>
+          <p className="hero-lead">Unifloe is a modern school ERP and LMS built for Indian schools, bringing academics, learning, fees, communication and campus operations into one connected platform.</p>
           <div className="hero-actions">
             <Link className="button" href="/contact">Book a free demo <ArrowRight aria-hidden="true" /></Link>
             <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
@@ -206,7 +217,7 @@ export default function Home() {
             <h2>Built around responsible school data.</h2>
             <p>Clear access, organised consent, structured records, and audited high-impact changes.</p>
             <div className="compliance-points"><span>DPDP readiness</span><span>APAAR readiness</span><span>UDISE+ support</span><span>Role-based access</span></div>
-            <div className="compliance-links"><Link href="/data-privacy">School data privacy <ArrowRight aria-hidden="true" /></Link><Link href="/apaar-readiness">APAAR readiness <ArrowRight aria-hidden="true" /></Link></div>
+            <div className="compliance-links"><Link href="/features#governance">Explore governance features <ArrowRight aria-hidden="true" /></Link><Link href="/about">How PaperKite operates Unifloe <ArrowRight aria-hidden="true" /></Link></div>
           </div>
           <div className="compliance-orb" aria-hidden="true"><ShieldCheck /><span className="orb-ring orb-ring-one" /><span className="orb-ring orb-ring-two" /></div>
         </div>

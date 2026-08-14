@@ -111,6 +111,18 @@ test("serves both logo variants directly and renders the staggered navigation sh
   assert.doesNotMatch(html, /_vinext\/image|_next\/image/);
 });
 
+test("shows only the five primary pages in global navigation", async () => {
+  const html = await render("/").then((response) => response.text());
+  const primaryNavigation = html.match(/<nav aria-label="Primary navigation">([\s\S]*?)<\/nav>/)?.[1] ?? "";
+  const primaryHrefs = [...primaryNavigation.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(primaryHrefs, ["/", "/features", "/pricing", "/about", "/contact"]);
+
+  const footerNavigation = html.match(/<nav class="footer-links"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? "";
+  for (const path of ["/school-erp-software-india", "/school-lms", "/for-cbse-schools", "/apaar-readiness", "/data-privacy"]) {
+    assert.doesNotMatch(`${primaryNavigation}\n${footerNavigation}`, new RegExp(`href="${path}`));
+  }
+});
+
 test("emits unique metadata, self-canonicals, one H1, and indexable robots on every public page", async () => {
   const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
   await Promise.all([
@@ -164,17 +176,36 @@ test("serves a public robots policy and a canonical-only sitemap", async () => {
   assert.doesNotMatch(sitemap, /<lastmod>|<changefreq>|<priority>/);
 });
 
-test("emits valid homepage Organization and SoftwareApplication JSON-LD", async () => {
+test("emits one consistent homepage WebSite, Organization and SoftwareApplication graph", async () => {
   const html = await render("/").then((response) => response.text());
   const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
-  assert.equal(blocks.length, 2);
-  assert.deepEqual(blocks.map((block) => block["@type"]), ["Organization", "SoftwareApplication"]);
-  assert.equal(blocks[0].url, "https://unifloe.app/");
-  assert.equal(blocks[0].parentOrganization.name, "PaperKite");
-  assert.equal(blocks[0].email, "mailto:adithya@unifloe.app");
-  assert.equal(blocks[0].telephone, "+919686110206");
-  assert.equal(blocks[1].provider["@id"], "https://unifloe.app/#organization");
+  assert.equal(blocks.length, 1);
+  const graph = blocks[0]["@graph"];
+  assert.deepEqual(graph.map((entity) => entity["@type"]), ["WebSite", "Organization", "SoftwareApplication"]);
+  const [website, organization, software] = graph;
+  assert.equal(website["@id"], "https://unifloe.app/#website");
+  assert.equal(website.name, "Unifloe");
+  assert.equal(website.url, "https://unifloe.app/");
+  assert.deepEqual(website.alternateName, ["unifloe.app"]);
+  assert.equal(website.publisher["@id"], "https://unifloe.app/#organization");
+  assert.equal(organization["@id"], "https://unifloe.app/#organization");
+  assert.equal(organization.url, "https://unifloe.app/");
+  assert.equal(organization.parentOrganization.name, "PaperKite");
+  assert.equal(organization.email, "mailto:adithya@unifloe.app");
+  assert.equal(organization.telephone, "+919686110206");
+  assert.equal(software["@id"], "https://unifloe.app/#software");
+  assert.equal(software.isPartOf["@id"], "https://unifloe.app/#website");
+  assert.equal(software.provider["@id"], "https://unifloe.app/#organization");
+  assert.equal(software.creator["@id"], "https://unifloe.app/#organization");
   assert.doesNotMatch(JSON.stringify(blocks), /aggregateRating|review|award|sameAs|certif/i);
+});
+
+test("uses the exact Unifloe brand and identifies its PaperKite relationship visibly", async () => {
+  const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
+  const publicHtml = pages.join("\n");
+  assert.doesNotMatch(publicHtml, /\b(?:Uniflow|UniFlow|uniFlow|UNIFLOE|Uni Floe|uniFLOW)\b/);
+  assert.match(pages[0], /Unifloe is a modern school ERP and LMS built for Indian schools/);
+  assert.match(pages[4], /PaperKite creates and operates Unifloe, a school ERP and LMS built for Indian schools/);
 });
 
 test("keeps the LMS and CBSE pages only with distinct, substantive product content", async () => {
