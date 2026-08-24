@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
-import { footerNavigationGroups } from "../data/site-content";
+import { footerNavigationGroups, productAppUrl } from "../data/site-content";
 
 export function SiteFooter() {
   return (
@@ -28,7 +28,7 @@ export function SiteFooter() {
         </nav>
         <div className="footer-action" data-reveal>
           <h2>Bring your school together.</h2>
-          <Link className="button button-light" href="/contact">Book a free demo <ArrowUpRight aria-hidden="true" /></Link>
+          <Link className="button button-light" href={productAppUrl}>Book a free demo <ArrowUpRight aria-hidden="true" /></Link>
         </div>
       </div>
       <div className="footer-bottom">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
+import { productAppUrl } from "../data/site-content";
 import styles from "./StaggeredMenu.module.css";
 
 export type StaggeredMenuItem = {
@@ -122,7 +123,7 @@ export function StaggeredMenu({
           </Link>
 
           <div className={styles.headerActions}>
-            <Link className={styles.demoButton} href="/contact" onClick={() => closeMenu()}>
+            <Link className={styles.demoButton} href={productAppUrl} onClick={() => closeMenu()}>
               Book a free demo
             </Link>
             <button
@@ -197,7 +198,7 @@ export function StaggeredMenu({
         </nav>
         <div className={styles.panelCta}>
           <p>Ready to see your school in one place?</p>
-          <Link href="/contact" onClick={() => closeMenu()}>Start with a demo <span aria-hidden="true">↗</span></Link>
+          <Link href={productAppUrl} onClick={() => closeMenu()}>Start with a demo <span aria-hidden="true">↗</span></Link>
         </div>
       </aside>
     </div>

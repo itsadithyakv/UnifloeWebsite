@@ -1,6 +1,7 @@
 export type NavItem = { label: string; href: string };
 
 export const totalModuleCount = 65;
+export const productAppUrl = "https://go.unifloe.app";
 
 export type FeatureModule = {
   name: string;
@@ -47,7 +48,7 @@ export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> 
     title: "Company",
     links: [
       { label: "About Unifloe", href: "/about" },
-      { label: "Book a demo", href: "/contact" },
+      { label: "Book a demo", href: productAppUrl },
     ],
   },
 ];

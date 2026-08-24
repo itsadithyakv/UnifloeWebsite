@@ -64,6 +64,17 @@ test("renders exact pilot and standard pricing", async () => {
   }
 });
 
+test("sends free demos to the live product and pilots through the contact page", async () => {
+  const [home, pricing] = await Promise.all([
+    render("/").then((response) => response.text()),
+    render("/pricing").then((response) => response.text()),
+  ]);
+  const productHref = /href="https:\/\/go\.unifloe\.app"/g;
+  assert.ok((home.match(productHref) ?? []).length >= 4);
+  assert.match(pricing, /href="\/contact\?interest=pilot-free"/);
+  assert.match(pricing, /href="\/contact\?interest=pilot-starter"/);
+});
+
 test("uses a stable blurred count-up treatment for displayed prices", async () => {
   const [homeSource, pricingSource, counterSource, counterCss, globalCss, packageJson] = await Promise.all([
     readFile(new URL("app/page.tsx", root), "utf8"),

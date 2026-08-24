@@ -23,7 +23,7 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { pilotPlans, totalModuleCount } from "./data/site-content";
+import { pilotPlans, productAppUrl, totalModuleCount } from "./data/site-content";
 import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
@@ -111,7 +111,7 @@ export default function Home() {
           <h1>A modern school <span>ERP and LMS</span> built for Indian schools</h1>
           <p className="hero-lead">Unifloe is a modern school ERP and LMS built for Indian schools, bringing academics, learning, fees, communication and campus operations into one connected platform.</p>
           <div className="hero-actions">
-            <Link className="button" href="/contact">Book a free demo <ArrowRight aria-hidden="true" /></Link>
+            <Link className="button" href={productAppUrl}>Book a free demo <ArrowRight aria-hidden="true" /></Link>
             <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
           </div>
           <div className="hero-proof" aria-label="Key platform commitments">
@@ -233,7 +233,7 @@ export default function Home() {
 
       <section className="section-shell final-cta" data-reveal>
         <div className="final-cta-copy"><h2>Unifloe brings all of it together.</h2><p>Let’s map the platform to your school.</p></div>
-        <Link className="button button-light" href="/contact">Book a free demo <ArrowRight aria-hidden="true" /></Link>
+        <Link className="button button-light" href={productAppUrl}>Book a free demo <ArrowRight aria-hidden="true" /></Link>
         <div className="final-cta-clay" aria-hidden="true"><span /><span /><span /></div>
       </section>
     </main>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ScrollMotion } from "./components/ScrollMotion";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
+import { productAppUrl } from "./data/site-content";
 import { operatorName, siteName, siteUrl, socialImagePath } from "./lib/seo";
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
-        <Link className="floating-demo" href="/contact">Book a free demo</Link>
+        <Link className="floating-demo" href={productAppUrl}>Book a free demo</Link>
         <ScrollMotion />
       </body>
     </html>
