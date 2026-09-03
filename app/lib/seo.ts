@@ -32,8 +32,8 @@ export const publicRoutes = [
     path: "/pricing/",
     title: "School ERP Pricing & Pilot Plans | Unifloe",
     description:
-      "Compare the one year Unifloe pilot offers with the annual school ERP and LMS plans, including editions, optional sets, capacity and how invoicing works.",
-    h1: "Start with a pilot. Scale with confidence.",
+      "Unifloe pricing for Indian schools: free forever for one class, then Junior, Standard and Growth plans by students on roll, monthly or yearly, with what each includes.",
+    h1: "Free for one class. Clear plans for the whole school.",
   },
   {
     path: "/get-started/",

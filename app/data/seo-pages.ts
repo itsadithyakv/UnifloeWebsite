@@ -121,7 +121,7 @@ export const seoPages = {
     related: [
       { href: "/get-started", label: "How to get started", copy: "The steps from the demo to a live school." },
       { href: "/for-cbse-schools", label: "Unifloe for CBSE schools", copy: "Stages, registers, attendance and board readiness." },
-      { href: "/pricing", label: "Review pilot pricing", copy: "Compare pilot and annual paths for different school sizes." },
+      { href: "/pricing", label: "Review pricing", copy: "Free for one class, then Junior, Standard and Growth by students on roll." },
     ],
     cta: { title: "Plan a connected school rollout.", copy: "Tell PaperKite which workflows create the most friction today.", href: "/contact", label: "Discuss your school" },
   },

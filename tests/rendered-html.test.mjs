@@ -44,7 +44,7 @@ function visibleText(html) {
 const routeCases = [
   ["/", "A modern school", "Try the live demo", "Unifloe | Modern School ERP &amp; LMS for Indian Schools"],
   ["/features", "Every school workflow", "Campus operations", "Features for School ERP &amp; LMS | Unifloe"],
-  ["/pricing", "Start with a pilot", "₹30,000", "School ERP Pricing &amp; Pilot Plans | Unifloe"],
+  ["/pricing", "Free for one class", "₹19,999", "School ERP Pricing &amp; Pilot Plans | Unifloe"],
   ["/get-started", "Start using Unifloe", "The seven steps to a live school", "Get Started with Unifloe | Unifloe"],
   ["/contact", "Let’s map Unifloe", "Start a useful conversation", "Book a School ERP Demo | Unifloe"],
   ["/about", "built and operated by PaperKite", "Practical progress", "About Unifloe and PaperKite | Unifloe"],
@@ -97,18 +97,18 @@ test("routes product entry points to the live application", async () => {
   assert.doesNotMatch(home, /Book a free demo/);
 });
 
-test("renders exact pilot and standard pricing", async () => {
-  const response = await render("/pricing");
-  const html = await response.text();
-  for (const value of ["₹0", "₹8,000", "₹30,000", "₹80,000", "₹300/month", "₹3,600", "+1,000"]) {
-    assert.match(html, new RegExp(value.replace(/[+]/g, "\\+")));
+test("renders the exact four plan pricing on the pricing and home pages", async () => {
+  const [pricing, home] = await Promise.all([render("/pricing"), render("/")].map((request) => request.then((response) => response.text())));
+  for (const value of ["₹0", "₹999", "₹9,999", "₹1,999", "₹19,999", "₹5,999", "₹59,999", "up to 60", "Up to 250", "Up to 700", "Up to 2,100", "5 teacher and admin accounts", "Unlimited accounts"]) {
+    assert.match(pricing, new RegExp(value));
+    assert.match(home, new RegExp(value));
   }
-  assert.match(html, /Core edition/);
-  assert.match(html, /Full edition/);
-  assert.match(html, /How you pay/);
-  assert.match(html, /no card details are stored/);
-  assert.match(html, /href="\/contact\?interest=pilot-free"/);
-  assert.match(html, /href="\/contact\?interest=pilot-starter"/);
+  for (const value of ["WhatsApp channel", "Admissions pipeline", "Priority support", "Multi campus view", "Audit exports", "Fee ledger and receipts", "Notices to parents"]) assert.match(pricing, new RegExp(value));
+  assert.doesNotMatch(`${pricing}\n${home}`, /₹8,000|₹30,000|₹80,000|₹300\/month|₹3,600|Founding|pilot-free|pilot-starter|interest=starter|interest=enterprise/);
+  assert.match(pricing, /How you pay/);
+  assert.match(pricing, /no card details are stored/);
+  for (const key of ["free", "junior", "standard", "growth"]) assert.match(pricing, new RegExp(`href="/contact\\?interest=${key}"`));
+  assert.match(pricing, /<table/);
 });
 
 test("uses a stable blurred count-up treatment for displayed prices", async () => {
@@ -134,11 +134,10 @@ test("uses a stable blurred count-up treatment for displayed prices", async () =
   assert.match(counterCss, /font-size:\s*inherit\s*!important/);
   assert.match(globalCss, /\.plan-price\s*>\s*span/);
   assert.doesNotMatch(globalCss, /\.plan-price\s+span\s*\{/);
-  assert.match(homeSource, /<PriceCounter text=\{plan\.price\}/);
-  assert.match(pricingSource, /<PriceCounter text=\{plan\.price\}/);
-  assert.match(pricingSource, /<PriceCounter text="₹300\/month"/);
-  assert.match(pricingSource, /<PriceCounter text="₹3,600"/);
-  assert.doesNotMatch(`${homeSource}\n${pricingSource}`, /<strong>\{plan\.price\}<\/strong>/);
+  assert.match(homeSource, /<PriceCounter text=\{plan\.monthly \?\? plan\.yearly\}/);
+  assert.match(pricingSource, /<PriceCounter text=\{plan\.monthly \?\? plan\.yearly\}/);
+  assert.match(pricingSource, /<PriceCounter text=\{plan\.yearly\}/);
+  assert.doesNotMatch(`${homeSource}\n${pricingSource}`, /<strong>\{plan\.(?:price|monthly|yearly)\}<\/strong>/);
 });
 
 test("keeps headings free of eyebrows, kickers and decorative counters", async () => {
@@ -362,11 +361,11 @@ test("renders the four-part home pitch and compact contact privacy treatment", a
   ]);
   for (const value of [
     "One place for every", "Your school. Your identity.", "Built for the DPDP Act.",
-    "Enable only what you need.", "Priced for a school, not a district.",
-    "Default, Sculpt or Clay preset", "Founding School Starter Plan",
-    "Direct founder support", "Start at", "Ten roles",
+    "Enable only what you need.",
+    "Default, Sculpt or Clay preset", "Free for one class. Forever.",
+    "Start with one class.", "Ten roles",
   ]) assert.match(home, new RegExp(value.replace(/[.]/g, "\\.")));
-  assert.match(home, /₹1[\s\S]*?per student[\s\S]*?per month[\s\S]*?₹8,000[\s\S]*?per year/);
+  assert.match(home, /₹0[\s\S]*?for one section[\s\S]*?up to 60 students/);
   assert.match(home, /45(?:<!-- -->)?<\/strong>/);
   assert.doesNotMatch(home, /APAAR certified|official APAAR certification|Five visual themes|65 registered/i);
   assert.doesNotMatch(home, /Data hosted in India|India-hosted|DPDP-aligned/i);
@@ -455,9 +454,9 @@ test("gives pricing the feature hero art direction and a visual plan path", asyn
     readFile(new URL("app/pricing/page.tsx", root), "utf8"),
   ]);
   assert.match(pricingSource, /features-hero pricing-hero/);
-  assert.match(pricing, /Pilot to rollout/);
-  assert.match(pricing, /Built around your school/);
-  assert.match(pricing, /What a plan actually turns on/);
+  assert.match(pricing, /Free to Growth/);
+  assert.match(pricing, /Two campuses or more/);
+  assert.match(pricing, /Compare the plans/);
 });
 
 test("keeps the header fixed to the viewport and locks scroll on the root while the menu is open", async () => {
@@ -636,7 +635,7 @@ test("exports retained pages while Caddy proxies all requests through the Worker
   const exportedPages = [
     ["dist/client/index.html", "A modern school"],
     ["dist/client/features/index.html", "Every school workflow"],
-    ["dist/client/pricing/index.html", "Start with a pilot"],
+    ["dist/client/pricing/index.html", "Free for one class"],
     ["dist/client/get-started/index.html", "Start using Unifloe"],
     ["dist/client/contact/index.html", "Start a useful conversation"],
     ["dist/client/about/index.html", "built and operated by PaperKite"],

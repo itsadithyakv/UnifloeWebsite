@@ -13,6 +13,7 @@ import {
   DatabaseZap,
   HeartHandshake,
   IndianRupee,
+  KeyRound,
   Landmark,
   MessagesSquare,
   Palette,
@@ -22,7 +23,7 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { coreModuleCount, pilotPlans, productLinks, totalModuleCount } from "./data/site-content";
+import { coreModuleCount, plans, productLinks, totalModuleCount } from "./data/site-content";
 import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
@@ -34,15 +35,8 @@ const pitchModuleGroups = [
   { title: "Administration", Icon: Landmark },
 ];
 
-const foundingPlanHighlights = [
-  "Up to 700 family and staff units",
-  "Your logo on every screen and document",
-  "Three visual presets",
-  "Core edition plus the sets you choose",
-  "Free onboarding and initial setup",
-  "Direct founder support",
-  "Continuous platform updates",
-];
+const freePlan = plans[0];
+const paidPlans = plans.slice(1);
 
 const roleCards = [
   { role: "School leaders", copy: "Approvals, attendance risk, collections, staff workload and the audit trail behind every change.", Icon: School2 },
@@ -191,14 +185,14 @@ export default function Home() {
             </article>
 
             <article className="pitch-card pitch-value">
-              <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Priced for a school, not a district.</h3></div></div><div className="start-free-badge">Start at <PriceCounter text="₹0" /></div></div>
-              <div className="founding-price"><strong><PriceCounter text="₹1" /></strong><span>per student<br />per month</span></div>
-              <div className="founding-price-annual"><PriceCounter text="₹8,000" /><span>per year</span></div>
-              <p className="founding-plan-name">Founding School Starter Plan</p>
+              <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Free for one class. Forever.</h3></div></div></div>
+              <div className="founding-price"><strong><PriceCounter text="₹0" /></strong><span>for one section<br />up to 60 students</span></div>
+              <p className="founding-plan-name">{freePlan.accounts}</p>
               <ul className="founding-plan-list">
-                {foundingPlanHighlights.map((highlight) => <li key={highlight}><Check aria-hidden="true" />{highlight}</li>)}
+                {freePlan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}
+                {paidPlans.map((plan) => <li key={plan.name}><Check aria-hidden="true" />{plan.name} from <PriceCounter text={plan.monthly ?? plan.yearly} /> a month</li>)}
               </ul>
-              <Link className="button button-light" href="/pricing#pilot">See the founding offer <ArrowRight aria-hidden="true" /></Link>
+              <Link className="button button-light" href="/pricing">See every plan <ArrowRight aria-hidden="true" /></Link>
             </article>
           </div>
         </div>
@@ -238,12 +232,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell pilot-preview" id="pilot">
-        <div className="section-heading centered-heading" data-reveal><h2>Start small. Prove the value.<br />Build from there.</h2><p>A full year to run Unifloe on your own records. The founding offer covers the pilot cohort of three schools.</p></div>
-        <div className="pilot-grid" data-reveal-group>
-          {pilotPlans.map((plan) => <article className={`pilot-card ${plan.featured ? "featured" : ""}`} key={plan.name}><p className="plan-name">{plan.name}</p><div className="plan-price"><strong><PriceCounter text={plan.price} /></strong><span>{plan.cadence}</span></div><p>{plan.audience}</p><div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div><ul>{plan.highlights.map((item) => <li key={item}><Check aria-hidden="true" />{item.includes("₹") ? <PriceCounter text={item} /> : item}</li>)}</ul><Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link></article>)}
+      <section className="section-shell pilot-preview" id="plans">
+        <div className="section-heading centered-heading" data-reveal><h2>Start with one class.<br />Pay when the whole school comes on.</h2><p>Plans are priced by students on roll, monthly or yearly. Every paid plan has unlimited accounts.</p></div>
+        <div className="plan-grid" data-reveal-group>
+          {plans.map((plan) => <article className={`pilot-card ${plan.featured ? "featured" : ""}`} key={plan.name}><p className="plan-name">{plan.name}</p><div className="plan-price"><strong><PriceCounter text={plan.monthly ?? plan.yearly} /></strong><span>{plan.priceNote}</span></div><p>{plan.audience}</p><div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div><div className="capacity-line plan-accounts"><KeyRound aria-hidden="true" />{plan.accounts}</div><ul>{plan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul><Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link></article>)}
         </div>
-        <p className="pilot-footnote">Pilot scope, edition and optional sets are agreed with each school before onboarding.</p>
+        <p className="pilot-footnote">Enabled modules and rollout are confirmed with each school before onboarding.</p>
       </section>
 
       <section className="section-shell final-cta" data-reveal>

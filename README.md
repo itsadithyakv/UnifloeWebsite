@@ -6,7 +6,7 @@ The public-facing website for Unifloe, a connected ERP and LMS for modern Indian
 
 - `/` : platform overview, the path to a live school, and the pilot programme
 - `/features` : the 45 registered modules by group, with the edition that includes each one
-- `/pricing` : pilot and standard annual plans, editions and optional sets
+- `/pricing` : the four plans (Free, Junior, Standard, Growth) priced by students on roll, monthly or yearly
 - `/get-started` : how a school starts, from the live demo and the pilot invite to registration at go.unifloe.app, setup, student import and guardian activation
 - `/contact` : tailored demo and pilot enquiry form
 - `/about` : PaperKite and Unifloe operating model

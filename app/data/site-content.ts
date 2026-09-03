@@ -11,7 +11,6 @@ export const productLinks = {
 
 export const totalModuleCount = 45;
 export const coreModuleCount = 29;
-export const pilotSchoolLimit = 3;
 
 export type ModuleEdition = "core" | "library" | "hostel" | "inventory" | "full";
 
@@ -38,12 +37,15 @@ export type FeatureGroup = {
 };
 
 export type PricingPlan = {
+  key: string;
   name: string;
-  price: string;
-  cadence: string;
   audience: string;
+  accounts: string;
   capacity: string;
-  highlights: string[];
+  monthly: string | null;
+  yearly: string;
+  priceNote: string;
+  includes: string[];
   cta: string;
   href: string;
   featured?: boolean;
@@ -71,7 +73,7 @@ export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> 
     title: "Explore",
     links: [
       { label: "Features", href: "/features" },
-      { label: "Pricing and pilots", href: "/pricing" },
+      { label: "Pricing", href: "/pricing" },
       { label: "About Unifloe", href: "/about" },
       { label: "Talk to PaperKite", href: "/contact" },
     ],
@@ -388,60 +390,58 @@ export const featureGroups: FeatureGroup[] = [
   },
 ];
 
-export const pilotPlans: PricingPlan[] = [
+export const plans: PricingPlan[] = [
   {
-    name: "Pilot Free",
-    price: "₹0",
-    cadence: "for one full year",
-    audience: "One grade on the Core edition, to see the product on your own records.",
-    capacity: "Up to 100 students",
-    highlights: ["One grade", "12 month pilot", "Core edition modules", "Guided setup"],
-    cta: "Apply for the free pilot",
-    href: "/contact?interest=pilot-free",
+    key: "free",
+    name: "Free",
+    audience: "A teacher or a school trying it with one class.",
+    accounts: "5 teacher and admin accounts",
+    capacity: "1 section, up to 60 students",
+    monthly: null,
+    yearly: "₹0",
+    priceNote: "forever",
+    includes: ["Attendance", "Homework", "Notices to parents", "Basic marks"],
+    cta: "Start with one class",
+    href: "/contact?interest=free",
   },
   {
-    name: "Pilot Starter",
-    price: "₹8,000",
-    cadence: "for one full year",
-    audience: "The founding school plan for a larger cohort, with the sets you choose.",
-    capacity: "Up to 700 students",
-    highlights: ["12 month pilot", "About ₹0.95 per student per month", "Core edition plus optional sets", "Founder led onboarding"],
-    cta: "Start a pilot conversation",
-    href: "/contact?interest=pilot-starter",
+    key: "junior",
+    name: "Junior",
+    audience: "A small school or PU college.",
+    accounts: "Unlimited accounts",
+    capacity: "Up to 250 students on roll",
+    monthly: "₹999",
+    yearly: "₹9,999",
+    priceNote: "a month, or ₹9,999 a year",
+    includes: ["Students and classes", "Attendance and timetable", "Marks and report cards", "Fee ledger and receipts", "Calendar and notices", "Exports"],
+    cta: "Choose Junior",
+    href: "/contact?interest=junior",
+  },
+  {
+    key: "standard",
+    name: "Standard",
+    audience: "A typical Bengaluru school or PU college.",
+    accounts: "Unlimited accounts",
+    capacity: "Up to 700 students on roll",
+    monthly: "₹1,999",
+    yearly: "₹19,999",
+    priceNote: "a month, or ₹19,999 a year",
+    includes: ["Everything in Junior", "WhatsApp channel", "Library, hostel and inventory", "Branded documents", "Admissions pipeline", "Priority support"],
+    cta: "Choose Standard",
+    href: "/contact?interest=standard",
     featured: true,
   },
-];
-
-export const standardPlans: PricingPlan[] = [
   {
-    name: "Starter",
-    price: "₹30,000",
-    cadence: "per year",
-    audience: "For a school running its day on the Core edition.",
-    capacity: "700 students included",
-    highlights: ["Core edition", "Optional Library, Hostel and Inventory sets", "Your own logo and colours", "Add up to 1,000 students"],
-    cta: "Discuss Starter",
-    href: "/contact?interest=starter",
-  },
-  {
+    key: "growth",
     name: "Growth",
-    price: "₹80,000",
-    cadence: "per year",
-    audience: "For a larger school connecting more learners and workflows.",
-    capacity: "2,500 students included",
-    highlights: ["Larger school scale", "Edition and optional sets agreed with the school", "Your own logo and colours", "Add up to 1,000 students"],
-    cta: "Discuss Growth",
+    audience: "A larger school or two campuses.",
+    accounts: "Unlimited accounts",
+    capacity: "Up to 2,100 students on roll",
+    monthly: "₹5,999",
+    yearly: "₹59,999",
+    priceNote: "a month, or ₹59,999 a year",
+    includes: ["Everything in Standard", "Multi campus view", "Audit exports"],
+    cta: "Choose Growth",
     href: "/contact?interest=growth",
-    featured: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Let’s talk",
-    cadence: "custom annual scope",
-    audience: "For groups of schools and institutions with their own operating model.",
-    capacity: "Capacity agreed together",
-    highlights: ["Custom scope", "Groups of schools", "Tailored rollout", "Priced on request"],
-    cta: "Contact our team",
-    href: "/contact?interest=enterprise",
   },
 ];

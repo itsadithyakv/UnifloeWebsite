@@ -1,9 +1,8 @@
 export const interestOptions = [
-  "pilot-free",
-  "pilot-starter",
-  "starter",
+  "free",
+  "junior",
+  "standard",
   "growth",
-  "enterprise",
   "general-demo",
 ];
 
