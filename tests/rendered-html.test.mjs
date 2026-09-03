@@ -103,7 +103,7 @@ test("renders the exact four plan pricing on the pricing and home pages", async 
     assert.match(pricing, new RegExp(value));
     assert.match(home, new RegExp(value));
   }
-  for (const value of ["WhatsApp channel", "Admissions pipeline", "Priority support", "Multi campus view", "Audit exports", "Fee ledger and receipts", "Notices to parents"]) assert.match(pricing, new RegExp(value));
+  for (const value of ["WhatsApp channel, coming soon", "Admissions pipeline, coming soon", "Priority support", "Multi campus view", "Audit exports, coming soon", "Fee ledger and receipts", "Notices to parents"]) assert.match(pricing, new RegExp(value));
   assert.doesNotMatch(`${pricing}\n${home}`, /₹8,000|₹30,000|₹80,000|₹300\/month|₹3,600|Founding|pilot-free|pilot-starter|interest=starter|interest=enterprise/);
   assert.match(pricing, /How you pay/);
   assert.match(pricing, /no card details are stored/);
