@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
-import { footerNavigationGroups, productAppUrl } from "../data/site-content";
+import { footerNavigationGroups, productLinks } from "../data/site-content";
 
 export function SiteFooter() {
   return (
@@ -22,19 +22,25 @@ export function SiteFooter() {
           {footerNavigationGroups.map((group) => (
             <div key={group.title}>
               <h3>{group.title}</h3>
-              {group.links.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
+              {group.links.map((item) =>
+                item.href.startsWith("http") ? (
+                  <a href={item.href} key={item.href}>{item.label}</a>
+                ) : (
+                  <Link href={item.href} key={item.href}>{item.label}</Link>
+                ),
+              )}
             </div>
           ))}
         </nav>
         <div className="footer-action" data-reveal>
-          <h2>Bring your school together.</h2>
-          <Link className="button button-light" href={productAppUrl}>Book a free demo <ArrowUpRight aria-hidden="true" /></Link>
+          <h2>See it running before you decide.</h2>
+          <a className="button button-light" href={productLinks.demo}>Try the live demo <ArrowUpRight aria-hidden="true" /></a>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Unifloe</span>
-        <span>Privacy-conscious workflows · DPDP readiness · APAAR readiness</span>
-        <span>Unifloe is an independent product and is not affiliated with the Government of India or APAAR.</span>
+        <span>© {new Date().getFullYear()} Unifloe, a PaperKite product</span>
+        <span>Guardian consent under the DPDP Act · No advertising or tracking</span>
+        <span>Unifloe is an independent product and is not affiliated with the Government of India, CBSE, CISCE, APAAR or UDISE+.</span>
       </div>
     </footer>
   );

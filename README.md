@@ -4,16 +4,23 @@ The public-facing website for Unifloe, a connected ERP and LMS for modern Indian
 
 ## Pages
 
-- `/` — platform overview and pilot programme
-- `/features` — complete feature catalogue
-- `/pricing` — pilot and standard annual plans
-- `/contact` — tailored demo and pilot enquiry form
-- `/about` — PaperKite and Unifloe operating model
-- `/school-erp-software-india` — connected ERP and LMS for Indian schools
-- `/school-lms` — assignments, materials, assessment, and feedback
-- `/for-cbse-schools` — CBSE-first academic use cases
-- `/apaar-readiness` — readiness, consent, and status workflows
-- `/data-privacy` — privacy-conscious school data controls
+- `/` : platform overview, the path to a live school, and the pilot programme
+- `/features` : the 45 registered modules by group, with the edition that includes each one
+- `/pricing` : pilot and standard annual plans, editions and optional sets
+- `/get-started` : how a school starts, from the live demo and the pilot invite to registration at go.unifloe.app, setup, student import and guardian activation
+- `/contact` : tailored demo and pilot enquiry form
+- `/about` : PaperKite and Unifloe operating model
+- `/school-erp-software-india` : connected ERP and LMS for Indian schools
+- `/school-lms` : assignments, materials, assessment, and feedback
+- `/for-cbse-schools` : CBSE stages, registers and thresholds
+- `/apaar-readiness` : APAAR consent and UDISE+ preparation, described honestly
+- `/data-privacy` : responsibilities, consent, safeguards and retention under the DPDP Act
+
+The product itself lives at `https://go.unifloe.app` (`productAppUrl` in `app/data/site-content.ts`). The site links to its public demo (`/demo`), sign in (`/login`) and invite registration (`/register`); those are the only external links the marketing pages may carry.
+
+Product facts on the site (module counts, editions, workflows, consent handling) come from the product reference at `D:/Unifloe/reference`. When that reference changes, update `app/data/site-content.ts`, `app/data/seo-pages.ts` and the page copy in the same change.
+
+Copy rules enforced by the tests: no dashes of any kind in visible text, no eyebrow or kicker labels above headings, and no decorative counters or lines.
 
 Detailed attendance, fee, and exam workflows are consolidated into `/features`. Bengaluru pilot and onboarding information is consolidated into `/school-erp-software-india`. Their previously deployed URLs return permanent redirects.
 

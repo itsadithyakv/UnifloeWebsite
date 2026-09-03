@@ -25,15 +25,22 @@ export const publicRoutes = [
     path: "/features/",
     title: "Features for School ERP & LMS | Unifloe",
     description:
-      "Explore Unifloe's 65 registered school ERP and LMS modules across academics, attendance, fees, communication, campus operations and governance.",
+      "Explore the 45 registered Unifloe modules across academics, communication, finance, campus operations, people and administration, and see which edition includes each one.",
     h1: "Every school workflow. One connected system.",
   },
   {
     path: "/pricing/",
     title: "School ERP Pricing & Pilot Plans | Unifloe",
     description:
-      "Compare Unifloe's one-year pilot offers and annual school ERP and LMS plans, with clear capacity, onboarding scope and options for growing schools.",
+      "Compare the one year Unifloe pilot offers with the annual school ERP and LMS plans, including editions, optional sets, capacity and how invoicing works.",
     h1: "Start with a pilot. Scale with confidence.",
+  },
+  {
+    path: "/get-started/",
+    title: "Get Started with Unifloe | Unifloe",
+    description:
+      "How a school starts using Unifloe: try the live demo, agree the pilot, register the school at go.unifloe.app, set up classes, import students and activate guardians.",
+    h1: "Start using Unifloe in a few clear steps",
   },
   {
     path: "/contact/",
@@ -46,7 +53,7 @@ export const publicRoutes = [
     path: "/about/",
     title: "About Unifloe and PaperKite | Unifloe",
     description:
-      "Learn how PaperKite builds and operates Unifloe, a role-aware school ERP and LMS designed around Indian school workflows, privacy and gradual rollout.",
+      "Learn how PaperKite builds and operates Unifloe, a role aware school ERP and LMS designed around Indian school workflows, guardian consent and gradual rollout.",
     h1: "Unifloe is built and operated by PaperKite",
   },
   {
@@ -67,22 +74,22 @@ export const publicRoutes = [
     path: "/for-cbse-schools/",
     title: "ERP & LMS for CBSE Schools | Unifloe",
     description:
-      "Support CBSE school workflows from Nursery to Grade 12 with connected academics, attendance, assessments, communication and structured records.",
+      "Support CBSE school workflows from Nursery to Class 12 with connected academics, attendance, assessments, communication and structured records.",
     h1: "A connected ERP and LMS for CBSE schools",
   },
   {
     path: "/apaar-readiness/",
     title: "APAAR Readiness for Schools | Unifloe",
     description:
-      "Support APAAR readiness with structured student records, guardian consent, UDISE+ readiness checks and status tracking without claiming certification.",
-    h1: "Support APAAR readiness with structured school records",
+      "How Unifloe handles APAAR consent, UDISE+ preparation and student identity records honestly, with separate guardian consent and no Aadhaar numbers stored.",
+    h1: "APAAR consent and UDISE+ preparation, described honestly",
   },
   {
     path: "/data-privacy/",
     title: "School Data Privacy & DPDP Readiness | Unifloe",
     description:
-      "Explore privacy-conscious school data workflows with tenant boundaries, role-based access, consent records, audit history and private files.",
-    h1: "Privacy-conscious workflows for school data",
+      "How Unifloe handles school data under the DPDP Act: who is responsible for what, guardian consent, security safeguards, retention and what stays with the school.",
+    h1: "How Unifloe handles school data",
   },
 ] as const satisfies readonly PublicRoute[];
 

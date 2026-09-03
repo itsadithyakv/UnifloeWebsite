@@ -1,8 +1,15 @@
-import { Clock3, Mail, MapPin, MessageCircleMore, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, Clock3, Mail, MapPin, MessageCircleMore, Phone, ShieldCheck } from "lucide-react";
 import { ContactForm } from "../components/ContactForm";
+import { productLinks } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/contact/");
+
+const nextSteps = [
+  { title: "Share the school context", copy: "Your board, location, student strength, current tools and the workflows creating the most friction." },
+  { title: "See a relevant product path", copy: "PaperKite walks the demo through your priorities and says plainly which surfaces are dedicated, grouped or generic." },
+  { title: "Agree scope, then register", copy: "If there is a fit, the edition, optional sets, consent basis and rollout steps are confirmed. You receive a pilot invite and register the school at go.unifloe.app." },
+];
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ interest?: string | string[] }> }) {
   const params = await searchParams;
@@ -13,10 +20,11 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <section className="contact-hero section-shell">
         <div className="contact-intro" data-reveal>
           <h1>Let’s map Unifloe<br /><span>to your school.</span></h1>
-          <p>A focused conversation around your workflows, scale, and priorities.</p>
+          <p>A focused conversation around your workflows, scale and priorities. If you would rather look first, the live demo is open now.</p>
+          <a className="text-link contact-demo-link" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
           <div className="contact-benefits" data-reveal-group>
             <div><span><Clock3 aria-hidden="true" /></span><div><strong>Relevant from the start</strong><p>Your priorities, not a generic tour.</p></div></div>
-            <div><span><MapPin aria-hidden="true" /></span><div><strong>Built for Indian schools</strong><p>Local structures, pricing, and readiness workflows.</p></div></div>
+            <div><span><MapPin aria-hidden="true" /></span><div><strong>Built for Indian schools</strong><p>CBSE, ICSE, state board and Karnataka PU, priced in rupees.</p></div></div>
             <div><span><MessageCircleMore aria-hidden="true" /></span><div><strong>A practical path</strong><p>Pilot first, then scale when ready.</p></div></div>
           </div>
           <div className="contact-direct" data-reveal>
@@ -32,22 +40,20 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <h2>Your enquiry stays an enquiry.</h2>
           <p>We collect only what the Unifloe team needs to respond. Never student records or child data.</p>
         </div>
-        <ol className="privacy-commitments">
-          <li><span>01</span><div><strong>No student data</strong><p>Keep learner information out of this form.</p></div></li>
-          <li><span>02</span><div><strong>Fixed recipient</strong><p>Sent only to the configured Unifloe inbox.</p></div></li>
-          <li><span>03</span><div><strong>Your consent</strong><p>Required before an enquiry can be submitted.</p></div></li>
-        </ol>
+        <ul className="privacy-commitments">
+          <li><div><strong>No student data</strong><p>Keep learner information out of this form.</p></div></li>
+          <li><div><strong>Fixed recipient</strong><p>Sent only to the configured Unifloe inbox.</p></div></li>
+          <li><div><strong>Your consent</strong><p>Required before an enquiry can be submitted.</p></div></li>
+        </ul>
       </section>
       <section className="section-shell contact-next" aria-labelledby="contact-next-heading">
         <div className="section-heading" data-reveal>
           <h2 id="contact-next-heading">What happens after you contact PaperKite?</h2>
           <p>A useful first conversation, followed by a clearly defined next step.</p>
         </div>
-        <div className="contact-next-grid" data-reveal-group>
-          <article><span>01</span><h3>Share the school context</h3><p>Tell us your board, location, student strength, current tools and the workflows creating the most friction.</p></article>
-          <article><span>02</span><h3>See a relevant product path</h3><p>PaperKite maps the demo to your priorities and distinguishes dedicated, grouped and configurable product surfaces.</p></article>
-          <article><span>03</span><h3>Agree scope before onboarding</h3><p>If there is a fit, pilot modules, capacity, responsibilities, integrations and rollout steps are confirmed before work begins.</p></article>
-        </div>
+        <ol className="contact-next-grid" data-reveal-group>
+          {nextSteps.map((step, index) => <li key={step.title}><span>{index + 1}</span><h3>{step.title}</h3><p>{step.copy}</p></li>)}
+        </ol>
         <p className="contact-region-note">Bengaluru is Unifloe&apos;s initial pilot focus. Availability and onboarding timelines are confirmed during the product conversation.</p>
       </section>
     </main>

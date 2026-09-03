@@ -1,41 +1,68 @@
 import Link from "next/link";
-import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, ClipboardCheck, FileCheck2, GraduationCap, Landmark, UsersRound } from "lucide-react";
+import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, CalendarRange, ClipboardCheck, FileCheck2, Landmark, MessagesSquare, UsersRound, WalletCards } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
-import { featureGroups, totalModuleCount } from "../data/site-content";
+import { coreModuleCount, editionLabels, featureGroups, productLinks, totalModuleCount } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/features/");
 
 const groupIcons = {
   academics: BookOpenCheck,
-  student: GraduationCap,
-  admin: ClipboardCheck,
-  community: UsersRound,
+  communication: MessagesSquare,
+  finance: WalletCards,
   campus: Building2,
-  governance: Landmark,
+  people: UsersRound,
+  administration: Landmark,
 };
+
+const editions = [
+  { name: "Core", copy: `${coreModuleCount} modules enabled for every school: the teaching day, communication, finance, people and administration.` },
+  { name: "Optional sets", copy: "Library (seven modules), Hostel with Front Office, and Inventory. A school turns on a whole set, not a single key." },
+  { name: "Full", copy: "Every module, including Chat, Reports, HR and Lesson Plans." },
+];
 
 const workflowDeepDives = [
   {
     id: "attendance-workflows",
     icon: CalendarCheck2,
     title: "Attendance, corrections and student leave",
-    copy: "Attendance sessions retain their policy version, collection window, section, subject or period context and owning teacher. Faculty work within assigned registers; disputed records move through a Head Admin or Principal decision with audit history instead of silent editing.",
-    points: ["Effective-dated attendance policies", "Assignment-scoped registers", "Correction approval history", "Student leave separated from staff and hostel leave"],
+    copy: "Head Admin sets a collection policy: by period, once a day, or morning and after lunch. A future policy is added as a new version, so old registers keep their meaning. The assigned teacher opens the register, marks it and confirms it.",
+    points: ["Dated policies, never rewritten", "Registers opened by the assigned teacher, or by the Principal", "Correction requests decided by Head Admin or Principal, with history", "Student leave applications, separate from staff and hostel leave", "A workbook export that counts only confirmed periods"],
   },
   {
     id: "fee-workflows",
     icon: BadgeIndianRupee,
-    title: "School-owned fees and collection boundaries",
-    copy: "Authorized finance teams can manage obligations, schedules, dues, payments, receipts, concessions and outstanding balances. Family-fee collections remain in a separately configured school-owned payment scope, distinct from PaperKite subscription billing.",
-    points: ["Fee obligations and due schedules", "Payments and receipts", "Concession approvals", "School-scoped collection reporting"],
+    title: "Fees, payments and receipts",
+    copy: "A published fee structure derives each student's charges. Teachers, wardens and librarians can only propose a charge; Finance publishes it to the family statement. Families pay at the school and staff record it. Recording allocates the payment, updates dues and issues the numbered receipt in one step.",
+    points: ["Charges proposed, then published once", "Payment recorded and verified by different people", "Receipt PDFs from a per school sequence", "Adjustments with maker and checker", "No online collection and no card details stored"],
   },
   {
     id: "assessment-workflows",
     icon: FileCheck2,
-    title: "Exams, question papers and result publication",
-    copy: "Academic structure connects exam planning, assessment components, question libraries, marks and report cards. Faculty authority follows assigned subjects and sections, while broader review, correction and publication decisions remain controlled and auditable.",
-    points: ["Reusable question classification", "Paper sets and marking guides", "Marks and grade history", "Authorized report-card publication"],
+    title: "Exams, marks, report cards and hall tickets",
+    copy: "Leadership creates an exam plan and announces the timetable. Each subject teacher submits a mark sheet. Results are released in batches so a whole school opening results at once does not stall. Report cards are built only from released marks, in the school's own document theme.",
+    points: ["Release refused until every mark sheet is submitted", "Staggered release by section and roll number", "Report cards graded on the school's board scale", "Hall tickets in four layouts, per student or per section", "No hall ticket until the timetable is announced"],
+  },
+  {
+    id: "guardian-workflows",
+    icon: UsersRound,
+    title: "Guardians, consent and family sign in",
+    copy: "A child exists as a roster row whether or not they have a login. Up to three guardians link to a student, and a parent with several children gets one account. Parents are activated by a single use link or an Excel import, and record consent under the DPDP Act when they first sign in.",
+    points: ["One parent account across all their children", "Activation links for your own mail merge", "Consent held at sign in until the parent gives it", "Withdrawal recorded, full history reviewable", "One time codes for approvals and payment requests"],
+  },
+  {
+    id: "timetable-workflows",
+    icon: CalendarRange,
+    title: "Timetable, calendar and publication",
+    copy: "Leadership defines period templates and subject requirements, generates a draft, edits it and publishes. A teacher may propose a change but never publish it. The academic calendar is versioned and validated before publication, and a half day changes what the register expects.",
+    points: ["Generated draft checked for conflicts", "Faculty proposals decided by Head Admin or Principal", "Calendar drafts validated before publishing", "Published timetable decides who may open a register"],
+  },
+  {
+    id: "approval-workflows",
+    icon: ClipboardCheck,
+    title: "Approvals and the audit trail",
+    copy: "One queue collects every decision the school raises: timetables, calendars, attendance corrections, marks release, charges, adjustments, inventory, leave and announcements. The owning service makes the final authority check; the queue only shows it.",
+    points: ["The requester never decides", "A decided request cannot be decided again", "A lost update is reported, never shown as success", "Every sensitive change writes an audit row with actor, role and record"],
   },
 ] as const;
 
@@ -47,9 +74,9 @@ export default function FeaturesPage() {
         <div className="features-hero-inner section-shell">
           <div className="features-hero-copy" data-reveal>
             <h1>Every school workflow.<br /><span>One connected system.</span></h1>
-            <p>Explore {totalModuleCount} registered modules across six connected areas.</p>
+            <p>{totalModuleCount} registered modules across six groups. A Core school runs {coreModuleCount} of them, plus the sets it turns on.</p>
           </div>
-          <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six connected areas`}>
+          <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six groups`}>
             <div className="features-platform-head">
               <span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -61,33 +88,40 @@ export default function FeaturesPage() {
             <div className="features-platform-grid">
               {featureGroups.map((group) => {
                 const Icon = groupIcons[group.icon];
-                return <a href={`#${group.icon}`} key={group.icon}><Icon aria-hidden="true" /><span>{group.title}</span><strong>{String(group.modules.length).padStart(2, "0")}</strong></a>;
+                return <a href={`#${group.icon}`} key={group.icon}><Icon aria-hidden="true" /><span>{group.title}</span><strong>{group.modules.length}</strong></a>;
               })}
             </div>
-            <div className="features-platform-foot"><span>ERP</span><i /><span>LMS</span><i /><span>Governance</span></div>
           </div>
         </div>
       </section>
-      <nav className="feature-jump section-shell" aria-label="Feature categories" data-reveal-group>
-        {featureGroups.map((group, index) => {
+      <nav className="feature-jump section-shell" aria-label="Feature groups" data-reveal-group>
+        {featureGroups.map((group) => {
           const Icon = groupIcons[group.icon];
-          return <a href={`#${group.icon}`} key={group.icon}><span className="feature-jump-icon"><Icon aria-hidden="true" /></span><span><small>{String(index + 1).padStart(2, "0")}</small><strong>{group.title}</strong></span><ArrowRight aria-hidden="true" /></a>;
+          return <a href={`#${group.icon}`} key={group.icon}><span className="feature-jump-icon"><Icon aria-hidden="true" /></span><span><strong>{group.title}</strong><small>{group.modules.length} modules</small></span><ArrowRight aria-hidden="true" /></a>;
         })}
       </nav>
+      <section className="section-shell editions-section" aria-labelledby="editions-heading">
+        <div className="section-heading" data-reveal>
+          <h2 id="editions-heading">Two editions and three optional sets.</h2>
+          <p>Core and Full share the same services and data model. Core enables fewer modules and caps active Student and Faculty accounts.</p>
+        </div>
+        <div className="editions-grid" data-reveal-group>
+          {editions.map((edition) => <article key={edition.name}><h3>{edition.name}</h3><p>{edition.copy}</p></article>)}
+        </div>
+      </section>
       <div className="feature-groups section-shell">
         {featureGroups.map((group, index) => {
           const Icon = groupIcons[group.icon];
           return (
             <section className="feature-group" id={group.icon} key={group.title} data-reveal>
               <div className="feature-group-heading">
-                <div className="feature-group-index">{String(index + 1).padStart(2, "0")}</div>
                 <div className="icon-tile icon-tile-large"><Icon aria-hidden="true" /></div>
                 <div><h2>{group.title}</h2><p>{group.description}</p></div>
               </div>
               <div className="module-list" data-reveal-group>
                 {group.modules.map((module, moduleIndex) => (
                   <FeatureAccordion
-                    index={String(moduleIndex + 1).padStart(2, "0")}
+                    tag={editionLabels[module.edition]}
                     name={module.name}
                     summary={module.summary}
                     features={module.features}
@@ -101,13 +135,13 @@ export default function FeaturesPage() {
         })}
       </div>
       <aside className="section-shell feature-scope-note" data-reveal>
-        <p><strong>Implementation scope stays explicit.</strong> Some modules use dedicated workspaces, others share grouped workflows, and configurable catalogue surfaces are confirmed during onboarding.</p>
+        <p><strong>Two registered keys are not listed.</strong> PaperKite’s own institutions console is platform scope, and a payroll key survives without a working module. Staff pay stays with the school’s payroll provider in this build.</p>
         <Link className="text-link" href="/about">How Unifloe describes product maturity <ArrowRight aria-hidden="true" /></Link>
       </aside>
       <section className="section-shell workflow-deep-dives" aria-labelledby="workflow-deep-dives-heading">
         <div className="section-heading" data-reveal>
           <h2 id="workflow-deep-dives-heading">How connected workflows operate</h2>
-          <p>Detailed product boundaries for three high-value school processes.</p>
+          <p>Who starts each process, who decides, and what is refused.</p>
         </div>
         <div className="workflow-deep-dive-grid" data-reveal-group>
           {workflowDeepDives.map((workflow) => {
@@ -123,7 +157,7 @@ export default function FeaturesPage() {
           })}
         </div>
       </section>
-      <section className="section-shell inline-cta" data-reveal><div><h2>Choose the workflows that matter first.</h2><p>Begin with essentials. Expand when ready.</p></div><Link className="button" href="/contact">Build your Unifloe roadmap <ArrowRight aria-hidden="true" /></Link></section>
+      <section className="section-shell inline-cta" data-reveal><div><h2>Try any of this right now.</h2><p>The demo runs the real product on a synthetic school. Nothing you change is saved.</p></div><a className="button" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a></section>
     </main>
   );
 }

@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { useId, useState } from "react";
 
 type FeatureAccordionProps = {
-  index: string;
+  tag: string;
   name: string;
   summary: string;
   features: string[];
@@ -14,7 +14,7 @@ type FeatureAccordionProps = {
 
 const smoothEase = [0.22, 1, 0.36, 1] as const;
 
-export function FeatureAccordion({ index, name, summary, features, defaultOpen = false }: FeatureAccordionProps) {
+export function FeatureAccordion({ tag, name, summary, features, defaultOpen = false }: FeatureAccordionProps) {
   const [open, setOpen] = useState(defaultOpen);
   const prefersReducedMotion = useReducedMotion();
   const contentId = useId();
@@ -31,7 +31,7 @@ export function FeatureAccordion({ index, name, summary, features, defaultOpen =
         aria-controls={contentId}
         onClick={() => setOpen((current) => !current)}
       >
-        <span className="module-summary-copy"><span>{index}</span><strong>{name}</strong></span>
+        <span className="module-summary-copy"><strong>{name}</strong><span>{tag}</span></span>
         <ChevronDown aria-hidden="true" />
       </button>
       <AnimatePresence initial={false}>

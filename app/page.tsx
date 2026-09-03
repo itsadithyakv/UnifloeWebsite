@@ -7,14 +7,13 @@ import {
   BadgeCheck,
   BookOpenCheck,
   Boxes,
-  BusFront,
+  Building2,
   Check,
   CloudCog,
   DatabaseZap,
-  FileCheck2,
-  GraduationCap,
   HeartHandshake,
   IndianRupee,
+  Landmark,
   MessagesSquare,
   Palette,
   Presentation,
@@ -23,32 +22,39 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { pilotPlans, productAppUrl, totalModuleCount } from "./data/site-content";
+import { coreModuleCount, pilotPlans, productLinks, totalModuleCount } from "./data/site-content";
 import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
-  { title: "Academics & LMS", Icon: BookOpenCheck },
-  { title: "Students & families", Icon: UsersRound },
-  { title: "Administration & finance", Icon: WalletCards },
+  { title: "Academics", Icon: BookOpenCheck },
   { title: "Communication", Icon: MessagesSquare },
-  { title: "Campus operations", Icon: BusFront },
-  { title: "Compliance & reporting", Icon: FileCheck2 },
+  { title: "Finance", Icon: WalletCards },
+  { title: "Campus operations", Icon: Building2 },
+  { title: "People", Icon: UsersRound },
+  { title: "Administration", Icon: Landmark },
 ];
 
 const foundingPlanHighlights = [
   "Up to 700 family and staff units",
-  "School branding included",
-  "Five starter themes",
-  "Configurable modules and terminology",
+  "Your logo on every screen and document",
+  "Three visual presets",
+  "Core edition plus the sets you choose",
   "Free onboarding and initial setup",
   "Direct founder support",
   "Continuous platform updates",
 ];
 
 const roleCards = [
-  { role: "School leaders", title: "Whole-school clarity", copy: "Academic, financial, operational, and compliance insight.", Icon: School2 },
-  { role: "Teachers", title: "More time to teach", copy: "Planning, attendance, assessment, and communication.", Icon: Presentation },
-  { role: "Parents & students", title: "A calmer experience", copy: "Learning, progress, payments, and official updates.", Icon: HeartHandshake },
+  { role: "School leaders", copy: "Approvals, attendance risk, collections, staff workload and the audit trail behind every change.", Icon: School2 },
+  { role: "Teachers", copy: "Today's classes, registers, assignments, mark sheets and lesson notes for assigned sections only.", Icon: Presentation },
+  { role: "Parents and students", copy: "Timetable, attendance, released results, fees and receipts, library loans and school announcements.", Icon: HeartHandshake },
+];
+
+const startSteps = [
+  { title: "Try the live demo", copy: "Open go.unifloe.app as any role. Nothing you change is saved." },
+  { title: "Agree the pilot", copy: "Board format, edition, optional sets and the consent basis for your parents." },
+  { title: "Register the school", copy: "Use your invite at go.unifloe.app. The Head Admin account and the school's own database are created together." },
+  { title: "Import and activate", copy: "Fill the student workbook, then activate parents with one link each. Parents consent when they first sign in." },
 ];
 
 export const metadata = createPageMetadata("/");
@@ -109,51 +115,51 @@ export default function Home() {
         />
         <div className="hero-copy" data-reveal>
           <h1>A modern school <span>ERP and LMS</span> built for Indian schools</h1>
-          <p className="hero-lead">Unifloe is a modern school ERP and LMS built for Indian schools, bringing academics, learning, fees, communication and campus operations into one connected platform.</p>
+          <p className="hero-lead">Unifloe is a modern school ERP and LMS built for Indian schools. Attendance, marks, fees, guardians, library, hostel and front office run in one place at go.unifloe.app.</p>
           <div className="hero-actions">
-            <Link className="button" href={productAppUrl}>Book a free demo <ArrowRight aria-hidden="true" /></Link>
-            <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
+            <a className="button" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
+            <Link className="text-link" href="/get-started">How to get started <ArrowRight aria-hidden="true" /></Link>
           </div>
-          <div className="hero-proof" aria-label="Key platform commitments">
-            <span><ShieldCheck aria-hidden="true" /> Privacy-conscious workflows</span>
-            <span><DatabaseZap aria-hidden="true" /> Role-based access</span>
-            <span><GraduationCap aria-hidden="true" /> Supports APAAR readiness</span>
+          <div className="hero-proof" aria-label="Key platform facts">
+            <span><CloudCog aria-hidden="true" /> A web app that installs on any phone or laptop</span>
+            <span><ShieldCheck aria-hidden="true" /> Guardian consent under the DPDP Act</span>
+            <span><BookOpenCheck aria-hidden="true" /> CBSE, ICSE, state board and Karnataka PU</span>
           </div>
         </div>
         <HeroProduct />
       </section>
 
       <section className="trust-strip" data-reveal-group aria-label="Unifloe platform strengths">
-        <div><DatabaseZap aria-hidden="true" /><span><strong>One source</strong><small>Connected data</small></span></div>
-        <div><UsersRound aria-hidden="true" /><span><strong>Every role</strong><small>Focused views</small></span></div>
-        <div><CloudCog aria-hidden="true" /><span><strong>Any device</strong><small>Work anywhere</small></span></div>
-        <div><ShieldCheck aria-hidden="true" /><span><strong>Your identity</strong><small>White-labelled</small></span></div>
+        <div><DatabaseZap aria-hidden="true" /><span><strong>One structure</strong><small>Classes drive every module</small></span></div>
+        <div><UsersRound aria-hidden="true" /><span><strong>Ten roles</strong><small>Each sees its own work</small></span></div>
+        <div><CloudCog aria-hidden="true" /><span><strong>Any device</strong><small>Browser or installed app</small></span></div>
+        <div><Palette aria-hidden="true" /><span><strong>Your identity</strong><small>Logo, colours, preset</small></span></div>
       </section>
 
       <section className="platform-intro">
         <div className="section-shell">
           <div className="pitch-heading" data-reveal>
             <h2>One place for every<br /><span>school need.</span></h2>
-            <p>Your identity, records, learning, operations and growth—connected without stitching together separate tools.</p>
+            <p>Records, teaching, money, families and campus in one system, with the approval trail that ties them together.</p>
           </div>
 
           <div className="pitch-canvas" data-reveal-group>
             <article className="pitch-card pitch-identity">
-              <div className="pitch-card-title"><span><Palette aria-hidden="true" /></span><div><h3>Your school. Your identity.</h3><p>Adapt Unifloe until it feels like your school’s own platform.</p></div></div>
-              <div className="school-brand-preview" aria-label="A configurable school-branded portal preview">
+              <div className="pitch-card-title"><span><Palette aria-hidden="true" /></span><div><h3>Your school. Your identity.</h3><p>Upload the logo once and it appears in the sidebar and on every receipt, report card and hall ticket.</p></div></div>
+              <div className="school-brand-preview" aria-label="A configurable school branded portal preview">
                 <div className="school-preview-bar">
-                  <div className="school-preview-brand"><span>YS</span><div><strong>Your School</strong><small>Family portal</small></div></div>
-                  <div className="school-preview-themes" aria-label="Five visual theme colours"><i /><i /><i /><i /><i /></div>
+                  <div className="school-preview-brand"><span>YS</span><div><strong>Your School</strong><small>Family view</small></div></div>
+                  <div className="school-preview-themes" aria-label="Three visual presets"><i /><i /><i /></div>
                 </div>
-                <div className="school-preview-tabs"><span>Overview</span><span>Academics</span><span>Payments</span></div>
+                <div className="school-preview-tabs"><span>Overview</span><span>Academics</span><span>Fees</span></div>
                 <div className="school-preview-body" aria-hidden="true"><div><i /><i /><i /></div><div><span /><span /><span /><span /></div></div>
               </div>
-              <div className="pitch-spec-list" aria-label="School branding options"><span>Custom logo</span><span>School colours</span><span>Custom terminology</span><span>Five visual themes</span><span>Selected modules</span></div>
-              <p className="pitch-card-foot">Parents, students and staff experience your school’s brand—not another generic software company.</p>
+              <div className="pitch-spec-list" aria-label="School branding options"><span>Your logo</span><span>Four brand colours</span><span>Default, Sculpt or Clay preset</span><span>Board vocabulary</span><span>Only the modules you enable</span></div>
+              <p className="pitch-card-foot">Parents, students and staff see your school’s name and mark, not another software company’s.</p>
             </article>
 
             <article className="pitch-card pitch-compliance">
-                <div className="pitch-card-title"><span><ShieldCheck aria-hidden="true" /></span><div><h3>Readiness-focused by design.</h3></div></div>
+                <div className="pitch-card-title"><span><ShieldCheck aria-hidden="true" /></span><div><h3>Built for the DPDP Act.</h3></div></div>
                 <div className="student-record-preview">
                   <div className="student-record-head">
                     <div className="record-avatar-stack" aria-hidden="true">
@@ -163,19 +169,19 @@ export default function Home() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/unifloe_avatar_02_mint-192.jpg" width="48" height="48" alt="" loading="lazy" decoding="async" />
                     </div>
-                    <div><strong>Structured profiles</strong><small>Student and guardian records</small></div>
+                    <div><strong>Student and guardian</strong><small>Linked, with consent on record</small></div>
                     <BadgeCheck aria-hidden="true" />
                   </div>
-                <div className="student-record-row"><span>Academic records</span><strong>Organised</strong></div>
-                <div className="student-record-row"><span>Consent & permissions</span><strong>Traceable</strong></div>
-                <div className="student-record-row"><span>Approvals & history</span><strong>Recorded</strong></div>
+                <div className="student-record-row"><span>Guardian consent</span><strong>Recorded by the parent</strong></div>
+                <div className="student-record-row"><span>Withdrawal</span><strong>As easy as giving</strong></div>
+                <div className="student-record-row"><span>High impact changes</span><strong>Approved and audited</strong></div>
               </div>
-              <div className="pitch-spec-list pitch-spec-light"><span>APAAR readiness</span><span>UDISE+ readiness</span><span>Holistic Progress Cards</span><span>Consent records</span><span>Approvals</span><span>Audit trails</span></div>
+              <div className="pitch-spec-list pitch-spec-light"><span>Parent consent</span><span>Purpose on every record</span><span>No advertising</span><span>No tracking</span><span>Encrypted secrets</span><span>Private files</span></div>
             </article>
 
             <article className="pitch-card pitch-modules">
               <div className="modules-intro">
-                <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3></div></div>
+                <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3><p>A Core school runs {coreModuleCount} modules. Library, Hostel and Inventory are sets you turn on as a whole.</p></div></div>
                 <div className="module-count"><strong>{totalModuleCount}</strong><span>registered<br />modules</span></div>
                 <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
               </div>
@@ -185,7 +191,7 @@ export default function Home() {
             </article>
 
             <article className="pitch-card pitch-value">
-              <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Powerful without being expensive.</h3></div></div><div className="start-free-badge">Start at <PriceCounter text="₹0" /></div></div>
+              <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Priced for a school, not a district.</h3></div></div><div className="start-free-badge">Start at <PriceCounter text="₹0" /></div></div>
               <div className="founding-price"><strong><PriceCounter text="₹1" /></strong><span>per student<br />per month</span></div>
               <div className="founding-price-annual"><PriceCounter text="₹8,000" /><span>per year</span></div>
               <p className="founding-plan-name">Founding School Starter Plan</p>
@@ -202,38 +208,50 @@ export default function Home() {
         <div className="section-shell roles-inner">
           <div className="roles-copy" data-reveal>
             <h2>Everyone sees what matters to them.</h2>
-            <p>Clear, role-focused views. Less training and less searching.</p>
-            <Link className="button button-light" href="/contact">See Unifloe for your school <ArrowRight aria-hidden="true" /></Link>
+            <p>Ten school roles, each with its own dashboard and navigation. Guardians sign in as a family and pick the child. Nobody gets a full access role, because none exists.</p>
+            <a className="button button-light" href={productLinks.demo}>Open the demo as any role <ArrowRight aria-hidden="true" /></a>
           </div>
           <div className="role-stack" data-reveal-group>
-            {roleCards.map(({ role, title, copy, Icon }) => <article className="role-card" key={role}><span className="role-card-icon"><Icon aria-hidden="true" /></span><div><p>{role}</p><h3>{title}</h3><small>{copy}</small></div></article>)}
+            {roleCards.map(({ role, copy, Icon }) => <article className="role-card" key={role}><span className="role-card-icon"><Icon aria-hidden="true" /></span><div><h3>{role}</h3><small>{copy}</small></div></article>)}
           </div>
         </div>
       </section>
 
-      <section className="section-shell compliance-section">
-        <div className="compliance-panel" data-reveal>
-          <div className="compliance-copy">
-            <h2>Built around responsible school data.</h2>
-            <p>Clear access, organised consent, structured records, and audited high-impact changes.</p>
-            <div className="compliance-points"><span>DPDP readiness</span><span>APAAR readiness</span><span>UDISE+ support</span><span>Role-based access</span></div>
-            <div className="compliance-links"><Link href="/features#governance">Explore governance features <ArrowRight aria-hidden="true" /></Link><Link href="/about">How PaperKite operates Unifloe <ArrowRight aria-hidden="true" /></Link></div>
+      <section className="section-shell start-section" id="start">
+        <div className="start-panel" data-reveal>
+          <div className="start-copy">
+            <h2>From the demo to your first parent signing in.</h2>
+            <p>Getting a school onto Unifloe is a short, defined sequence. Each step has a page or a template behind it, and PaperKite does the first one with you.</p>
+            <div className="start-actions">
+              <Link className="button" href="/get-started">See every step <ArrowRight aria-hidden="true" /></Link>
+              <a className="text-link" href={productLinks.signIn}>Already on Unifloe? Sign in <ArrowRight aria-hidden="true" /></a>
+            </div>
           </div>
-          <div className="compliance-orb" aria-hidden="true"><ShieldCheck /><span className="orb-ring orb-ring-one" /><span className="orb-ring orb-ring-two" /></div>
+          <ol className="start-steps" data-reveal-group>
+            {startSteps.map((step, index) => (
+              <li key={step.title}>
+                <span>{index + 1}</span>
+                <div><strong>{step.title}</strong><p>{step.copy}</p></div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
       <section className="section-shell pilot-preview" id="pilot">
-        <div className="section-heading centered-heading" data-reveal><h2>Start small. Prove the value.<br />Build from there.</h2><p>A full year to experience Unifloe.</p></div>
+        <div className="section-heading centered-heading" data-reveal><h2>Start small. Prove the value.<br />Build from there.</h2><p>A full year to run Unifloe on your own records. The founding offer covers the pilot cohort of three schools.</p></div>
         <div className="pilot-grid" data-reveal-group>
           {pilotPlans.map((plan) => <article className={`pilot-card ${plan.featured ? "featured" : ""}`} key={plan.name}><p className="plan-name">{plan.name}</p><div className="plan-price"><strong><PriceCounter text={plan.price} /></strong><span>{plan.cadence}</span></div><p>{plan.audience}</p><div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div><ul>{plan.highlights.map((item) => <li key={item}><Check aria-hidden="true" />{item.includes("₹") ? <PriceCounter text={item} /> : item}</li>)}</ul><Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link></article>)}
         </div>
-        <p className="pilot-footnote">Pilot scope and participating modules are agreed with each school before onboarding.</p>
+        <p className="pilot-footnote">Pilot scope, edition and optional sets are agreed with each school before onboarding.</p>
       </section>
 
       <section className="section-shell final-cta" data-reveal>
-        <div className="final-cta-copy"><h2>Unifloe brings all of it together.</h2><p>Let’s map the platform to your school.</p></div>
-        <Link className="button button-light" href={productAppUrl}>Book a free demo <ArrowRight aria-hidden="true" /></Link>
+        <div className="final-cta-copy"><h2>See it running before you decide.</h2><p>The demo is the real product on a synthetic school. Open it as a principal, a teacher or a parent.</p></div>
+        <div className="final-cta-actions">
+          <a className="button button-light" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
+          <Link className="final-cta-link" href="/contact">Talk to PaperKite <ArrowRight aria-hidden="true" /></Link>
+        </div>
         <div className="final-cta-clay" aria-hidden="true"><span /><span /><span /></div>
       </section>
     </main>

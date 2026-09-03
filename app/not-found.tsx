@@ -16,8 +16,7 @@ export default function NotFound() {
       <meta name="robots" content="noindex, nofollow" />
       <main id="main-content" className="error-page">
         <section className="section-shell error-panel">
-          <p>404</p>
-          <h1>This page has moved beyond the timetable.</h1>
+          <h1>This page could not be found.</h1>
           <span>The address may be incorrect or the page may no longer be available.</span>
           <div className="error-actions">
             <Link className="button" href="/">Return home<ArrowRight aria-hidden="true" /></Link>

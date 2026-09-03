@@ -8,7 +8,6 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
     <main id="main-content" className="error-page">
       <meta name="robots" content="noindex, nofollow" />
       <section className="section-shell error-panel">
-        <p>Something went wrong</p>
         <h1>We could not load this page.</h1>
         <span>Try the page again, or return to a stable part of the Unifloe website.</span>
         <div className="error-actions">

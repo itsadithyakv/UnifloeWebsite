@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
-import { productAppUrl } from "../data/site-content";
+import { productLinks } from "../data/site-content";
 import styles from "./StaggeredMenu.module.css";
 
 export type StaggeredMenuItem = {
@@ -16,50 +16,48 @@ type StaggeredMenuProps = {
   position?: "left" | "right";
   colors?: string[];
   items: StaggeredMenuItem[];
-  displayItemNumbering?: boolean;
   logoUrl: string;
   accentColor?: string;
   closeOnClickAway?: boolean;
 };
 
+const openClassName = "menu-open";
+
 export function StaggeredMenu({
   position = "right",
   colors = ["#d8e6ff", "#72a7ff", "#185ee8"],
   items,
-  displayItemNumbering = true,
   logoUrl,
   accentColor = "#1a61f3",
   closeOnClickAway = true,
 }: StaggeredMenuProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef(false);
-
-  const syncViewportTop = useCallback(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-    const headerHeight = wrapper.offsetHeight;
-    const bottom = Math.min(window.innerHeight, wrapper.getBoundingClientRect().bottom);
-    const viewportTop = Math.max(headerHeight, bottom);
-    wrapper.style.setProperty("--menu-viewport-top", `${viewportTop}px`);
-  }, []);
 
   const closeMenu = useCallback(() => {
     if (!openRef.current) return;
     openRef.current = false;
     setOpen(false);
-    document.body.classList.remove("menu-open");
+    const root = document.documentElement;
+    root.classList.remove(openClassName);
+    root.style.removeProperty("--scrollbar-gap");
   }, []);
 
   const openMenu = useCallback(() => {
-    syncViewportTop();
     openRef.current = true;
     setOpen(true);
-    document.body.classList.add("menu-open");
-  }, [syncViewportTop]);
+    // Lock the document scroll on the root element. Locking <body> does not
+    // propagate to the viewport once <html> clips horizontal overflow, which
+    // let the page keep scrolling behind the open menu and carried the header
+    // away with it.
+    const root = document.documentElement;
+    const scrollbarGap = window.innerWidth - root.clientWidth;
+    root.style.setProperty("--scrollbar-gap", `${Math.max(0, scrollbarGap)}px`);
+    root.classList.add(openClassName);
+  }, []);
 
   const toggleMenu = useCallback(() => {
     if (openRef.current) closeMenu();
@@ -67,17 +65,12 @@ export function StaggeredMenu({
   }, [closeMenu, openMenu]);
 
   useEffect(() => {
-    syncViewportTop();
     return () => {
-      document.body.classList.remove("menu-open");
+      const root = document.documentElement;
+      root.classList.remove(openClassName);
+      root.style.removeProperty("--scrollbar-gap");
     };
-  }, [syncViewportTop]);
-
-  useEffect(() => {
-    if (!open) return;
-    window.addEventListener("resize", syncViewportTop);
-    return () => window.removeEventListener("resize", syncViewportTop);
-  }, [open, syncViewportTop]);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -113,7 +106,7 @@ export function StaggeredMenu({
   const style = { "--menu-accent": accentColor } as CSSProperties;
 
   return (
-    <div ref={wrapperRef} className={styles.wrapper} data-open={open || undefined} data-position={position} style={style}>
+    <div className={styles.wrapper} data-open={open || undefined} data-position={position} style={style}>
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link className={styles.brand} href="/" aria-label="Unifloe home" onClick={() => closeMenu()}>
@@ -123,8 +116,11 @@ export function StaggeredMenu({
           </Link>
 
           <div className={styles.headerActions}>
-            <Link className={styles.demoButton} href={productAppUrl} onClick={() => closeMenu()}>
-              Book a free demo
+            <a className={styles.signIn} href={productLinks.signIn}>
+              Sign in
+            </a>
+            <Link className={styles.startButton} href="/get-started" onClick={() => closeMenu()}>
+              Get started
             </Link>
             <button
               ref={toggleRef}
@@ -168,15 +164,18 @@ export function StaggeredMenu({
         aria-hidden={!open}
         inert={!open}
       >
-        <div className={styles.panelTop}>
-          <span>Explore Unifloe</span>
-          <span>ERP + LMS for Indian schools</span>
+        <div className={styles.productLinks}>
+          <a href={productLinks.demo} onClick={() => closeMenu()}>
+            <strong>Try the live demo</strong>
+            <span>Open go.unifloe.app as any role. Nothing you change is saved.</span>
+          </a>
+          <a href={productLinks.signIn} onClick={() => closeMenu()}>
+            <strong>Sign in</strong>
+            <span>For schools already on Unifloe.</span>
+          </a>
         </div>
-        <Link className={styles.pilotLink} href="/pricing#pilot" onClick={() => closeMenu()}>
-          <span>Pilot applications are open</span><strong>View the offer →</strong>
-        </Link>
         <nav aria-label="Primary navigation">
-          <ol className={`${styles.list} ${displayItemNumbering ? styles.numbered : ""}`}>
+          <ol className={styles.list}>
             {items.map((item, index) => {
               const active = item.link === "/" ? pathname === "/" : pathname.startsWith(item.link);
               return (
@@ -188,7 +187,6 @@ export function StaggeredMenu({
                     aria-current={active ? "page" : undefined}
                     onClick={() => closeMenu()}
                   >
-                    {displayItemNumbering && <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>}
                     <span className={styles.itemLabel}>{item.label}</span>
                   </Link>
                 </li>
@@ -197,8 +195,8 @@ export function StaggeredMenu({
           </ol>
         </nav>
         <div className={styles.panelCta}>
-          <p>Ready to see your school in one place?</p>
-          <Link href={productAppUrl} onClick={() => closeMenu()}>Start with a demo <span aria-hidden="true">↗</span></Link>
+          <p>Want to see it on your own school’s records?</p>
+          <Link href="/get-started" onClick={() => closeMenu()}>How to get started <span aria-hidden="true">↗</span></Link>
         </div>
       </aside>
     </div>

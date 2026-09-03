@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 import { ScrollMotion } from "./components/ScrollMotion";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { productAppUrl } from "./data/site-content";
+import { productLinks } from "./data/site-content";
 import { operatorName, siteName, siteUrl, socialImagePath } from "./lib/seo";
 
 export const metadata: Metadata = {
@@ -55,7 +54,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
-        <Link className="floating-demo" href={productAppUrl}>Book a free demo</Link>
+        <a className="floating-demo" href={productLinks.demo}>Try the live demo</a>
         <ScrollMotion />
       </body>
     </html>

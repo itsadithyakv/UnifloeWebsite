@@ -11,6 +11,7 @@ Requests for `http://unifloe.app`, `http://www.unifloe.app`, and `https://www.un
 - `https://unifloe.app/`
 - `https://unifloe.app/features/`
 - `https://unifloe.app/pricing/`
+- `https://unifloe.app/get-started/`
 - `https://unifloe.app/contact/`
 - `https://unifloe.app/about/`
 - `https://unifloe.app/school-erp-software-india/`
@@ -23,7 +24,7 @@ The LMS route remains indexable because it documents distinct assignment, submis
 
 ## Primary visitor navigation
 
-The global header presents exactly five primary pages: Home, Features, Pricing, About, and Contact. The footer reinforces the same compact information architecture through the home logo plus links to Features, Pricing, About, and Contact.
+The global header presents exactly six primary pages: Home, Features, Pricing, Get started, About, and Contact, plus a Sign in link and a Get started button. The footer reinforces the same compact information architecture: a Product group linking to the live demo at go.unifloe.app, sign in and Get started, and an Explore group linking to Features, Pricing, About, and Contact.
 
 The five specialist SEO pages remain useful, indexable, canonical and listed in the sitemap, but they are intentionally excluded from the global header and footer so they do not crowd normal visitor navigation. They must remain substantial, server rendered and reachable directly; do not disguise them with hidden text or create additional doorway pages.
 

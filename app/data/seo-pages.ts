@@ -1,5 +1,5 @@
 export type SeoPageContent = {
-  eyebrow: string;
+  name: string;
   intro: string;
   highlights: Array<{ title: string; copy: string }>;
   sections: Array<{
@@ -15,290 +15,330 @@ export type SeoPageContent = {
 
 export const seoPages = {
   about: {
-    eyebrow: "About Unifloe",
+    name: "About Unifloe",
     intro:
-      "PaperKite creates and operates Unifloe, a school ERP and LMS built for Indian schools. Unifloe brings academic, administrative, financial, communication and campus work into one role-aware product.",
+      "PaperKite creates and operates Unifloe, a school ERP and LMS built for Indian schools. Unifloe brings academic, administrative, financial, communication and campus work into one role aware product that a school runs at go.unifloe.app.",
     highlights: [
-      { title: "School-first product", copy: "Workflows start with the people, structures and responsibilities found inside a school." },
-      { title: "Role-aware by design", copy: "Students, faculty, leaders and operational teams receive focused views backed by server-side permission checks." },
-      { title: "Gradual rollout", copy: "Schools can begin with the workflows that matter most and expand their enabled modules over time." },
+      { title: "One deployment, many schools", copy: "Each school is a tenant with its own identity, enabled modules, branding, academic structure, users and data boundary." },
+      { title: "Roles that match a school", copy: "Ten school roles from Student to Security, plus guardian access on top of the student identity. PaperKite is a platform role, not a school superuser." },
+      { title: "A pilot of three schools", copy: "The current build is scoped to a pilot of up to three schools, run from Bengaluru, with the founder doing the onboarding." },
     ],
     sections: [
       {
         title: "PaperKite creates and operates Unifloe",
         paragraphs: [
-          "Unifloe is PaperKite's school ERP and LMS for Indian schools. PaperKite develops and operates the product, while schools use Unifloe to connect teaching, attendance, fees, requests, communication and campus services around a shared school structure.",
-          "The platform covers web and installable PWA experiences, with selected mobile journeys using the same authenticated school APIs. Each school retains its own identity, enabled modules, academic structure and data boundary.",
+          "Unifloe is PaperKite's school ERP and LMS for Indian schools. PaperKite develops and operates the product, while schools use Unifloe to connect teaching, attendance, marks, fees, requests, communication and campus services around one shared school structure.",
+          "The product is a web application that installs as a PWA on a phone or laptop. There is no separate mobile app to download and no device connector to maintain. A school signs in at go.unifloe.app with its school code.",
         ],
       },
       {
         title: "Built around real responsibility boundaries",
         paragraphs: [
-          "Visibility in the interface is not treated as authorization. Product services evaluate the signed-in actor, school tenant, role, module entitlement, assignment, ownership and workflow state before protected actions are allowed.",
-          "PaperKite operates the platform control plane for institution onboarding, module entitlements, subscription administration and approved support communication. School-owned academic and operational decisions remain inside authorized school workflows.",
+          "Visibility in the interface is never treated as authorisation. Every protected request resolves the signed in person, the school, the role, the module, the commercial capability, the school's own control policy and then ownership or assignment before anything is read or written.",
+          "Almost every consequential action starts with one role and finishes with another, joined by a record. A teacher proposes a timetable change and leadership publishes it. An admin records a payment and someone else verifies it. A warden proposes a fine and Finance owns the ledger.",
         ],
         points: [
-          "Tenant-aware school records and platform records",
-          "Role, assignment and ownership checks",
-          "Audited high-impact changes and approvals",
-          "Private school uploads and controlled delivery",
+          "The requester never performs the decision",
+          "A decision is a record with reason, context and outcome",
+          "The final authority check lives in the service, not the screen",
+          "High impact changes carry an approval or a confirmation",
+        ],
+      },
+      {
+        title: "Board formats the product understands",
+        paragraphs: [
+          "A school picks its board format first: CBSE, ICSE, state board or Karnataka Pre University. The format decides the vocabulary, the class bands, the assessment modes and the report card template shape.",
+          "A Karnataka PU college is the same product, not a fork. It gets I PUC and II PUC, lecturers and class in charges, marks based assessment throughout, a pass mark of 35, and subject combinations the college creates itself, with the common Karnataka sets offered as quick picks.",
         ],
       },
       {
         title: "Practical progress, not inflated claims",
         paragraphs: [
-          "Unifloe has a catalogue of 65 registered modules. Some have dedicated workspaces and domain services, some share richer grouped workspaces, and some remain configurable manifest-driven surfaces until a school needs a specialized flow.",
-          "Demo and onboarding conversations therefore focus on the workflows a school intends to use, the current implementation shape, required integrations and a realistic rollout sequence.",
+          "Unifloe registers 45 modules. A Core school runs 29 of them plus any optional set it turns on. Some modules have dedicated workspaces, some share a grouped workspace, and a few are plain manifest driven screens. The features page says which is which.",
+          "Some things are deliberately not in this build: payroll, online fee collection, a transport module, a chat app for every school, and any face or biometric attendance. Demo and onboarding conversations start from what exists today and a realistic rollout order.",
         ],
       },
     ],
     related: [
-      { href: "/features", label: "Explore the platform", copy: "Review Unifloe's registered academic, finance, campus and governance modules." },
-      { href: "/pricing", label: "Compare pilot paths", copy: "Start with a defined school pilot before a wider rollout." },
-      { href: "/contact", label: "Talk to PaperKite", copy: "Discuss your school priorities and the workflows to include first." },
+      { href: "/features", label: "Explore the platform", copy: "The registered modules by group, with the edition that includes each one." },
+      { href: "/get-started", label: "How a school gets started", copy: "From the live demo to the first parent signing in." },
+      { href: "/data-privacy", label: "How school data is handled", copy: "Who is responsible for what under the DPDP Act, and what Unifloe does about it." },
     ],
     cta: { title: "See how PaperKite can map Unifloe to your school.", copy: "Share your priorities and receive a focused product conversation.", href: "/contact", label: "Book a school demo" },
   },
   schoolErpIndia: {
-    eyebrow: "School ERP software for India",
+    name: "School ERP software for India",
     intro:
-      "Unifloe connects academic, administrative, financial, communication and campus workflows for Indian schools without forcing every role into the same generic screen.",
+      "Unifloe connects academic, administrative, financial, communication and campus workflows for Indian schools without forcing every role into the same generic screen. It is built for CBSE, ICSE, state board and Karnataka PU institutions.",
     highlights: [
-      { title: "ERP and LMS together", copy: "School operations and digital learning work from a connected academic and identity structure." },
-      { title: "Built for Indian schools", copy: "CBSE-first demo structures, Indian pricing and readiness workflows reflect local school operations." },
-      { title: "Configurable by school", copy: "Branding, terminology, modules and academic structures can be adapted to each institution." },
+      { title: "ERP and LMS together", copy: "Attendance, marks, fees and requests share the same classes, sections, people and permissions as assignments and materials." },
+      { title: "Built for Indian schools", copy: "Board formats, the 75 percent attendance threshold, hall tickets, receipts in rupees and guardian consent under the DPDP Act." },
+      { title: "Configurable by school", copy: "Logo, colours, terminology, enabled modules and academic structure adapt to each institution." },
     ],
     sections: [
       {
         title: "Replace fragmented school operations with connected workflows",
         paragraphs: [
-          "Attendance, fees, assignments, requests, announcements and campus services depend on many of the same students, families, staff, classes and permissions. Unifloe brings these workflows into one role-aware system so information can move through the school without repeated spreadsheets and informal handoffs.",
-          "Leadership receives aggregate operational views, faculty work from their assigned classes and subjects, and students or guardians see only the records and services connected to them.",
+          "Attendance, fees, assignments, requests, announcements and campus services depend on the same students, families, staff, classes and permissions. Unifloe brings these workflows into one role aware system so information moves through the school without repeated spreadsheets and informal handoffs.",
+          "Leadership sees whole school exceptions. Faculty work from their assigned classes and subjects. Students and guardians see only the records and services connected to them.",
         ],
         points: [
-          "Academic structures, timetables and attendance",
-          "Assignments, materials, assessment and feedback",
+          "Classes, sections, subjects, timetables and attendance",
+          "Assignments, materials, quizzes and feedback",
           "Fees, dues, receipts and concessions",
-          "Announcements, requests and school services",
+          "Announcements, requests and approvals",
         ],
       },
       {
         title: "Start from school structure and responsibility",
         paragraphs: [
-          "Each school is treated as a tenant with its own branding, enabled modules, capabilities, users and data boundary. Server-side policies repeat tenant and actor checks even when the interface has already hidden an unavailable action.",
-          "Class-teacher, subject and ownership authority comes from assignments rather than broad labels. This allows attendance, marks, calendars and LMS work to follow the people who are responsible for a specific class or learner.",
+          "Each school is a tenant with its own branding, enabled modules, capabilities, users and data boundary. The server repeats tenant and actor checks even when the interface has already hidden an unavailable action.",
+          "Class teacher, subject and ownership authority comes from assignments rather than broad labels. Attendance registers, marks entry, calendars and assignments follow the people who are responsible for a specific class or learner.",
         ],
       },
       {
         title: "Roll out the workflows your school is ready to adopt",
         paragraphs: [
-          "A school does not need to activate every registered module on day one. A pilot can begin with a defined set of workflows, confirm the school structure and responsibilities, and expand once staff are comfortable.",
-          "Final scope, configured modules, integrations and onboarding milestones are agreed before rollout. Generic catalogue surfaces are not presented as completed specialized implementations.",
+          "A school does not need to activate every registered module on day one. The Core edition covers the teaching day, communication, finance, people and administration. Library, Hostel with Front Office, and Inventory are optional sets a school turns on as a whole.",
+          "Final scope, enabled modules and onboarding milestones are agreed before rollout. Generic catalogue surfaces are not presented as completed specialised implementations.",
         ],
       },
       {
         id: "bengaluru-pilot",
         title: "Bengaluru pilot and onboarding support",
         paragraphs: [
-          "Bengaluru is Unifloe's initial region for guided school pilots. PaperKite uses those conversations to map each school's board and stage structure, student capacity, current systems, highest-friction workflows and the people responsible for each process.",
-          "Pilot modules, implementation shape, onboarding responsibilities and review milestones are agreed before work begins. Availability and timelines are confirmed directly; Unifloe does not claim a physical Bengaluru office or unpublished customer network.",
+          "Bengaluru is where the current pilot of up to three schools runs. PaperKite uses those conversations to map each school's board and stage structure, student capacity, current systems, highest friction workflows and the people responsible for each process.",
+          "Onboarding is a defined sequence: try the demo, agree the scope, register the school with a pilot invite, set up classes and subjects, import students from the Unifloe workbook, and activate guardians. Unifloe does not claim a physical Bengaluru office or an unpublished customer network.",
         ],
         points: [
-          "Direct workflow-discovery conversations",
+          "Direct workflow discovery conversations",
           "School structure and capacity review",
-          "Defined pilot modules and responsibilities",
-          "Onboarding milestones and success review",
+          "Defined edition, sets and responsibilities",
+          "Onboarding milestones and a review point",
         ],
       },
     ],
     related: [
-      { href: "/features", label: "Explore ERP and LMS features", copy: "See how registered modules are grouped across the school." },
-      { href: "/for-cbse-schools", label: "Unifloe for CBSE schools", copy: "Review CBSE-first academic structures and use cases." },
+      { href: "/get-started", label: "How to get started", copy: "The steps from the demo to a live school." },
+      { href: "/for-cbse-schools", label: "Unifloe for CBSE schools", copy: "Stages, registers, attendance and board readiness." },
       { href: "/pricing", label: "Review pilot pricing", copy: "Compare pilot and annual paths for different school sizes." },
     ],
     cta: { title: "Plan a connected school rollout.", copy: "Tell PaperKite which workflows create the most friction today.", href: "/contact", label: "Discuss your school" },
   },
   schoolLms: {
-    eyebrow: "Connected school LMS",
+    name: "Connected school LMS",
     intro:
-      "Unifloe's LMS supports assignments, learning materials, submissions, quizzes, assessment and feedback while staying connected to the school's classes, people and communication workflows.",
+      "The Unifloe LMS covers assignments, learning materials, quizzes, tests, submissions, grading and feedback, and it stays connected to the school's classes, people and communication.",
     highlights: [
-      { title: "Built around assignments", copy: "Faculty create due work and materials while students see current and completed activity." },
-      { title: "Connected context", copy: "Class, subject, timetable and communication context come from the same school structure." },
-      { title: "Role-scoped access", copy: "Faculty work within assigned classes and students access their own learning activity." },
+      { title: "Built around assignments", copy: "Faculty create due work and materials for the classes they teach. Students see current and completed work in urgency order." },
+      { title: "Connected context", copy: "Class, subject, timetable and announcement context comes from the same school structure as everything else." },
+      { title: "Role scoped access", copy: "Faculty work within assigned classes. Students see only their own submission, feedback and completed state." },
     ],
     sections: [
       {
         title: "Keep teaching and learning connected to the school day",
         paragraphs: [
-          "A standalone learning portal can become another place that teachers and families must keep in sync. Unifloe connects LMS activity to subjects, class sections, faculty assignments and the role inbox so learning tasks sit alongside the rest of school life.",
-          "Students can find due work and completed submissions while faculty create assignments, quizzes, tests, essays and materials for the classes they are authorized to teach.",
+          "A standalone learning portal becomes another place teachers and families must keep in sync. Unifloe connects LMS activity to subjects, sections, faculty assignments and the role inbox so learning tasks sit alongside the rest of school life.",
+          "Faculty open an assigned class and create a material, assignment, quiz or test. Draft content stays hidden until its publish state permits student access. Students open due work, submit the allowed response or file, and later see the released grade and feedback.",
         ],
         points: [
           "Assignments, quizzes, tests, essays and materials",
           "Student submissions and teacher feedback",
           "Due work, completed work and progress context",
-          "Class- and subject-aware access controls",
+          "Class and subject aware access controls",
         ],
       },
       {
-        title: "Support a clearer learning workflow",
+        title: "Assessments with server controlled attempts",
         paragraphs: [
-          "Faculty can move from lesson context to learning activity without rebuilding the same class and subject information. Students receive a focused view of what requires attention rather than an administrative workspace.",
-          "When configured, realtime updates can support active assessment state. The product retains a non-realtime fallback so the underlying authorization and persisted workflow do not depend on a live connection.",
+          "Quiz and test attempts are controlled by the server, not the browser, so a retried submission cannot bypass the rules. Faculty review submissions, grade or return feedback, release results and close the activity.",
+          "Live sessions can use a realtime channel when the school has it configured, and they still work through an ordinary refresh when it is not. Authorisation and the persisted workflow never depend on a live connection.",
         ],
       },
       {
         title: "Use LMS data responsibly",
         paragraphs: [
-          "Learning records are authenticated school data. They remain inside tenant-aware services and are not included in public marketing pages, offline public caches or search-engine surfaces.",
-          "Uploads use private, tenant-prefixed storage and restricted files require authenticated reads. Mobile and PWA clients use the same HTTPS API boundaries rather than receiving database credentials.",
+          "Learning records are authenticated school data. They stay inside tenant aware services and never appear on public pages, in offline caches or on search engine surfaces.",
+          "Uploads go to private, tenant prefixed storage and restricted files are re authorised on every read. The installed PWA uses the same HTTPS API as the browser and never receives database credentials.",
         ],
       },
     ],
     related: [
-      { href: "/features#assessment-workflows", label: "Assessment workflows", copy: "Connect questions, marks and report-card decisions to academic records." },
-      { href: "/features#attendance-workflows", label: "Attendance workflows", copy: "Use class, assignment, correction and leave context across the academic day." },
+      { href: "/features#assessment-workflows", label: "Exams and results", copy: "Exam plans, mark sheets, staggered release, report cards and hall tickets." },
+      { href: "/features#attendance-workflows", label: "Attendance workflows", copy: "Registers, dated policies, corrections and student leave." },
       { href: "/features", label: "All platform features", copy: "Review the wider academic and school operations catalogue." },
     ],
     cta: { title: "See the LMS in your school's context.", copy: "Choose the classes and learning workflows that should lead a pilot.", href: "/contact", label: "Book an LMS demo" },
   },
   cbseSchools: {
-    eyebrow: "For CBSE schools",
+    name: "For CBSE schools",
     intro:
-      "Unifloe uses a CBSE-first school structure covering Nursery, LKG, UKG and Grades 1–12 across Foundational, Preparatory, Middle and Secondary stages.",
+      "Unifloe models the CBSE school shape from Nursery, LKG and UKG through Classes 1 to 12, across the Foundational, Preparatory, Middle and Secondary stages, with the registers and thresholds the affiliation bye laws expect.",
     highlights: [
-      { title: "Nursery to Grade 12", copy: "Demo structures span pre-primary, primary, middle and secondary school journeys." },
+      { title: "Nursery to Class 12", copy: "Pre primary, primary, middle, secondary and senior secondary bands in one structure." },
       { title: "Connected academics", copy: "Classes, sections, subjects, timetables, attendance and assessment share one structure." },
-      { title: "School-configured", copy: "Production structure comes from each school's authorized records, not a fixed demo selector." },
+      { title: "School configured", copy: "The live structure comes from the school's own records during setup, not from a fixed demo." },
     ],
     sections: [
       {
         title: "Model the academic structure your school actually uses",
         paragraphs: [
-          "Classes, sections, stages, subjects, faculty assignments and term context form the foundation for academic workflows. Unifloe uses those records as authorization and routing inputs for timetables, attendance, marks, calendars, LMS activity and reporting.",
-          "The CBSE-first demo makes it possible to explore age-appropriate school stages from Nursery through Grade 12. During onboarding, the production structure is configured from the school's own authorized records.",
+          "Classes, sections, stages, subjects, faculty assignments and term context form the foundation for academic workflows. Unifloe uses those records as authorisation and routing inputs for timetables, attendance, marks, calendars, assignments and reporting.",
+          "The public demo lets you explore school stages from Nursery through Class 12. During onboarding the production structure is configured from the school's own authorised records.",
         ],
       },
       {
         title: "Connect assessment, attendance and family communication",
         paragraphs: [
-          "Faculty authority follows class and subject assignments. Attendance registers, academic calendars, assignments and marks can therefore stay connected to the correct section without giving every teacher blanket access.",
-          "Published announcements, due work, timetable changes and progress information can reach the relevant role inbox and dashboard while remaining scoped to authorized recipients.",
+          "Faculty authority follows class and subject assignments. Attendance registers, academic calendars, assignments and marks stay connected to the correct section without giving every teacher blanket access.",
+          "The attendance threshold defaults to 75 percent, the figure a CBSE school works to for board eligibility, and it is a school setting rather than a constant. Report cards are graded on the school's own scale, and hall tickets are only issued once the exam timetable is announced.",
         ],
         points: [
           "Stage, class, section and subject structures",
-          "Faculty assignment and class-teacher context",
+          "Faculty assignment and class teacher context",
           "Attendance, assessment and report workflows",
           "Guardian communication and consent records",
         ],
       },
       {
-        title: "Support readiness without overstating affiliation",
+        title: "Registers and records a CBSE school keeps",
         paragraphs: [
-          "Unifloe includes workflows for curriculum readiness, UDISE+, APAAR and Holistic Progress Card operations. These tools organize school records, validation and authorized decisions; they do not make Unifloe a government authority or certification body.",
-          "Schools remain responsible for their regulatory decisions, official submissions and interpretation of applicable requirements.",
+          "The bye laws expect an admission and withdrawal register, a daily attendance register, a cumulative record for each student and staff records. Unifloe keeps the roster, the attendance history, released marks and staff documents, and exports attendance as a workbook.",
+          "UDISE+ returns are prepared from the school's own exports. Unifloe does not integrate live with UDISE+ or APAAR, does not store Aadhaar numbers, and is not a government authority or certification body. Regulatory decisions and official submissions remain the school's.",
         ],
       },
     ],
     notice: "Unifloe is an independent PaperKite product. It is not affiliated with or approved by CBSE, the Government of India, APAAR or UDISE+.",
     related: [
-      { href: "/apaar-readiness", label: "APAAR readiness", copy: "Review structured records, consent and readiness checks." },
-      { href: "/features#assessment-workflows", label: "Assessment workflows", copy: "See connected assessment, marks and report-card decisions." },
+      { href: "/apaar-readiness", label: "APAAR consent and UDISE+", copy: "What Unifloe records, and what it deliberately does not." },
+      { href: "/features#assessment-workflows", label: "Exams and results", copy: "Mark sheets, staggered release, report cards and hall tickets." },
       { href: "/school-erp-software-india", label: "School ERP for India", copy: "Explore the wider operating system for Indian schools." },
     ],
     cta: { title: "Map Unifloe to your CBSE school.", copy: "Discuss stages, sections, subjects and the workflows to include first.", href: "/contact", label: "Book a CBSE school demo" },
   },
   apaar: {
-    eyebrow: "APAAR readiness",
+    name: "APAAR readiness",
     intro:
-      "Unifloe supports school workflows around structured student records, UDISE+ readiness, guardian consent and APAAR status tracking without presenting itself as a certification authority.",
+      "APAAR is voluntary and needs a parent's consent. Unifloe records that consent separately from everything else, keeps the student identity records a school needs for UDISE+, and stores no Aadhaar number anywhere.",
     highlights: [
-      { title: "Structured records", copy: "Organize identity and academic information used by authorized readiness workflows." },
-      { title: "Consent-aware", copy: "Track guardian consent as a separate requirement before an APAAR status can be marked generated." },
-      { title: "Readiness checks", copy: "Identify missing student, teacher and infrastructure fields before preparing an export." },
+      { title: "Separate consent", copy: "APAAR generation has its own consent type, so a parent can consent to the school running on Unifloe and still decline APAAR." },
+      { title: "No Aadhaar stored", copy: "Unifloe holds no Aadhaar number and never places one in a log, an export or a link." },
+      { title: "Exports, not integrations", copy: "A UDISE+ return is prepared from the school's own extracts. There is no live connection to a government system." },
     ],
     sections: [
       {
-        title: "Prepare the records before the submission step",
+        title: "Consent that is recorded on its own",
         paragraphs: [
-          "Readiness begins with the quality and completeness of school records. Unifloe's compliance services can identify missing student, teacher and infrastructure information used by the school's UDISE+ preparation workflow.",
-          "An export is prepared only after the configured readiness validation succeeds. Official submission, acceptance and interpretation remain the responsibility of the school and the applicable government system.",
+          "Every consent record in Unifloe carries a type. Platform terms and data processing consent are needed to sign in. APAAR generation is a third, separate type, recorded only when a parent chooses it.",
+          "Each record stores who consented, the verification method, the notice version, the purposes and the data categories. Withdrawal is a first class action and the whole history for a student can be reviewed.",
+        ],
+        points: [
+          "Three consent types, recorded independently",
+          "Verification method and notice version on every record",
+          "Withdrawal recorded, never silently deleted",
+          "Full consent history per student",
         ],
       },
       {
-        title: "Keep APAAR consent and status visible",
+        title: "What Unifloe keeps for UDISE+",
         paragraphs: [
-          "APAAR status tracking can distinguish not started, pending match review, pending consent, generated and failed states. A generated status requires readiness checks, active guardian APAAR consent and a valid identifier in the authorized workflow.",
-          "Consent records are stored separately from a general platform agreement so the school can review the purpose and status relevant to APAAR generation.",
-        ],
-        points: [
-          "UDISE+ readiness validation",
-          "Guardian APAAR consent records",
-          "Student status and match-review tracking",
-          "Authorized export and audit context",
+          "Every recognised school files annual data into UDISE+ with student level records keyed to the Permanent Education Number. Unifloe keeps the roster, class placement, attendance history and guardian links a school draws on for that return.",
+          "The return itself is produced from exports. An earlier compliance module that generated UDISE+ and APAAR outputs was removed because nothing used it; if it returns, it returns as an export, not a live integration.",
         ],
       },
       {
         title: "Use readiness language accurately",
         paragraphs: [
-          "Unifloe can help organize the data and workflow a school uses when preparing for APAAR-related operations. It does not issue APAAR IDs, certify a school, guarantee acceptance or replace official guidance.",
-          "Schools should verify current requirements and obtain appropriate professional or government guidance before making regulatory decisions.",
+          "Unifloe helps a school organise records and consent around APAAR. It does not issue APAAR IDs, certify a school, guarantee acceptance or replace official guidance.",
+          "If a school collects Aadhaar for UDISE+ or APAAR, it should hold a masked reference and a verification outcome in Unifloe, never the number. Schools should verify current requirements and take appropriate guidance before making regulatory decisions.",
         ],
       },
     ],
-    notice: "Unifloe is not APAAR certified, government approved or affiliated with the Government of India. This page describes product workflow support, not legal or regulatory advice.",
+    notice: "Unifloe is not APAAR certified, government approved or affiliated with the Government of India. This page describes product behaviour, not legal or regulatory advice.",
     related: [
-      { href: "/data-privacy", label: "Data privacy and DPDP readiness", copy: "Review consent, tenant and access-control boundaries." },
-      { href: "/for-cbse-schools", label: "CBSE school workflows", copy: "See the academic structure surrounding readiness records." },
-      { href: "/features", label: "Compliance features", copy: "Explore governance, reporting and school-record modules." },
+      { href: "/data-privacy", label: "How school data is handled", copy: "Responsibilities, consent, safeguards and retention under the DPDP Act." },
+      { href: "/for-cbse-schools", label: "CBSE school workflows", copy: "The academic structure around these records." },
+      { href: "/features", label: "All features", copy: "Explore the registered modules by group." },
     ],
-    cta: { title: "Review your school's readiness workflow.", copy: "Discuss records, consent and operational steps without unsupported certification claims.", href: "/contact", label: "Book a readiness demo" },
+    cta: { title: "Review your school's consent and records workflow.", copy: "Discuss what is recorded, what is exported and what stays with the school.", href: "/contact", label: "Book a readiness conversation" },
   },
   dataPrivacy: {
-    eyebrow: "School data privacy",
+    name: "School data privacy",
     intro:
-      "Unifloe supports privacy-conscious school data workflows through tenant boundaries, server-side authorization, guardian consent, audit history and controlled file delivery.",
+      "Under the Digital Personal Data Protection Act the school is the Data Fiduciary and PaperKite is the Data Processor. This page says what each side carries, what Unifloe implements, and what remains the school's own job.",
     highlights: [
-      { title: "Tenant boundaries", copy: "School-owned records are scoped to the authenticated institution instead of caller-supplied identifiers." },
-      { title: "Server authorization", copy: "Roles, assignments, ownership and entitlements are checked behind the interface." },
-      { title: "Purposeful records", copy: "Consent, audit and private-upload workflows preserve relevant context without publishing school data." },
+      { title: "Consent from the parent", copy: "A child's data needs a parent's own verifiable consent. There is deliberately no option for an administrator to consent on a parent's behalf." },
+      { title: "Safeguards in the product", copy: "Hashed passwords, encrypted secrets, private tenant scoped files, structural tenant isolation, rate limits and a strict content security policy." },
+      { title: "No tracking of children", copy: "No advertising, no third party analytics, no session replay and no cross site tracking anywhere in the product." },
     ],
     sections: [
       {
-        title: "Treat visibility and authorization as different concerns",
+        title: "Who is responsible for what",
         paragraphs: [
-          "A hidden link is not a security boundary. Unifloe's protected services resolve the authenticated actor and school, then evaluate roles, enabled modules, permissions, assignments, ownership, guardian links and workflow state as applicable.",
-          "Sensitive services repeat school and actor checks even when a shared route wrapper has already performed a broader authorization step.",
-        ],
-      },
-      {
-        title: "Keep school, platform and mixed data in the right scope",
-        paragraphs: [
-          "School academic, financial, people and operations data belongs to a school tenant. PaperKite institution and subscription administration stays in platform scope, while carefully defined mixed workflows coordinate identity with school-owned records.",
-          "Private uploads use tenant-prefixed storage and restricted files require authenticated delivery. Clients receive controlled application responses, not database credentials or unrestricted object-store access.",
+          "The school decides the purpose and means of processing student, guardian and staff data, so it carries notice, consent, purpose limitation, accuracy, retention, responding to requests, breach notification and grievance redressal.",
+          "PaperKite processes only on the school's instructions. It carries security safeguards, processing only under a written contract, assisting the school with requests and breach facts, deleting on instruction, and never using school data for its own purposes. A data processing agreement naming purposes, safeguards and the services Unifloe relies on is settled with each school before it goes live.",
         ],
         points: [
-          "Tenant-aware repositories and private uploads",
-          "Guardian links and purpose-specific consent",
-          "Audited marks, attendance and permission changes",
-          "Network-only authenticated PWA data",
+          "School: notice, consent, retention, grievance officer",
+          "PaperKite: safeguards, contract, deletion on instruction",
+          "Parent or guardian: consent for the child",
+          "Every pilot student is a child under the Act",
         ],
       },
       {
-        title: "Support DPDP readiness without claiming complete compliance",
+        title: "Consent the way the Act describes it",
         paragraphs: [
-          "Technology controls are only one part of a school's data-governance responsibilities. Unifloe provides tools that can support consent, access, correction, audit and controlled data handling processes.",
-          "Configuration, school policy, contractual terms, operational practice and applicable legal interpretation remain necessary. PaperKite does not describe the product as automatically or completely DPDP compliant.",
+          "The default basis is the parent's own act inside the product. A parent signs in and is held at the consent step until platform terms and data processing consent are both recorded. A school may instead rely on a signed admission form, but only if that form carries the DPDP notice, and each row must declare it.",
+          "Every consent record stores the verification method, the notice version, the purposes and the data categories. Withdrawal is as easy as giving consent, and the full history for a student can be reviewed at any time.",
+        ],
+        points: [
+          "Parent in app consent by default",
+          "Signed admission form as a declared alternative",
+          "Withdrawal recorded as a first class action",
+          "APAAR consent kept separate and optional",
+        ],
+      },
+      {
+        title: "Security safeguards that are in the product",
+        paragraphs: [
+          "Passwords are hashed. Connection strings and integration secrets are encrypted at rest. Uploads are size limited, type checked, tenant prefixed, private and re authorised on every read. Every school record is read and written through a repository that cannot build a query without the school identity.",
+          "The content security policy uses a per request nonce and blocks framing. Rate limits sit before any account lookup. Every authenticated response is marked private and never stored by a cache. Audit and error reports exclude passwords, tokens, request bodies, student names and guardian emails.",
+        ],
+        points: [
+          "No card or bank details stored; payments are recorded at the school",
+          "No Aadhaar numbers and no biometrics",
+          "Blood group is the only health field, and the school can decide not to collect it",
+          "Backups are encrypted and restore drills are part of admitting a school",
+        ],
+      },
+      {
+        title: "What is retained, and for how long",
+        paragraphs: [
+          "Email delivery history is compacted after 90 days. Password reset links last 30 minutes. One time codes last 10 minutes. Public demo changes live in the visitor's browser for 24 hours and never touch a real school. Sessions last 30 days by default.",
+          "Chat messages and cold module history are archived on the school's rules and purged only after a verified backup exists, never while a legal hold is active. Statutory retention of financial, employment and admission records remains the school's own obligation.",
+        ],
+      },
+      {
+        title: "What stays with the school",
+        paragraphs: [
+          "The school publishes the privacy notice, names a grievance officer, decides the consent basis against its own admission form, and answers access, correction and erasure requests. Unifloe gives every person a view of their own data and lets the school correct records with an audit trail, but a formal request is still answered by the school.",
+          "Breach notification to the Data Protection Board and to affected people is the school's duty. PaperKite provides the facts and monitoring, and the timelines are written into the agreement with each school. This page is engineering guidance, not legal advice, and it does not describe the product as automatically or completely DPDP compliant.",
+        ],
+      },
+      {
+        title: "Services Unifloe relies on",
+        paragraphs: [
+          "Unifloe runs as one application behind Nginx at go.unifloe.app. Records are stored in MongoDB Atlas, private files, archives and backups in Cloudflare R2, transactional email goes through Resend, school outbound email through the school's own Google account, error reporting through Sentry with scrubbing, and optional live updates through Ably.",
+          "These are named as sub processors in the data processing agreement. Hosting regions are confirmed with each school against the residency requirements that apply to it.",
         ],
       },
     ],
-    notice: "This page describes product controls that may support school data-governance and DPDP-readiness processes. It is not legal advice or a certification of complete DPDP compliance.",
+    notice: "This page describes product controls that support a school's data governance under the DPDP Act. It is not legal advice or a certification of complete compliance, and dates, thresholds and commencement status should be confirmed with counsel.",
     related: [
-      { href: "/apaar-readiness", label: "APAAR readiness", copy: "See how guardian consent and structured records support readiness work." },
-      { href: "/about", label: "About PaperKite and Unifloe", copy: "Review the product's operating and responsibility model." },
+      { href: "/apaar-readiness", label: "APAAR consent and UDISE+", copy: "What is recorded, what is exported and what is never stored." },
+      { href: "/about", label: "About PaperKite and Unifloe", copy: "The operating and responsibility model." },
       { href: "/contact", label: "Discuss your requirements", copy: "Bring your school's privacy and governance questions to a focused conversation." },
     ],
-    cta: { title: "Make data-governance questions part of the demo.", copy: "Discuss tenant scope, access, consent, audit and rollout responsibilities.", href: "/contact", label: "Talk to PaperKite" },
+    cta: { title: "Make data governance part of the demo.", copy: "Discuss consent basis, safeguards, retention and who does what.", href: "/contact", label: "Talk to PaperKite" },
   },
 } as const satisfies Record<string, SeoPageContent>;
