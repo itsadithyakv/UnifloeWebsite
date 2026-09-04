@@ -448,12 +448,27 @@ test("uses optimized profile avatars and defers below-fold rendering work", asyn
   assert.doesNotMatch(packageJson, /"gsap"/);
 });
 
+test("uses one shared hero and one closing call to action on every inner page", async () => {
+  const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
+  for (const [index, html] of pages.entries()) {
+    const [pathname] = routeCases[index];
+    if (pathname === "/") continue;
+    assert.equal((html.match(/class="page-hero(?: has-aside)?"/g) ?? []).length, 1, `${pathname} has one shared hero`);
+    if (pathname !== "/contact") {
+      assert.match(html, /class="section-shell final-cta"/, `${pathname} closes with the shared call to action`);
+      assert.match(html, /class="hero-actions"><a class="button" href="https:\/\/go\.unifloe\.app\/demo">Try the live demo/, `${pathname} hero leads with the demo`);
+      assert.match(html, /href="\/contact">Talk to PaperKite/, `${pathname} hero offers the contact link`);
+    }
+    assert.doesNotMatch(html, /features-hero|seo-hero|start-hero|inline-cta/, `${pathname} carries no page specific hero`);
+  }
+});
+
 test("gives pricing the feature hero art direction and a visual plan path", async () => {
   const [pricing, pricingSource] = await Promise.all([
     render("/pricing").then((response) => response.text()),
     readFile(new URL("app/pricing/page.tsx", root), "utf8"),
   ]);
-  assert.match(pricingSource, /features-hero pricing-hero/);
+  assert.match(pricingSource, /<PageHero/);
   assert.match(pricing, /Free to Growth/);
   assert.match(pricing, /Two campuses or more/);
   assert.match(pricing, /Compare the plans/);
@@ -514,7 +529,6 @@ test("uses a purpose-built portrait layout instead of a compressed desktop hero"
   assert.match(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)[\s\S]*?\.hero\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?background:\s*#fff/);
   assert.match(globalCss, /\.hero-dot-grid,\s*\.hero::before,\s*\.hero-product-aura\s*\{\s*display:\s*none/);
   assert.match(globalCss, /\.trust-strip\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2/);
-  assert.match(globalCss, /\.features-hero-shape\s*\{\s*display:\s*none/);
   assert.match(globalCss, /\[data-reveal\]\.reveal-ready\s*\{[\s\S]*?filter:\s*blur\(5px\)/);
   assert.doesNotMatch(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)[\s\S]*?filter:\s*none/);
 });

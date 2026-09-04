@@ -1,25 +1,19 @@
 import Link from "next/link";
 import { ArrowRight, Check, Layers3 } from "lucide-react";
 import type { SeoPageContent } from "../data/seo-pages";
-import { productLinks } from "../data/site-content";
 import { getPublicRoute } from "../lib/seo";
+import { FinalCta } from "./FinalCta";
+import { PageHero } from "./PageHero";
 
 export function SeoLandingPage({ path, content }: { path: string; content: SeoPageContent }) {
   const route = getPublicRoute(path);
 
   return (
     <main id="main-content" className="seo-landing">
-      <section className="seo-hero">
-        <div className="seo-hero-shape" aria-hidden="true" />
-        <div className="section-shell seo-hero-inner">
-          <div className="seo-hero-copy" data-reveal>
-            <h1>{route.h1}</h1>
-            <p>{content.intro}</p>
-            <div className="seo-hero-actions">
-              <Link className="button" href={content.cta.href}>{content.cta.label}<ArrowRight aria-hidden="true" /></Link>
-              <a className="text-link" href={productLinks.demo}>Try the live demo<ArrowRight aria-hidden="true" /></a>
-            </div>
-          </div>
+      <PageHero
+        title={route.h1}
+        lead={content.intro}
+        aside={
           <div className="seo-highlight-stack" data-reveal-group aria-label={`${content.name} highlights`}>
             {content.highlights.map((highlight) => (
               <article key={highlight.title}>
@@ -28,23 +22,19 @@ export function SeoLandingPage({ path, content }: { path: string; content: SeoPa
               </article>
             ))}
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <div className="section-shell seo-content">
         {content.sections.map((section) => (
           <section className="seo-content-section" id={section.id} key={section.title} data-reveal>
             <div className="seo-section-heading">
               <h2>{section.title}</h2>
+              {section.lead ? <p>{section.lead}</p> : null}
             </div>
-            <div className="seo-section-body">
-              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              {section.points ? (
-                <ul>
-                  {section.points.map((point) => <li key={point}><Check aria-hidden="true" />{point}</li>)}
-                </ul>
-              ) : null}
-            </div>
+            <ul className="seo-section-points">
+              {section.points.map((point) => <li key={point}><Check aria-hidden="true" />{point}</li>)}
+            </ul>
           </section>
         ))}
       </div>
@@ -71,11 +61,7 @@ export function SeoLandingPage({ path, content }: { path: string; content: SeoPa
         </div>
       </section>
 
-      <section className="section-shell final-cta seo-final-cta" data-reveal>
-        <div className="final-cta-copy"><h2>{content.cta.title}</h2><p>{content.cta.copy}</p></div>
-        <Link className="button button-light" href={content.cta.href}>{content.cta.label}<ArrowRight aria-hidden="true" /></Link>
-        <div className="final-cta-clay" aria-hidden="true"><span /><span /><span /></div>
-      </section>
+      <FinalCta />
     </main>
   );
 }

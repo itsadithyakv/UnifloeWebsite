@@ -1,6 +1,7 @@
 import { ArrowRight, Clock3, Mail, MapPin, MessageCircleMore, Phone, ShieldCheck } from "lucide-react";
 import { ContactForm } from "../components/ContactForm";
 import { productLinks } from "../data/site-content";
+import { PageHero } from "../components/PageHero";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/contact/");
@@ -17,10 +18,14 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
   return (
     <main id="main-content">
+      <PageHero
+        title={<>Let’s map Unifloe<br /><span>to your school.</span></>}
+        lead="A focused conversation around your workflows, scale and priorities. If you would rather look first, the live demo is open now."
+        actions={false}
+        aside={<ContactForm initialInterest={initialInterest} />}
+      />
       <section className="contact-hero section-shell">
         <div className="contact-intro" data-reveal>
-          <h1>Let’s map Unifloe<br /><span>to your school.</span></h1>
-          <p>A focused conversation around your workflows, scale and priorities. If you would rather look first, the live demo is open now.</p>
           <a className="text-link contact-demo-link" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
           <div className="contact-benefits" data-reveal-group>
             <div><span><Clock3 aria-hidden="true" /></span><div><strong>Relevant from the start</strong><p>Your priorities, not a generic tour.</p></div></div>
@@ -33,7 +38,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           </div>
           <div className="contact-assurance"><ShieldCheck aria-hidden="true" /><p><strong>Responsible enquiry handling</strong>Sent only to the configured Unifloe inbox.</p></div>
         </div>
-        <ContactForm initialInterest={initialInterest} />
       </section>
       <section className="section-shell privacy-panel" id="privacy" data-reveal>
         <div className="privacy-copy">

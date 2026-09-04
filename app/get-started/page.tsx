@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Check, KeyRound, LogIn, MonitorPlay, Users } from "lucide-react";
 import { boardFormats, productLinks } from "../data/site-content";
+import { FinalCta } from "../components/FinalCta";
+import { PageHero } from "../components/PageHero";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/get-started/");
@@ -102,17 +104,10 @@ function StepLink({ link }: { link: { href: string; label: string; external: boo
 export default function GetStartedPage() {
   return (
     <main id="main-content">
-      <section className="features-hero start-hero">
-        <div className="features-hero-shape" aria-hidden="true" />
-        <div className="features-hero-inner section-shell">
-          <div className="features-hero-copy" data-reveal>
-            <h1>Start using Unifloe<br /><span>in a few clear steps.</span></h1>
-            <p>From the live demo to the first parent signing in. Every step has a page or a template behind it, and PaperKite does the first ones with you.</p>
-            <div className="hero-actions">
-              <a className="button" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
-              <Link className="text-link start-hero-link" href="/contact">Talk to PaperKite <ArrowRight aria-hidden="true" /></Link>
-            </div>
-          </div>
+      <PageHero
+        title={<>Start using Unifloe<br /><span>in a few clear steps.</span></>}
+        lead="From the live demo to the first parent signing in. Every step has a page or a template behind it, and PaperKite does the first ones with you."
+        aside={
           <div className="entry-grid" data-reveal-group>
             {entryPoints.map(({ Icon, title, copy, href, label, external }) => (
               <article key={title}>
@@ -123,8 +118,8 @@ export default function GetStartedPage() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <section className="section-shell steps-section" aria-labelledby="steps-heading">
         <div className="section-heading" data-reveal>
@@ -171,14 +166,7 @@ export default function GetStartedPage() {
         </div>
       </section>
 
-      <section className="section-shell final-cta" data-reveal>
-        <div className="final-cta-copy"><h2>Ready when you are.</h2><p>Look at the demo now, or tell PaperKite about your school and get an invite.</p></div>
-        <div className="final-cta-actions">
-          <a className="button button-light" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
-          <Link className="final-cta-link" href="/contact">Talk to PaperKite <ArrowRight aria-hidden="true" /></Link>
-        </div>
-        <div className="final-cta-clay" aria-hidden="true"><span /><span /><span /></div>
-      </section>
+      <FinalCta title="Ready when you are." copy="Look at the demo now, or tell PaperKite about your school and get an invite." />
     </main>
   );
 }

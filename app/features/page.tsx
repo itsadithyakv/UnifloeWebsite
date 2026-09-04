@@ -1,6 +1,8 @@
 import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, CalendarRange, ClipboardCheck, FileCheck2, Landmark, MessagesSquare, UsersRound, WalletCards } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
-import { coreModuleCount, editionLabels, featureGroups, productLinks, totalModuleCount } from "../data/site-content";
+import { FinalCta } from "../components/FinalCta";
+import { PageHero } from "../components/PageHero";
+import { coreModuleCount, editionLabels, featureGroups, totalModuleCount } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/features/");
@@ -68,13 +70,10 @@ const workflowDeepDives = [
 export default function FeaturesPage() {
   return (
     <main id="main-content">
-      <section className="features-hero">
-        <div className="features-hero-shape" aria-hidden="true" />
-        <div className="features-hero-inner section-shell">
-          <div className="features-hero-copy" data-reveal>
-            <h1>Every school workflow.<br /><span>One connected system.</span></h1>
-            <p>{totalModuleCount} modules across six groups. A Core school runs {coreModuleCount} of them, plus the sets it turns on.</p>
-          </div>
+      <PageHero
+        title={<>Every school workflow.<br /><span>One connected system.</span></>}
+        lead={`${totalModuleCount} modules across six groups. A Core school runs ${coreModuleCount} of them, plus the sets it turns on.`}
+        aside={
           <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six groups`}>
             <div className="features-platform-head">
               <span>
@@ -91,8 +90,8 @@ export default function FeaturesPage() {
               })}
             </div>
           </div>
-        </div>
-      </section>
+        }
+      />
       <nav className="feature-jump section-shell" aria-label="Feature groups" data-reveal-group>
         {featureGroups.map((group) => {
           const Icon = groupIcons[group.icon];
@@ -152,7 +151,7 @@ export default function FeaturesPage() {
           })}
         </div>
       </section>
-      <section className="section-shell inline-cta" data-reveal><div><h2>Try any of this right now.</h2><p>The demo runs the real product on a synthetic school. Nothing you change is saved.</p></div><a className="button" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a></section>
+      <FinalCta />
     </main>
   );
 }

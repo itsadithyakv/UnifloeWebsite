@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Check, CircleHelp, KeyRound, Receipt, UsersRound } from "lucide-react";
 import { PriceCounter } from "../components/Counter";
+import { FinalCta } from "../components/FinalCta";
+import { PageHero } from "../components/PageHero";
 import { plans } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
@@ -11,13 +13,10 @@ const pathSteps = plans.map((plan, index) => ({ step: index + 1, name: plan.name
 export default function PricingPage() {
   return (
     <main id="main-content">
-      <section className="features-hero pricing-hero">
-        <div className="features-hero-shape pricing-hero-shape" aria-hidden="true" />
-        <div className="features-hero-inner pricing-hero-inner section-shell">
-          <div className="features-hero-copy pricing-hero-copy" data-reveal>
-            <h1>Free for one class.<br /><span>Clear plans for the whole school.</span></h1>
-            <p>Start with one section at no cost, for as long as you like. When the whole school comes on, pick the plan by students on roll and pay monthly or yearly.</p>
-          </div>
+      <PageHero
+        title={<>Free for one class.<br /><span>Clear plans for the whole school.</span></>}
+        lead="Start with one section at no cost, for as long as you like. When the whole school comes on, pick the plan by students on roll and pay monthly or yearly."
+        aside={
           <div className="pricing-path-card" data-reveal aria-label="The four Unifloe plans from Free to Growth">
             <div className="pricing-path-head"><strong>Free to Growth</strong></div>
             <div className="pricing-path">
@@ -30,8 +29,8 @@ export default function PricingPage() {
             </div>
             <Link className="pricing-path-foot" href="/contact"><span>Two campuses or more</span><strong>Talk to PaperKite about scope</strong><ArrowRight aria-hidden="true" /></Link>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <section className="section-shell pricing-section" id="plans">
         <div className="pricing-section-heading" data-reveal><h2>Four plans. One product.</h2><p>Every plan runs the same product at go.unifloe.app. The difference is students on roll and what is switched on.</p></div>
@@ -77,7 +76,8 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="section-shell pricing-clarity"><p>Prices are shown exactly as provided. Enabled modules and rollout are confirmed with each school before onboarding.</p><Link className="text-link" href="/contact">Talk through the right plan <ArrowRight aria-hidden="true" /></Link></section>
+      <section className="section-shell pricing-clarity"><p>Prices are shown exactly as provided. Enabled modules and rollout are confirmed with each school before onboarding.</p></section>
+      <FinalCta />
     </main>
   );
 }

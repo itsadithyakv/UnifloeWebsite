@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PriceCounter } from "./components/Counter";
 import { DotGrid } from "./components/DotGrid";
+import { FinalCta } from "./components/FinalCta";
 import { HeroProduct } from "./components/HeroProduct";
 import {
   ArrowRight,
@@ -240,14 +241,7 @@ export default function Home() {
         <p className="pilot-footnote">Enabled modules and rollout are confirmed with each school before onboarding.</p>
       </section>
 
-      <section className="section-shell final-cta" data-reveal>
-        <div className="final-cta-copy"><h2>See it running before you decide.</h2><p>The demo is the real product on a synthetic school. Open it as a principal, a teacher or a parent.</p></div>
-        <div className="final-cta-actions">
-          <a className="button button-light" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
-          <Link className="final-cta-link" href="/contact">Talk to PaperKite <ArrowRight aria-hidden="true" /></Link>
-        </div>
-        <div className="final-cta-clay" aria-hidden="true"><span /><span /><span /></div>
-      </section>
+      <FinalCta />
     </main>
   );
 }
