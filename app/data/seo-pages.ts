@@ -54,13 +54,13 @@ export const seoPages = {
       {
         title: "Practical progress, not inflated claims",
         paragraphs: [
-          "Unifloe registers 45 modules. A Core school runs 29 of them plus any optional set it turns on. Some modules have dedicated workspaces, some share a grouped workspace, and a few are plain manifest driven screens. The features page says which is which.",
-          "Some things are deliberately not in this build: payroll, online fee collection, a transport module, a chat app for every school, and any face or biometric attendance. Demo and onboarding conversations start from what exists today and a realistic rollout order.",
+          "A Core school runs 29 modules plus any optional set it turns on, and the Full edition runs every module. Some modules have their own workspace and some share a grouped workspace, and the features page shows which edition includes each one.",
+          "Demo and onboarding conversations start from the workflows a school will actually use and a realistic rollout order, so the first term on Unifloe is calm rather than crowded.",
         ],
       },
     ],
     related: [
-      { href: "/features", label: "Explore the platform", copy: "The registered modules by group, with the edition that includes each one." },
+      { href: "/features", label: "Explore the platform", copy: "The modules by group, with the edition that includes each one." },
       { href: "/get-started", label: "How a school gets started", copy: "From the live demo to the first parent signing in." },
       { href: "/data-privacy", label: "How school data is handled", copy: "Who is responsible for what under the DPDP Act, and what Unifloe does about it." },
     ],
@@ -243,7 +243,7 @@ export const seoPages = {
         title: "What Unifloe keeps for UDISE+",
         paragraphs: [
           "Every recognised school files annual data into UDISE+ with student level records keyed to the Permanent Education Number. Unifloe keeps the roster, class placement, attendance history and guardian links a school draws on for that return.",
-          "The return itself is produced from exports. An earlier compliance module that generated UDISE+ and APAAR outputs was removed because nothing used it; if it returns, it returns as an export, not a live integration.",
+          "The return itself is produced from exports the school downloads, checks and submits. There is no live connection between Unifloe and a government system.",
         ],
       },
       {
@@ -258,7 +258,7 @@ export const seoPages = {
     related: [
       { href: "/data-privacy", label: "How school data is handled", copy: "Responsibilities, consent, safeguards and retention under the DPDP Act." },
       { href: "/for-cbse-schools", label: "CBSE school workflows", copy: "The academic structure around these records." },
-      { href: "/features", label: "All features", copy: "Explore the registered modules by group." },
+      { href: "/features", label: "All features", copy: "Explore the modules by group." },
     ],
     cta: { title: "Review your school's consent and records workflow.", copy: "Discuss what is recorded, what is exported and what stays with the school.", href: "/contact", label: "Book a readiness conversation" },
   },

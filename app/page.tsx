@@ -176,7 +176,7 @@ export default function Home() {
             <article className="pitch-card pitch-modules">
               <div className="modules-intro">
                 <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3><p>A Core school runs {coreModuleCount} modules. Library, Hostel and Inventory are sets you turn on as a whole.</p></div></div>
-                <div className="module-count"><strong>{totalModuleCount}</strong><span>registered<br />modules</span></div>
+                <div className="module-count"><strong>{totalModuleCount}</strong><span>modules<br />in six groups</span></div>
                 <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
               </div>
               <div className="module-family-list">

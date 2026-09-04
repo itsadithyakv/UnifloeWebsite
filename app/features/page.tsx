@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, CalendarRange, ClipboardCheck, FileCheck2, Landmark, MessagesSquare, UsersRound, WalletCards } from "lucide-react";
 import { FeatureAccordion } from "../components/FeatureAccordion";
 import { coreModuleCount, editionLabels, featureGroups, productLinks, totalModuleCount } from "../data/site-content";
@@ -74,7 +73,7 @@ export default function FeaturesPage() {
         <div className="features-hero-inner section-shell">
           <div className="features-hero-copy" data-reveal>
             <h1>Every school workflow.<br /><span>One connected system.</span></h1>
-            <p>{totalModuleCount} registered modules across six groups. A Core school runs {coreModuleCount} of them, plus the sets it turns on.</p>
+            <p>{totalModuleCount} modules across six groups. A Core school runs {coreModuleCount} of them, plus the sets it turns on.</p>
           </div>
           <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six groups`}>
             <div className="features-platform-head">
@@ -134,10 +133,6 @@ export default function FeaturesPage() {
           );
         })}
       </div>
-      <aside className="section-shell feature-scope-note" data-reveal>
-        <p><strong>Two registered keys are not listed.</strong> PaperKite’s own institutions console is platform scope, and a payroll key survives without a working module. Staff pay stays with the school’s payroll provider in this build.</p>
-        <Link className="text-link" href="/about">How Unifloe describes product maturity <ArrowRight aria-hidden="true" /></Link>
-      </aside>
       <section className="section-shell workflow-deep-dives" aria-labelledby="workflow-deep-dives-heading">
         <div className="section-heading" data-reveal>
           <h2 id="workflow-deep-dives-heading">How connected workflows operate</h2>

@@ -366,7 +366,7 @@ test("renders the four-part home pitch and compact contact privacy treatment", a
     "Start with one class.", "Ten roles",
   ]) assert.match(home, new RegExp(value.replace(/[.]/g, "\\.")));
   assert.match(home, /₹0[\s\S]*?for one section[\s\S]*?up to 60 students/);
-  assert.match(home, /45(?:<!-- -->)?<\/strong>/);
+  assert.match(home, /43(?:<!-- -->)?<\/strong>/);
   assert.doesNotMatch(home, /APAAR certified|official APAAR certification|Five visual themes|65 registered/i);
   assert.doesNotMatch(home, /Data hosted in India|India-hosted|DPDP-aligned/i);
   assert.doesNotMatch(home, /Readiness-focused|Powerful without being expensive|Not another tool/);
@@ -523,7 +523,7 @@ test("keeps product and compliance language present and current", async () => {
   const [home, features] = await Promise.all([render("/").then((response) => response.text()), render("/features").then((response) => response.text())]);
   for (const value of ["Guardian consent under the DPDP Act", "CBSE, ICSE, state board and Karnataka PU", "No advertising", "No tracking"]) assert.match(home, new RegExp(value));
   assert.doesNotMatch(home, /DPDP-aligned|APAAR-ready|Data hosted in India|India-hosted/i);
-  for (const value of ["Front Office", "Hostel", "Role Inbox", "Report Cards", "Approvals", "Library set", "Hostel set", "Inventory set", "Full edition", "Two registered keys are not listed"]) assert.match(features, new RegExp(value));
+  for (const value of ["Front Office", "Hostel", "Role Inbox", "Report Cards", "Approvals", "Library set", "Hostel set", "Inventory set", "Full edition"]) assert.match(features, new RegExp(value));
 });
 
 test("renders the feature system hero, aligned selector, and animated disclosures", async () => {
@@ -534,8 +534,9 @@ test("renders the feature system hero, aligned selector, and animated disclosure
     readFile(new URL("app/globals.css", root), "utf8"),
   ]);
   assert.match(html, /Unifloe platform/);
-  assert.match(html, /45<small>modules/);
-  assert.match(html, /45(?:<!-- -->)? registered modules/);
+  assert.match(html, /43<small>modules/);
+  assert.match(html, /43(?:<!-- -->)? modules across six groups/);
+  assert.doesNotMatch(html, /not listed|not built|payroll/i);
   assert.match(html, /29(?:<!-- -->)? of them/);
   assert.match(html, /Two editions and three optional sets/);
   assert.match(html, /How connected workflows operate/);

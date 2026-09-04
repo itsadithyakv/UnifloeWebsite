@@ -9,7 +9,6 @@ export const productLinks = {
   register: `${productAppUrl}/register`,
 } as const;
 
-export const totalModuleCount = 45;
 export const coreModuleCount = 29;
 
 export type ModuleEdition = "core" | "library" | "hostel" | "inventory" | "full";
@@ -389,6 +388,8 @@ export const featureGroups: FeatureGroup[] = [
     ],
   },
 ];
+
+export const totalModuleCount = featureGroups.reduce((count, group) => count + group.modules.length, 0);
 
 export const plans: PricingPlan[] = [
   {
