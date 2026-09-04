@@ -105,7 +105,7 @@ export default function GetStartedPage() {
   return (
     <main id="main-content">
       <PageHero
-        title={<>Start using Unifloe<br /><span>in a few clear steps.</span></>}
+        title={<>Start using Unifloe <span>in a few clear steps.</span></>}
         lead="From the live demo to the first parent signing in. Every step has a page or a template behind it, and PaperKite does the first ones with you."
         aside={
           <div className="entry-grid" data-reveal-group>

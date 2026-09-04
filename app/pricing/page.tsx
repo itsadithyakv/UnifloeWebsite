@@ -14,7 +14,7 @@ export default function PricingPage() {
   return (
     <main id="main-content">
       <PageHero
-        title={<>Free for one class.<br /><span>Clear plans for the whole school.</span></>}
+        title={<>Free for one class. <span>Clear plans for the whole school.</span></>}
         lead="Start with one section at no cost, for as long as you like. When the whole school comes on, pick the plan by students on roll and pay monthly or yearly."
         aside={
           <div className="pricing-path-card" data-reveal aria-label="The four Unifloe plans from Free to Growth">

@@ -71,7 +71,7 @@ export default function FeaturesPage() {
   return (
     <main id="main-content">
       <PageHero
-        title={<>Every school workflow.<br /><span>One connected system.</span></>}
+        title={<>Every school workflow. <span>One connected system.</span></>}
         lead={`${totalModuleCount} modules across six groups. A Core school runs ${coreModuleCount} of them, plus the sets it turns on.`}
         aside={
           <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six groups`}>

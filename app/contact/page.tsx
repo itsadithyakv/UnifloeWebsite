@@ -19,7 +19,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   return (
     <main id="main-content">
       <PageHero
-        title={<>Let’s map Unifloe<br /><span>to your school.</span></>}
+        title={<>Let’s map Unifloe <span>to your school.</span></>}
         lead="A focused conversation around your workflows, scale and priorities. If you would rather look first, the live demo is open now."
         actions={false}
         aside={<ContactForm initialInterest={initialInterest} />}
