@@ -45,20 +45,29 @@ function formatAnimatedPrice(price: ParsedPrice, value: number) {
 export function PriceCounter({ text, className = "" }: PriceCounterProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const visualRef = useRef<HTMLSpanElement>(null);
+  const playedRef = useRef(false);
   const [isCounting, setIsCounting] = useState(false);
   const parsed = useMemo(() => parsePriceText(text), [text]);
-  const isInView = useInView(containerRef, { once: true, amount: 0.55 });
+  const isInView = useInView(containerRef, { once: true, amount: 0.4 });
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const visual = visualRef.current;
-    if (!visual || !parsed || !isInView || prefersReducedMotion) return;
-
+    if (!visual || !parsed || !isInView || prefersReducedMotion || playedRef.current) return;
+    // Play once. If this effect is torn down mid count (for example the
+    // reduced motion query resolving a moment after the count started), the
+    // cleanup restores the final text and clears the blur rather than leaving
+    // the number frozen half way and blurred.
+    playedRef.current = true;
     setIsCounting(true);
+
     if (parsed.value === 0) {
       visual.textContent = text;
       const timeout = window.setTimeout(() => setIsCounting(false), 680);
-      return () => window.clearTimeout(timeout);
+      return () => {
+        window.clearTimeout(timeout);
+        setIsCounting(false);
+      };
     }
 
     visual.textContent = formatAnimatedPrice(parsed, 0);
@@ -74,7 +83,11 @@ export function PriceCounter({ text, className = "" }: PriceCounterProps) {
       },
     });
 
-    return () => controls.stop();
+    return () => {
+      controls.stop();
+      if (visualRef.current) visualRef.current.textContent = text;
+      setIsCounting(false);
+    };
   }, [isInView, parsed, prefersReducedMotion, text]);
 
   if (!parsed) return <span className={className}>{text}</span>;
