@@ -28,7 +28,7 @@ SEO conventions, canonical routes, robots, sitemap, structured data, and Search 
 
 ## Analytics
 
-The site uses Cloudflare Web Analytics, which is free, sets no cookies and needs no consent banner. Create a site in the Cloudflare dashboard under Analytics and Logs, then Web Analytics, copy the beacon token, and set `NEXT_PUBLIC_CF_BEACON_TOKEN` in `.env.local` before building. Without the token no analytics script is emitted.
+The site uses Cloudflare Web Analytics, which is free, sets no cookies and needs no consent banner. Create a site in the Cloudflare dashboard under Analytics and Logs, then Web Analytics, copy the beacon token, and set `NEXT_PUBLIC_CF_BEACON_TOKEN` before building. The current token is in `.env.example` because it is a public identifier, like the EmailJS keys. Without a token no analytics script is emitted.
 
 ## Local setup
 
