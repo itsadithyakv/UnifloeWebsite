@@ -178,8 +178,10 @@ export default function Home() {
               <p className="founding-plan-name">{freePlan.accounts}</p>
               <ul className="founding-plan-list">
                 {freePlan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}
-                {paidPlans.map((plan) => <li key={plan.name}><Check aria-hidden="true" />{plan.name} from <PriceCounter text={plan.monthly ?? plan.yearly} /> a month</li>)}
               </ul>
+              <div className="paid-plan-row" aria-label="Paid plans">
+                {paidPlans.map((plan) => <div key={plan.name}><strong><PriceCounter text={plan.monthly ?? plan.yearly} /></strong><span>{plan.name}, a month</span></div>)}
+              </div>
               <Link className="button button-light" href="/pricing">See every plan <ArrowRight aria-hidden="true" /></Link>
             </article>
 

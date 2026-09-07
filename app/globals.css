@@ -481,7 +481,7 @@ h3 {
 .pitch-card { position: relative; min-width: 0; overflow: hidden; border: 1px solid #d4e2f5; border-radius: 36px; background: linear-gradient(145deg, #ffffff, #edf4ff); box-shadow: 16px 22px 46px rgba(40, 79, 140, 0.15), -8px -9px 24px rgba(255, 255, 255, 0.96), inset 2px 2px 3px white, inset -4px -5px 10px rgba(73, 112, 173, 0.06); }
 .pitch-identity { grid-column: span 7; min-height: 520px; display: flex; flex-direction: column; justify-content: center; padding: 38px; }
 .pitch-compliance { grid-column: span 5; min-height: 520px; display: flex; flex-direction: column; justify-content: center; padding: 38px; border-color: rgba(116, 159, 230, 0.24); background: radial-gradient(circle at 92% 5%, rgba(74, 137, 245, 0.48), transparent 31%), linear-gradient(145deg, #071c4d, #0b3d9d 66%, #1765e8); color: white; box-shadow: 18px 25px 52px rgba(13, 57, 139, 0.26), inset 2px 2px 3px rgba(255, 255, 255, 0.12), inset -5px -6px 12px rgba(1, 22, 67, 0.18); }
-.pitch-modules { grid-column: span 7; min-height: 490px; display: grid; grid-template-columns: minmax(210px, 0.67fr) minmax(0, 1.33fr); gap: 38px; padding: 38px; background: radial-gradient(circle at 0 100%, rgba(207, 225, 255, 0.88), transparent 34%), linear-gradient(145deg, #ffffff, #f0f5fd); }
+.pitch-modules { grid-column: span 12; min-height: 0; display: grid; grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr); gap: 38px; padding: 38px; background: radial-gradient(circle at 0 100%, rgba(207, 225, 255, 0.88), transparent 34%), linear-gradient(145deg, #ffffff, #f0f5fd); }
 .pitch-value { grid-column: span 5; min-height: 490px; display: flex; flex-direction: column; padding: 38px; border-color: rgba(255, 255, 255, 0.32); background: radial-gradient(circle at 94% 6%, rgba(133, 182, 255, 0.7), transparent 29%), linear-gradient(145deg, #0d43a8, #1768ef); color: white; box-shadow: 18px 25px 52px rgba(19, 80, 180, 0.25), inset 3px 3px 5px rgba(255, 255, 255, 0.18), inset -6px -7px 14px rgba(5, 45, 125, 0.18); }
 .pitch-card-title { display: flex; align-items: flex-start; gap: 15px; }
 .pitch-card-title > span { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid #ceddf3; border-radius: 15px; background: linear-gradient(145deg, #f0f6ff, #dfeaff); color: var(--blue); box-shadow: 6px 8px 16px rgba(48, 85, 143, 0.12), inset 2px 2px 3px white; }
@@ -532,7 +532,7 @@ h3 {
 .module-count { display: flex; align-items: end; gap: 11px; margin: 42px 0 22px; }
 .module-count strong { color: var(--blue); font-size: clamp(4.5rem, 7vw, 7rem); line-height: 0.72; letter-spacing: -0.08em; }.module-count span { color: #657590; font-size: 0.72rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
 .modules-intro .text-link { align-self: flex-start; margin-top: auto; }
-.module-family-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 10px; }
+.module-family-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: center; gap: 10px; }
 .module-family { min-width: 0; min-height: 82px; display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: center; gap: 10px; padding: 16px; border: 1px solid #d6e2f2; border-radius: 18px; background: rgba(255, 255, 255, 0.75); box-shadow: 6px 8px 16px rgba(42, 79, 138, 0.08), inset 1px 2px 2px white; }
 .module-family > svg { width: 18px; height: 18px; color: var(--blue); }.module-family strong { font-size: 0.78rem; line-height: 1.35; }
 .value-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
@@ -540,7 +540,11 @@ h3 {
 .founding-price { display: flex; align-items: end; gap: 14px; margin: 34px 0 10px; }.founding-price strong { font-size: clamp(4.8rem, 8vw, 7rem); line-height: 0.78; letter-spacing: -0.075em; }.founding-price > span { padding-bottom: 2px; color: #d9e6ff; font-size: 0.80rem; font-weight: 650; line-height: 1.15; }
 .founding-price-annual { display: flex; align-items: baseline; gap: 7px; margin-bottom: 9px; color: white; font-size: 1.15rem; font-weight: 750; }.founding-price-annual > span:last-child { color: #bfd3f7; font-size: 0.75rem; font-weight: 500; }
 .founding-plan-name { margin: 0 0 25px; color: #dce8ff; font-size: 0.80rem; font-weight: 700; letter-spacing: 0.04em; }
-.founding-plan-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; margin: 0 0 28px; padding: 0; list-style: none; }.founding-plan-list li { display: grid; grid-template-columns: 17px 1fr; gap: 8px; color: #e0eaff; font-size: 0.72rem; line-height: 1.4; }.founding-plan-list svg { width: 15px; height: 15px; margin-top: 1px; color: #a9c8ff; }
+.founding-plan-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; margin: 0 0 22px; padding: 0; list-style: none; }
+.paid-plan-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 28px; }
+.paid-plan-row div { display: flex; flex-direction: column; gap: 3px; padding: 13px 14px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); }
+.paid-plan-row strong { color: #ffffff; font-size: 1.15rem; letter-spacing: -0.03em; white-space: nowrap; }
+.paid-plan-row span { color: #d3e2ff; font-size: 0.74rem; font-weight: 600; white-space: nowrap; }.founding-plan-list li { display: grid; grid-template-columns: 17px 1fr; gap: 8px; color: #e0eaff; font-size: 0.72rem; line-height: 1.4; }.founding-plan-list svg { width: 15px; height: 15px; margin-top: 1px; color: #a9c8ff; }
 .pitch-value .button { align-self: flex-start; margin-top: auto; }
 
 .icon-tile { width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid #cfddf3; border-radius: 16px; background: var(--ice-strong); color: var(--blue); box-shadow: 7px 9px 17px rgba(58, 94, 151, 0.14), -5px -5px 13px rgba(255, 255, 255, 0.95), inset 2px 2px 3px white, inset -3px -3px 6px rgba(78, 117, 177, 0.08); }
@@ -1095,6 +1099,7 @@ h3 {
   .pitch-modules,
   .pitch-value { grid-column: 1; min-height: 0; padding: clamp(26px, 5vw, 40px); border-radius: 30px; }
   .pitch-modules { grid-template-columns: minmax(190px, 0.68fr) minmax(0, 1.32fr); }
+  .module-family-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .roles-inner { min-height: 0; grid-template-columns: 1fr; gap: 40px; padding-block: 76px; }
   .role-card { padding: 22px; }
@@ -1179,7 +1184,7 @@ h3 {
   .school-brand-preview { margin: 27px 0 22px; border-radius: 21px; }.school-preview-bar { padding: 14px; }.school-preview-themes { gap: 5px; }.school-preview-themes i { width: 13px; height: 13px; }.school-preview-tabs { gap: 15px; padding-inline: 14px; }.school-preview-body { grid-template-columns: 1fr; padding: 14px; }.school-preview-body > div:last-child { display: none; }
   .student-record-preview { margin: 28px 0 22px; padding: 17px; border-radius: 21px; }
   .pitch-modules { grid-template-columns: 1fr; gap: 28px; }.module-count { margin: 32px 0 19px; }.modules-intro .text-link { margin-top: 20px; }.module-family-list { grid-template-columns: 1fr; }
-  .value-card-top { flex-direction: column; }.start-free-badge { margin-left: 58px; }.founding-price { margin-top: 32px; }.founding-plan-list { grid-template-columns: 1fr; }.pitch-value .button { width: 100%; }
+  .value-card-top { flex-direction: column; }.start-free-badge { margin-left: 58px; }.founding-price { margin-top: 32px; }.founding-plan-list { grid-template-columns: 1fr; }.paid-plan-row { grid-template-columns: 1fr; }.pitch-value .button { width: 100%; }
   .roles-inner { gap: 38px; min-height: 0; padding-block: 70px; }
   .role-stack { gap: 12px; }
   .role-card { grid-template-columns: 46px 1fr; gap: 13px; padding: 19px; }
