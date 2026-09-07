@@ -3,8 +3,11 @@ import "./globals.css";
 import { ScrollMotion } from "./components/ScrollMotion";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { productLinks } from "./data/site-content";
 import { operatorName, siteName, siteUrl, socialImagePath } from "./lib/seo";
+
+// Cloudflare Web Analytics: free, cookie free, no consent banner needed.
+// The script is emitted only when a beacon token is configured at build time.
+const analyticsToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN?.trim() ?? "";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -54,8 +57,14 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
-        <a className="floating-demo" href={productLinks.demo}>Try the live demo</a>
         <ScrollMotion />
+        {analyticsToken ? (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+          />
+        ) : null}
       </body>
     </html>
   );

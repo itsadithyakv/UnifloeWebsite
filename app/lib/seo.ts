@@ -32,14 +32,14 @@ export const publicRoutes = [
     path: "/pricing/",
     title: "School ERP Pricing & Pilot Plans | Unifloe",
     description:
-      "Unifloe pricing for Indian schools: free forever for one class, then Junior, Standard and Growth plans by students on roll, monthly or yearly, with what each includes.",
+      "Unifloe pricing for Indian schools: free forever for one class with up to 100 users, then Junior, Standard and Growth by students on roll, monthly or yearly.",
     h1: "Free for one class. Clear plans for the whole school.",
   },
   {
     path: "/get-started/",
     title: "Get Started with Unifloe | Unifloe",
     description:
-      "How a school starts using Unifloe: try the live demo, agree the pilot, register the school at go.unifloe.app, set up classes, import students and activate guardians.",
+      "How a school starts using Unifloe: try the live demo, start free with one class, set up classes and subjects, import students from a workbook and activate parents.",
     h1: "Start using Unifloe in a few clear steps",
   },
   {
@@ -83,6 +83,20 @@ export const publicRoutes = [
     description:
       "How Unifloe handles APAAR consent, UDISE+ preparation and student identity records honestly, with separate guardian consent and no Aadhaar numbers stored.",
     h1: "APAAR consent and UDISE+ preparation, described honestly",
+  },
+  {
+    path: "/privacy-policy/",
+    title: "Privacy Policy | Unifloe",
+    description:
+      "What the Unifloe website collects when you visit or send an enquiry, how PaperKite uses it, the services involved, and how to ask for it to be corrected or deleted.",
+    h1: "Privacy policy for this website",
+  },
+  {
+    path: "/terms/",
+    title: "Terms of Use | Unifloe",
+    description:
+      "The terms on which PaperKite provides the Unifloe website and the public demo, what the site content means, and how to reach PaperKite with a question or a complaint.",
+    h1: "Terms of use",
   },
   {
     path: "/data-privacy/",

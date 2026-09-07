@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Check, CircleHelp, KeyRound, Receipt, UsersRound } from "lucide-react";
+import { ArrowRight, Check, CircleHelp, KeyRound, UsersRound } from "lucide-react";
 import { PriceCounter } from "../components/Counter";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
-import { plans } from "../data/site-content";
+import { plans, pricingFaq } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/pricing/");
@@ -15,7 +15,7 @@ export default function PricingPage() {
     <main id="main-content">
       <PageHero
         title={<>Free for one class. <span>Clear plans for the whole school.</span></>}
-        lead="Start with one section at no cost, for as long as you like. When the whole school comes on, pick the plan by students on roll and pay monthly or yearly."
+        lead="One class with up to 100 users costs nothing, for as long as you like. When the whole school comes on, pick the plan by students on roll and pay monthly or yearly."
         aside={
           <div className="pricing-path-card" data-reveal aria-label="The four Unifloe plans from Free to Growth">
             <div className="pricing-path-head"><strong>Free to Growth</strong></div>
@@ -47,7 +47,7 @@ export default function PricingPage() {
             </article>
           ))}
         </div>
-        <p className="pricing-note"><CircleHelp aria-hidden="true" /> Yearly billing works out to two months free on every paid plan.</p>
+        <p className="pricing-note"><CircleHelp aria-hidden="true" /> Prices are before GST. Yearly billing works out to two months free on every paid plan.</p>
       </section>
 
       <section className="standard-pricing-wrap" id="compare">
@@ -72,11 +72,16 @@ export default function PricingPage() {
               </tbody>
             </table>
           </div>
-          <div className="addon-card invoice-card" data-reveal><div className="addon-icon"><Receipt aria-hidden="true" /></div><div><h3>How you pay</h3><p>PaperKite invoices the school directly, monthly or yearly, and records the payment. There is no online checkout, no card details are stored, and every invoice is available as a PDF from the Billing screen.</p></div></div>
         </div>
       </section>
 
-      <section className="section-shell pricing-clarity"><p>Prices are shown exactly as provided. Enabled modules and rollout are confirmed with each school before onboarding.</p></section>
+      <section className="section-shell faq-section" aria-labelledby="faq-heading">
+        <div className="pricing-section-heading" data-reveal><h2 id="faq-heading">Questions schools ask.</h2><p>Straight answers on GST, limits, billing and leaving.</p></div>
+        <div className="faq-grid" data-reveal-group>
+          {pricingFaq.map((item) => <article key={item.q}><h3>{item.q}</h3><p>{item.a}</p></article>)}
+        </div>
+      </section>
+
       <FinalCta />
     </main>
   );

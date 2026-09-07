@@ -5,7 +5,6 @@ import { FinalCta } from "./components/FinalCta";
 import { HeroProduct } from "./components/HeroProduct";
 import {
   ArrowRight,
-  BadgeCheck,
   BookOpenCheck,
   Boxes,
   Building2,
@@ -24,7 +23,7 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { coreModuleCount, plans, productLinks, totalModuleCount } from "./data/site-content";
+import { plans, productLinks, schoolProblems, totalModuleCount } from "./data/site-content";
 import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
@@ -43,13 +42,6 @@ const roleCards = [
   { role: "School leaders", copy: "Approvals, attendance risk, collections, staff workload and the audit trail behind every change.", Icon: School2 },
   { role: "Teachers", copy: "Today's classes, registers, assignments, mark sheets and lesson notes for assigned sections only.", Icon: Presentation },
   { role: "Parents and students", copy: "Timetable, attendance, released results, fees and receipts, library loans and school announcements.", Icon: HeartHandshake },
-];
-
-const startSteps = [
-  { title: "Try the live demo", copy: "Open go.unifloe.app as any role. Nothing you change is saved." },
-  { title: "Agree the pilot", copy: "Board format, edition, optional sets and the consent basis for your parents." },
-  { title: "Register the school", copy: "Use your invite at go.unifloe.app. The Head Admin account and the school's own database are created together." },
-  { title: "Import and activate", copy: "Fill the student workbook, then activate parents with one link each. Parents consent when they first sign in." },
 ];
 
 export const metadata = createPageMetadata("/");
@@ -116,9 +108,9 @@ export default function Home() {
             <Link className="text-link" href="/get-started">How to get started <ArrowRight aria-hidden="true" /></Link>
           </div>
           <div className="hero-proof" aria-label="Key platform facts">
+            <span><IndianRupee aria-hidden="true" /> Free forever for one class</span>
             <span><CloudCog aria-hidden="true" /> A web app that installs on any phone or laptop</span>
             <span><ShieldCheck aria-hidden="true" /> Guardian consent under the DPDP Act</span>
-            <span><BookOpenCheck aria-hidden="true" /> CBSE, ICSE, state board and Karnataka PU</span>
           </div>
         </div>
         <HeroProduct />
@@ -129,6 +121,21 @@ export default function Home() {
         <div><UsersRound aria-hidden="true" /><span><strong>Ten roles</strong><small>Each sees its own work</small></span></div>
         <div><CloudCog aria-hidden="true" /><span><strong>Any device</strong><small>Browser or installed app</small></span></div>
         <div><Palette aria-hidden="true" /><span><strong>Your identity</strong><small>Logo, colours, preset</small></span></div>
+      </section>
+
+      <section className="section-shell problems-section" aria-labelledby="problems-heading">
+        <div className="section-heading" data-reveal>
+          <h2 id="problems-heading">What schools tell us.</h2>
+          <p>In conversations with Bengaluru schools the same problems come up again and again. This is what Unifloe does about each one.</p>
+        </div>
+        <div className="problems-grid" data-reveal-group>
+          {schoolProblems.map((item) => (
+            <article key={item.heard}>
+              <blockquote>{item.heard}</blockquote>
+              <p><Check aria-hidden="true" />{item.answer}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="platform-intro">
@@ -153,47 +160,26 @@ export default function Home() {
               <p className="pitch-card-foot">Parents, students and staff see your school’s name and mark, not another software company’s.</p>
             </article>
 
-            <article className="pitch-card pitch-compliance">
-                <div className="pitch-card-title"><span><ShieldCheck aria-hidden="true" /></span><div><h3>Built for the DPDP Act.</h3></div></div>
-                <div className="student-record-preview">
-                  <div className="student-record-head">
-                    <div className="record-avatar-stack" aria-hidden="true">
-                      {/* Pre-sized local assets avoid an image-optimization runtime for these tiny, lazy avatars. */}
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/unifloe_avatar_01_lavender-192.jpg" width="48" height="48" alt="" loading="lazy" decoding="async" />
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/unifloe_avatar_02_mint-192.jpg" width="48" height="48" alt="" loading="lazy" decoding="async" />
-                    </div>
-                    <div><strong>Student and guardian</strong><small>Linked, with consent on record</small></div>
-                    <BadgeCheck aria-hidden="true" />
-                  </div>
-                <div className="student-record-row"><span>Guardian consent</span><strong>Recorded by the parent</strong></div>
-                <div className="student-record-row"><span>Withdrawal</span><strong>As easy as giving</strong></div>
-                <div className="student-record-row"><span>High impact changes</span><strong>Approved and audited</strong></div>
-              </div>
-              <div className="pitch-spec-list pitch-spec-light"><span>Parent consent</span><span>Purpose on every record</span><span>No advertising</span><span>No tracking</span><span>Encrypted secrets</span><span>Private files</span></div>
-            </article>
-
-            <article className="pitch-card pitch-modules">
-              <div className="modules-intro">
-                <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3><p>A Core school runs {coreModuleCount} modules. Library, Hostel and Inventory are sets you turn on as a whole.</p></div></div>
-                <div className="module-count"><strong>{totalModuleCount}</strong><span>modules<br />in six groups</span></div>
-                <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
-              </div>
-              <div className="module-family-list">
-                {pitchModuleGroups.map(({ title, Icon }) => <div className="module-family" key={title}><Icon aria-hidden="true" /><strong>{title}</strong></div>)}
-              </div>
-            </article>
-
             <article className="pitch-card pitch-value">
               <div className="value-card-top"><div className="pitch-card-title"><span><IndianRupee aria-hidden="true" /></span><div><h3>Free for one class. Forever.</h3></div></div></div>
-              <div className="founding-price"><strong><PriceCounter text="₹0" /></strong><span>for one section<br />up to 60 students</span></div>
+              <div className="founding-price"><strong><PriceCounter text="₹0" /></strong><span>for one class<br />up to 100 users</span></div>
               <p className="founding-plan-name">{freePlan.accounts}</p>
               <ul className="founding-plan-list">
                 {freePlan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}
                 {paidPlans.map((plan) => <li key={plan.name}><Check aria-hidden="true" />{plan.name} from <PriceCounter text={plan.monthly ?? plan.yearly} /> a month</li>)}
               </ul>
               <Link className="button button-light" href="/pricing">See every plan <ArrowRight aria-hidden="true" /></Link>
+            </article>
+
+            <article className="pitch-card pitch-modules">
+              <div className="modules-intro">
+                <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3><p>Start with attendance and notices. Switch on fees, library, hostel or front office when the school is ready.</p></div></div>
+                <div className="module-count"><strong>{totalModuleCount}</strong><span>modules<br />in six groups</span></div>
+                <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
+              </div>
+              <div className="module-family-list">
+                {pitchModuleGroups.map(({ title, Icon }) => <div className="module-family" key={title}><Icon aria-hidden="true" /><strong>{title}</strong></div>)}
+              </div>
             </article>
           </div>
         </div>
@@ -203,33 +189,12 @@ export default function Home() {
         <div className="section-shell roles-inner">
           <div className="roles-copy" data-reveal>
             <h2>Everyone sees what matters to them.</h2>
-            <p>Ten school roles, each with its own dashboard and navigation. Guardians sign in as a family and pick the child. Nobody gets a full access role, because none exists.</p>
+            <p>Ten school roles, each with its own dashboard. Guardians sign in as a family and pick the child. Consent is recorded once, at the parent’s first sign in.</p>
             <a className="button button-light" href={productLinks.demo}>Open the demo as any role <ArrowRight aria-hidden="true" /></a>
           </div>
           <div className="role-stack" data-reveal-group>
             {roleCards.map(({ role, copy, Icon }) => <article className="role-card" key={role}><span className="role-card-icon"><Icon aria-hidden="true" /></span><div><h3>{role}</h3><small>{copy}</small></div></article>)}
           </div>
-        </div>
-      </section>
-
-      <section className="section-shell start-section" id="start">
-        <div className="start-panel" data-reveal>
-          <div className="start-copy">
-            <h2>From the demo to your first parent signing in.</h2>
-            <p>Getting a school onto Unifloe is a short, defined sequence. Each step has a page or a template behind it, and PaperKite does the first one with you.</p>
-            <div className="start-actions">
-              <Link className="button" href="/get-started">See every step <ArrowRight aria-hidden="true" /></Link>
-              <a className="text-link" href={productLinks.signIn}>Already on Unifloe? Sign in <ArrowRight aria-hidden="true" /></a>
-            </div>
-          </div>
-          <ol className="start-steps" data-reveal-group>
-            {startSteps.map((step, index) => (
-              <li key={step.title}>
-                <span>{index + 1}</span>
-                <div><strong>{step.title}</strong><p>{step.copy}</p></div>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 

@@ -11,12 +11,8 @@ export function validateContactForm(values) {
   const required = {
     schoolName: "Enter your school name.",
     contactName: "Enter your name.",
-    role: "Select your role.",
-    email: "Enter your work email.",
     phone: "Enter a phone number.",
-    location: "Enter your city and state.",
-    studentStrength: "Select your student strength.",
-    interest: "Select what you are interested in.",
+    interest: "Select a plan or a demo.",
   };
 
   for (const [field, message] of Object.entries(required)) {
@@ -44,13 +40,13 @@ export function buildEmailPayload(values, pageUrl, submittedAt) {
   return {
     school_name: values.schoolName.trim(),
     contact_name: values.contactName.trim(),
-    role: values.role,
-    reply_to: values.email.trim(),
+    role: String(values.role ?? "").trim() || "Not given",
+    reply_to: String(values.email ?? "").trim() || "Not given",
     phone: values.phone.trim(),
-    location: values.location.trim(),
-    student_strength: values.studentStrength,
+    location: String(values.location ?? "").trim() || "Not given",
+    student_strength: String(values.studentStrength ?? "").trim() || "Not given",
     plan_interest: values.interest,
-    message: values.message.trim() || "No additional message provided.",
+    message: String(values.message ?? "").trim() || "No additional message provided.",
     consent_timestamp: submittedAt,
     page_url: pageUrl,
   };

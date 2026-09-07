@@ -7,11 +7,8 @@ import { buildEmailPayload, interestOptions, isLikelyBot, validateContactForm } 
 type ContactValues = {
   schoolName: string;
   contactName: string;
-  role: string;
-  email: string;
   phone: string;
-  location: string;
-  studentStrength: string;
+  email: string;
   interest: string;
   message: string;
   consent: boolean;
@@ -31,11 +28,8 @@ function emptyValues(initialInterest: string): ContactValues {
   return {
     schoolName: "",
     contactName: "",
-    role: "",
-    email: "",
     phone: "",
-    location: "",
-    studentStrength: "",
+    email: "",
     interest: interestOptions.includes(initialInterest) ? initialInterest : "general-demo",
     message: "",
     consent: false,
@@ -72,7 +66,7 @@ export function ContactForm({ initialInterest = "general-demo" }: { initialInter
     }
 
     if (!emailDeliveryConfigured) {
-      setSubmission({ type: "error", message: "Enquiry delivery is not connected in this preview yet. Please email adithya@unifloe.app directly." });
+      setSubmission({ type: "error", message: "Enquiry delivery is not connected in this private preview yet. The EmailJS service ID, template ID, and public key are required before sending." });
       return;
     }
 
@@ -88,9 +82,9 @@ export function ContactForm({ initialInterest = "general-demo" }: { initialInter
       );
       lastSubmittedAt.current = Date.now();
       setValues(emptyValues(initialInterest));
-      setSubmission({ type: "success", message: "Thank you. Your enquiry has been sent to the Unifloe team." });
+      setSubmission({ type: "success", message: "Thank you. We will call you back within a working day." });
     } catch {
-      setSubmission({ type: "error", message: "We could not send your enquiry just now. Please check your connection and try again." });
+      setSubmission({ type: "error", message: "We could not send your enquiry just now. Please check your connection and try again, or send us a WhatsApp message." });
     }
   }
 
@@ -98,22 +92,19 @@ export function ContactForm({ initialInterest = "general-demo" }: { initialInter
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate data-reveal>
-      <div className="form-heading"><h2>Start a useful conversation.</h2><p>A few details make the conversation relevant. Nothing here is a commitment.</p></div>
+      <div className="form-heading"><h2>Tell us about your school.</h2><p>Four fields. Nothing here is a commitment.</p></div>
       <div className="form-grid">
         <label><span>School name</span><input name="schoolName" value={values.schoolName} onChange={(event) => updateField("schoolName", event.target.value)} aria-invalid={Boolean(errors.schoolName)} aria-describedby={errors.schoolName ? "schoolName-error" : undefined} autoComplete="organization" placeholder="Demo Public School" />{fieldError("schoolName")}</label>
         <label><span>Your name</span><input name="contactName" value={values.contactName} onChange={(event) => updateField("contactName", event.target.value)} aria-invalid={Boolean(errors.contactName)} aria-describedby={errors.contactName ? "contactName-error" : undefined} autoComplete="name" placeholder="Ananya Sharma" />{fieldError("contactName")}</label>
-        <label><span>Your role</span><select name="role" value={values.role} onChange={(event) => updateField("role", event.target.value)} aria-invalid={Boolean(errors.role)} aria-describedby={errors.role ? "role-error" : undefined}><option value="">Select a role</option><option>School owner / trustee</option><option>Principal / school leader</option><option>Administrator</option><option>IT / operations</option><option>Teacher</option><option>Other</option></select>{fieldError("role")}</label>
-        <label><span>Work email</span><input type="email" name="email" value={values.email} onChange={(event) => updateField("email", event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} autoComplete="email" inputMode="email" placeholder="ananya@demopublicschool.example" />{fieldError("email")}</label>
         <label><span>Phone</span><input type="tel" name="phone" value={values.phone} onChange={(event) => updateField("phone", event.target.value)} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} autoComplete="tel" inputMode="tel" placeholder="+91 98765 43210" />{fieldError("phone")}</label>
-        <label><span>City and state</span><input name="location" value={values.location} onChange={(event) => updateField("location", event.target.value)} aria-invalid={Boolean(errors.location)} aria-describedby={errors.location ? "location-error" : undefined} autoComplete="address-level2" placeholder="Bengaluru, Karnataka" />{fieldError("location")}</label>
-        <label><span>Student strength</span><select name="studentStrength" value={values.studentStrength} onChange={(event) => updateField("studentStrength", event.target.value)} aria-invalid={Boolean(errors.studentStrength)} aria-describedby={errors.studentStrength ? "studentStrength-error" : undefined}><option value="">Select a range</option><option>Up to 100</option><option>101 to 700</option><option>701 to 1,700</option><option>1,701 to 2,500</option><option>2,501 to 3,500</option><option>More than 3,500</option></select>{fieldError("studentStrength")}</label>
-        <label><span>I’m interested in</span><select name="interest" value={values.interest} onChange={(event) => updateField("interest", event.target.value)} aria-invalid={Boolean(errors.interest)} aria-describedby={errors.interest ? "interest-error" : undefined}><option value="free">Free, one class up to 60 students</option><option value="junior">Junior, ₹999 a month for up to 250 students</option><option value="standard">Standard, ₹1,999 a month for up to 700 students</option><option value="growth">Growth, ₹5,999 a month for up to 2,100 students</option><option value="general-demo">A guided walk through the product</option></select>{fieldError("interest")}</label>
-        <label className="full-field"><span>What would you like to improve?</span><textarea name="message" rows={5} value={values.message} onChange={(event) => updateField("message", event.target.value)} placeholder="For example: admissions, attendance, fee collection, or parent communication." /></label>
+        <label><span>I’m interested in</span><select name="interest" value={values.interest} onChange={(event) => updateField("interest", event.target.value)} aria-invalid={Boolean(errors.interest)} aria-describedby={errors.interest ? "interest-error" : undefined}><option value="free">Free, one class up to 100 users</option><option value="junior">Junior, ₹999 a month for up to 250 students</option><option value="standard">Standard, ₹1,999 a month for up to 700 students</option><option value="growth">Growth, ₹5,999 a month for up to 2,100 students</option><option value="general-demo">A guided walk through first</option></select>{fieldError("interest")}</label>
+        <label className="full-field"><span>Email, if you prefer it to a call</span><input type="email" name="email" value={values.email} onChange={(event) => updateField("email", event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} autoComplete="email" inputMode="email" placeholder="ananya@demopublicschool.example" />{fieldError("email")}</label>
+        <label className="full-field"><span>Anything we should know? Optional.</span><textarea name="message" rows={3} value={values.message} onChange={(event) => updateField("message", event.target.value)} placeholder="For example: attendance, fee collection, report cards, or parent communication." /></label>
         <label className="honeypot" aria-hidden="true"><span>Website</span><input name="website" value={values.website} onChange={(event) => updateField("website", event.target.value)} tabIndex={-1} autoComplete="off" /></label>
-        <label className="consent-field full-field"><input type="checkbox" checked={values.consent} onChange={(event) => updateField("consent", event.target.checked)} aria-invalid={Boolean(errors.consent)} aria-describedby={errors.consent ? "consent-error" : "privacy-note"} /><span>I agree that Unifloe may use these details to respond to my enquiry and arrange a product conversation.</span></label>
+        <label className="consent-field full-field"><input type="checkbox" checked={values.consent} onChange={(event) => updateField("consent", event.target.checked)} aria-invalid={Boolean(errors.consent)} aria-describedby={errors.consent ? "consent-error" : "privacy-note"} /><span>Unifloe may use these details to call or write back about my enquiry.</span></label>
         {fieldError("consent")}
       </div>
-      <div className="form-submit-row"><button className="button" type="submit" disabled={submission.type === "loading"}>{submission.type === "loading" ? <LoaderCircle className="spin" aria-hidden="true" /> : null}{submission.type === "loading" ? "Sending…" : "Send enquiry"}<ArrowRight aria-hidden="true" /></button><p id="privacy-note">Your details are sent only to the configured Unifloe business inbox through EmailJS.</p></div>
+      <div className="form-submit-row"><button className="button" type="submit" disabled={submission.type === "loading"}>{submission.type === "loading" ? <LoaderCircle className="spin" aria-hidden="true" /> : null}{submission.type === "loading" ? "Sending…" : "Send enquiry"}<ArrowRight aria-hidden="true" /></button><p id="privacy-note">Sent only to the Unifloe inbox. Never student data.</p></div>
       <div className={`form-status ${submission.type}`} role="status" aria-live="polite">{submission.type === "success" ? <CheckCircle2 aria-hidden="true" /> : null}{submission.message}</div>
     </form>
   );

@@ -20,7 +20,7 @@ export const seoPages = {
     highlights: [
       { title: "One deployment, many schools", copy: "Each school has its own identity, modules, branding, structure, users and data boundary." },
       { title: "Roles that match a school", copy: "Ten school roles from Student to Security, plus guardian access for parents." },
-      { title: "A pilot of three schools", copy: "The current cohort is three schools in Bengaluru, onboarded by the founder." },
+      { title: "Free for one class", copy: "Any teacher or school can start with one class at no cost, forever, and grow from there." },
     ],
     sections: [
       {
@@ -55,16 +55,16 @@ export const seoPages = {
       },
       {
         title: "Practical progress, not inflated claims",
-        lead: "A Core school runs 29 modules plus any optional set it turns on. The Full edition runs every module.",
+        lead: "Every plan runs the same product. What a school pays for is students on roll and which areas are switched on.",
         points: [
-          "The features page shows which edition includes each module",
+          "The features page shows every module by group",
           "Onboarding starts from the workflows a school will actually use",
           "A realistic rollout order, so the first term is calm rather than crowded",
         ],
       },
     ],
     related: [
-      { href: "/features", label: "Explore the platform", copy: "The modules by group, with the edition that includes each one." },
+      { href: "/features", label: "Explore the platform", copy: "The modules by group, in plain words." },
       { href: "/get-started", label: "How a school gets started", copy: "From the live demo to the first parent signing in." },
       { href: "/data-privacy", label: "How school data is handled", copy: "Who is responsible for what under the DPDP Act." },
     ],
@@ -91,7 +91,7 @@ export const seoPages = {
       },
       {
         title: "Start from school structure and responsibility",
-        lead: "Each school is its own tenant, and authority comes from assignments rather than broad labels.",
+        lead: "Each school has its own separate space, and authority comes from assignments rather than broad labels.",
         points: [
           "Own branding, modules, users and data boundary",
           "Server side checks even when the screen already hid an action",
@@ -103,19 +103,19 @@ export const seoPages = {
         title: "Roll out the workflows your school is ready to adopt",
         lead: "A school does not need every module on day one.",
         points: [
-          "Core covers the teaching day, communication, finance, people and administration",
-          "Library, Hostel with Front Office, and Inventory are optional sets",
+          "The basics cover the teaching day, communication, finance, people and administration",
+          "Library, hostel, front office and inventory switch on when the school needs them",
           "Scope and onboarding milestones agreed before rollout",
         ],
       },
       {
         id: "bengaluru-pilot",
-        title: "Bengaluru pilot and onboarding support",
-        lead: "The current pilot of up to three schools runs from Bengaluru, with PaperKite doing the first steps alongside each school.",
+        title: "Bengaluru onboarding support",
+        lead: "PaperKite is in Bengaluru and does the first steps alongside each school, in person where that helps.",
         points: [
           "Direct workflow discovery conversations",
           "School structure and capacity review",
-          "Defined edition, sets and responsibilities",
+          "A plan chosen for the school's size",
           "Onboarding milestones and a review point",
         ],
       },
@@ -158,10 +158,10 @@ export const seoPages = {
       },
       {
         title: "Use LMS data responsibly",
-        lead: "Learning records are authenticated school data and stay inside tenant aware services.",
+        lead: "Learning records are private school data and stay inside the school's own space.",
         points: [
           "Never on public pages, offline caches or search engines",
-          "Uploads in private, tenant prefixed storage",
+          "Uploads kept in private, per school storage",
           "Restricted files re authorised on every read",
           "The installed app uses the same HTTPS API as the browser",
         ],
@@ -274,7 +274,7 @@ export const seoPages = {
       "Under the Digital Personal Data Protection Act the school is the Data Fiduciary and PaperKite is the Data Processor. Here is what each side carries and what Unifloe does about it.",
     highlights: [
       { title: "Consent from the parent", copy: "A child's data needs a parent's own verifiable consent. No administrator can consent on their behalf." },
-      { title: "Safeguards in the product", copy: "Hashed passwords, encrypted secrets, private files, tenant isolation, rate limits and a strict content security policy." },
+      { title: "Safeguards in the product", copy: "Hashed passwords, encrypted secrets, private files, one separate space per school, rate limits and a strict content security policy." },
       { title: "No tracking of children", copy: "No advertising, no third party analytics, no session replay, no cross site tracking." },
     ],
     sections: [
@@ -285,7 +285,7 @@ export const seoPages = {
           "School: notice, consent, retention, grievance officer",
           "PaperKite: safeguards, contract, deletion on instruction",
           "Parent or guardian: consent for the child",
-          "Every pilot student is a child under the Act",
+          "Every school student is a child under the Act",
         ],
       },
       {

@@ -9,6 +9,7 @@ type PageHeroProps = {
   lead: string;
   aside?: ReactNode;
   actions?: boolean;
+  children?: ReactNode;
 };
 
 export function HeroActions({ light = false }: { light?: boolean }) {
@@ -20,9 +21,9 @@ export function HeroActions({ light = false }: { light?: boolean }) {
   );
 }
 
-export function PageHero({ title, lead, aside, actions = true }: PageHeroProps) {
+export function PageHero({ title, lead, aside, actions = true, children }: PageHeroProps) {
   return (
-    <section className={`page-hero ${aside ? "has-aside" : ""}`}>
+    <section className={aside ? "page-hero has-aside" : "page-hero"}>
       <DotGrid
         className="hero-dot-grid page-hero-grid"
         dotSize={3}
@@ -37,6 +38,7 @@ export function PageHero({ title, lead, aside, actions = true }: PageHeroProps) 
           <h1>{title}</h1>
           <p>{lead}</p>
           {actions ? <HeroActions /> : null}
+          {children}
         </div>
         {aside ? <div className="page-hero-aside" data-reveal>{aside}</div> : null}
       </div>

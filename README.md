@@ -26,6 +26,10 @@ Detailed attendance, fee, and exam workflows are consolidated into `/features`. 
 
 SEO conventions, canonical routes, robots, sitemap, structured data, and Search Console verification are documented in [`reference/seo.md`](./reference/seo.md).
 
+## Analytics
+
+The site uses Cloudflare Web Analytics, which is free, sets no cookies and needs no consent banner. Create a site in the Cloudflare dashboard under Analytics and Logs, then Web Analytics, copy the beacon token, and set `NEXT_PUBLIC_CF_BEACON_TOKEN` in `.env.local` before building. Without the token no analytics script is emitted.
+
 ## Local setup
 
 ```bash

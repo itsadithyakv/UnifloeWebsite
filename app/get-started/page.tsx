@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Check, KeyRound, LogIn, MonitorPlay, Users } from "lucide-react";
-import { boardFormats, productLinks } from "../data/site-content";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
+import { boardFormats, productLinks } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/get-started/");
@@ -11,17 +11,17 @@ const entryPoints = [
   {
     Icon: MonitorPlay,
     title: "Look first",
-    copy: "Open the live demo as a principal, teacher, parent, librarian or warden. It is the real product on a synthetic school, and nothing you change is saved.",
+    copy: "Open the live demo as a principal, teacher, parent, librarian or warden. It has a guided tour, and nothing you change is saved.",
     href: productLinks.demo,
     label: "Try the live demo",
     external: true,
   },
   {
     Icon: KeyRound,
-    title: "Start a pilot",
-    copy: "Tell PaperKite about your school. You get a pilot invite code and register the school yourself at go.unifloe.app.",
-    href: "/contact",
-    label: "Talk to PaperKite",
+    title: "Start free",
+    copy: "One class, up to 100 users, at no cost for as long as you like. Tell us the school and we set it up within a working day.",
+    href: "/contact?interest=free",
+    label: "Start free",
     external: false,
   },
   {
@@ -37,41 +37,40 @@ const entryPoints = [
 const steps = [
   {
     title: "Try the live demo",
-    copy: "Open go.unifloe.app/demo and pick a role. You are looking at the same screens your school will use. Changes stay in your browser for 24 hours and never touch a real school.",
-    points: ["Any school role, switch whenever you like", "No account needed", "Reset the demo from inside it"],
+    copy: "Open go.unifloe.app/demo and pick a role. The tour walks you through the screens your school will use. Changes stay in your browser for 24 hours.",
+    points: ["Any school role, switch whenever you like", "No account needed", "A guided tour inside the demo"],
     link: { href: productLinks.demo, label: "Open the demo", external: true },
   },
   {
-    title: "Agree the pilot with PaperKite",
-    copy: "One conversation settles the board format, the edition, any optional sets, the number of accounts, and the consent basis for your parents. PaperKite then issues a pilot invite code and reserves a database slot for your school.",
-    points: ["Board format: CBSE, ICSE, state board or Karnataka PU", "Core edition plus Library, Hostel or Inventory sets", "Consent basis chosen against your own admission form"],
-    link: { href: "/contact", label: "Talk to PaperKite", external: false },
+    title: "Tell us about your school",
+    copy: "Four fields on the contact page, or a WhatsApp message. We call back within a working day to confirm the board format, the classes you run and the plan that fits.",
+    points: ["Board format: CBSE, ICSE, state board or Karnataka PU", "Free for one class, or a plan by students on roll", "How your parents will give consent"],
+    link: { href: "/contact", label: "Tell us about your school", external: false },
   },
   {
-    title: "Register the school",
-    copy: "Enter the invite code at go.unifloe.app/register. The school's routing is created first, then the Head Admin account, and the slot becomes the school's own database. Registration is safe to retry.",
-    points: ["One Head Admin account to begin with", "The school's own database, assigned permanently", "Head Admin signs in and is asked to change the password"],
-    link: { href: productLinks.register, label: "Register with an invite", external: true },
+    title: "Your school is created",
+    copy: "PaperKite creates the school at go.unifloe.app with its own separate space, your logo and your school code, and hands you the Head Admin sign in.",
+    points: ["One Head Admin account to begin with", "Your own space, kept apart from every other school", "You are asked to set your own password on first sign in"],
   },
   {
     title: "Set up the structure",
-    copy: "The Head Admin picks the board format, then defines classes, sections, subjects, elective groups and faculty assignments. Those assignments are what decide who may open a register or enter marks.",
-    points: ["Classes, sections and student groups", "Subjects mapped to faculty and class teachers", "Attendance policy, academic calendar and school logo"],
+    copy: "The Head Admin defines classes, sections, subjects and which teacher takes which class. Those assignments are what decide who may open a register or enter marks.",
+    points: ["Classes, sections and student groups", "Subjects mapped to teachers and class teachers", "Attendance policy and the academic calendar"],
   },
   {
     title: "Import students from the workbook",
-    copy: "Download the Unifloe workbook, fill one row per child, and preview it. Every problem is shown against its row before anything is written. Committing creates a roster row for every child and a login only where the school wants one.",
-    points: ["Excel or CSV, checked row by row", "An unknown class is an error, never a silent skip", "Student logins are a school setting, off or on"],
+    copy: "Download the Unifloe workbook, fill one row per child, and preview it. Every problem is shown against its row before anything is written.",
+    points: ["Excel or CSV, checked row by row", "An unknown class is flagged, never skipped", "Student logins are optional, on or off for the school"],
   },
   {
-    title: "Activate guardians",
-    copy: "Export activation links for your own mail merge, or use the Excel import that activates parents outright. A parent with several children gets one account. On first sign in the parent sets a password and records consent under the DPDP Act.",
-    points: ["Up to three guardians per student", "One link per parent, single use", "Consent held at sign in until the parent gives it"],
+    title: "Activate parents",
+    copy: "Export one activation link per parent for your own mail merge, or use the Excel import that activates them outright. A parent with several children gets one account.",
+    points: ["Up to three guardians per student", "One link per parent, single use", "Consent recorded at the parent's first sign in"],
   },
   {
     title: "Go live",
-    copy: "Staff sign in at go.unifloe.app/login with the school code. Publish the timetable, open the first registers, and send the first announcement. Anyone can install Unifloe from the browser as an app.",
-    points: ["Password sign in for every school role", "Installs as an app on Android, iPhone and desktop", "PaperKite support thread inside the product"],
+    copy: "Staff sign in at go.unifloe.app with the school code, publish the timetable, open the first registers and send the first notice. Anyone can install Unifloe from the browser as an app.",
+    points: ["Password sign in for every school role", "Installs as an app on Android, iPhone and desktop", "PaperKite support inside the product"],
     link: { href: productLinks.signIn, label: "Sign in", external: true },
   },
 ];
@@ -81,16 +80,15 @@ const readyList = [
   "Your admission register or roster as a spreadsheet",
   "A phone number and email for each parent you want to activate",
   "Your logo as a PNG, JPEG or WebP",
-  "Your board format and the classes and sections you run this year",
-  "Your fee structure for the year, if Finance is in scope",
+  "The classes and sections you run this year",
+  "Your fee structure for the year, if fees are in scope",
 ];
 
 const settledList = [
   "A data processing agreement between PaperKite and the school",
   "The privacy notice your school publishes to parents",
   "A named grievance officer on the school side",
-  "The consent basis, decided against your own admission form",
-  "Hosting regions confirmed against the requirements that apply to you",
+  "How parents give consent, decided against your own admission form",
 ];
 
 function StepLink({ link }: { link: { href: string; label: string; external: boolean } }) {
@@ -106,7 +104,7 @@ export default function GetStartedPage() {
     <main id="main-content">
       <PageHero
         title={<>Start using Unifloe <span>in a few clear steps.</span></>}
-        lead="From the live demo to the first parent signing in. Every step has a page or a template behind it, and PaperKite does the first ones with you."
+        lead="From the live demo to the first parent signing in. Free for one class, and PaperKite does the first steps with you."
         aside={
           <div className="entry-grid" data-reveal-group>
             {entryPoints.map(({ Icon, title, copy, href, label, external }) => (
@@ -166,7 +164,7 @@ export default function GetStartedPage() {
         </div>
       </section>
 
-      <FinalCta title="Ready when you are." copy="Look at the demo now, or tell PaperKite about your school and get an invite." />
+      <FinalCta title="Ready when you are." copy="Look at the demo now, or tell us about your school and start free with one class." />
     </main>
   );
 }
