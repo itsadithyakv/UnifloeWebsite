@@ -61,6 +61,7 @@ export default function RootLayout({
         {analyticsToken ? (
           <script
             type="module"
+            defer
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon={JSON.stringify({ token: analyticsToken })}
           />

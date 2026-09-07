@@ -85,7 +85,7 @@ export function PriceCounter({ text, className = "" }: PriceCounterProps) {
 
     return () => {
       controls.stop();
-      if (visualRef.current) visualRef.current.textContent = text;
+      visual.textContent = text;
       setIsCounting(false);
     };
   }, [isInView, parsed, prefersReducedMotion, text]);

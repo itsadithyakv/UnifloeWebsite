@@ -445,7 +445,7 @@ test("uses the real product capture in a full-width home hero", async () => {
 });
 
 test("uses optimized profile avatars and defers below-fold rendering work", async () => {
-  const [home, pageSource, globalCss, menuSource, packageJson] = await Promise.all([
+  const [, pageSource, globalCss, menuSource, packageJson] = await Promise.all([
     render("/").then((response) => response.text()),
     readFile(new URL("app/page.tsx", root), "utf8"),
     readFile(new URL("app/globals.css", root), "utf8"),
