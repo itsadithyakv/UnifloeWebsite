@@ -124,17 +124,29 @@ export default function Home() {
       </section>
 
       <section className="section-shell problems-section" aria-labelledby="problems-heading">
-        <div className="section-heading" data-reveal>
-          <h2 id="problems-heading">What schools tell us.</h2>
-          <p>In conversations with Bengaluru schools the same problems come up again and again. This is what Unifloe does about each one.</p>
-        </div>
-        <div className="problems-grid" data-reveal-group>
-          {schoolProblems.map((item) => (
-            <article key={item.heard}>
-              <blockquote>{item.heard}</blockquote>
-              <p><Check aria-hidden="true" />{item.answer}</p>
-            </article>
-          ))}
+        <div className="problems-layout">
+          <div className="problems-copy" data-reveal>
+            <h2 id="problems-heading">What schools tell us.</h2>
+            <p>In conversations with Bengaluru schools the same problems come up again and again. Here is what we hear, and what Unifloe does about each one.</p>
+            <a className="text-link" href={productLinks.demo}>See it in the demo <ArrowRight aria-hidden="true" /></a>
+          </div>
+          <ol className="problems-thread" data-reveal-group>
+            {schoolProblems.map((item) => (
+              <li key={item.heard}>
+                <div className="thread-msg thread-school">
+                  <span className="thread-avatar" aria-hidden="true"><School2 /></span>
+                  <div><small>A school</small><p>{item.heard}</p></div>
+                </div>
+                <div className="thread-msg thread-unifloe">
+                  <span className="thread-avatar" aria-hidden="true">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/brand/logoUnifloeNoBgWhite-96.png" width="20" height="20" alt="" />
+                  </span>
+                  <div><small>Unifloe</small><p>{item.answer}</p></div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
