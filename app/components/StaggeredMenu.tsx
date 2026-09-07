@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight, LogIn, MonitorPlay } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { productLinks } from "../data/site-content";
@@ -165,13 +166,15 @@ export function StaggeredMenu({
         inert={!open}
       >
         <div className={styles.productLinks}>
-          <a href={productLinks.demo} onClick={() => closeMenu()}>
-            <strong>Try the live demo</strong>
-            <span>Open go.unifloe.app as any role. Nothing you change is saved.</span>
+          <a className={styles.productPrimary} href={productLinks.demo} onClick={() => closeMenu()}>
+            <span className={styles.productIcon} aria-hidden="true"><MonitorPlay /></span>
+            <span className={styles.productText}><strong>Try the live demo</strong><span>Any role, nothing saved</span></span>
+            <ArrowRight aria-hidden="true" />
           </a>
           <a href={productLinks.signIn} onClick={() => closeMenu()}>
-            <strong>Sign in</strong>
-            <span>For schools already on Unifloe.</span>
+            <span className={styles.productIcon} aria-hidden="true"><LogIn /></span>
+            <span className={styles.productText}><strong>Sign in</strong><span>For schools already on Unifloe</span></span>
+            <ArrowRight aria-hidden="true" />
           </a>
         </div>
         <nav aria-label="Primary navigation">
