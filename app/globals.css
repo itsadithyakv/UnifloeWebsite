@@ -189,6 +189,8 @@ h3 {
   color: white;
   box-shadow: 0 14px 29px rgba(26, 97, 243, 0.26), inset 0 2px 2px rgba(255, 255, 255, 0.3), inset 0 -4px 8px rgba(7, 48, 144, 0.16);
   font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
   cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
@@ -631,11 +633,11 @@ h3 {
 .final-cta-copy { position: relative; z-index: 2; }
 .final-cta h2 { max-width: 700px; margin: 0 0 12px; font-size: clamp(2.5rem, 4.6vw, 4.65rem); }
 .final-cta p:last-child { margin-bottom: 0; color: #d3e2ff; }
-.final-cta-actions { position: relative; z-index: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; }
 .final-cta-link { display: inline-flex; align-items: center; gap: 8px; color: white; font-weight: 700; }
 .final-cta-link svg { width: 18px; height: 18px; }
+.final-cta .hero-actions { position: relative; z-index: 2; flex: 0 0 auto; margin-top: 0; }
 .final-cta > .button,
-.final-cta-actions .button { position: relative; z-index: 2; flex: 0 0 auto; min-height: 62px; padding-inline: 28px; border-radius: 20px; box-shadow: 9px 12px 25px rgba(2, 29, 87, 0.25), -3px -3px 10px rgba(93, 159, 255, 0.22), inset 2px 2px 3px white, inset -3px -4px 7px rgba(62, 95, 149, 0.1); }
+.final-cta .hero-actions .button { position: relative; z-index: 2; flex: 0 0 auto; min-height: 62px; padding-inline: 28px; border-radius: 20px; box-shadow: 9px 12px 25px rgba(2, 29, 87, 0.25), -3px -3px 10px rgba(93, 159, 255, 0.22), inset 2px 2px 3px white, inset -3px -4px 7px rgba(62, 95, 149, 0.1); }
 .final-cta-clay { position: absolute; right: 8%; bottom: -90px; width: 270px; height: 190px; opacity: 0.85; pointer-events: none; transform: rotate(-7deg); }
 .final-cta-clay span { position: absolute; display: block; border-radius: 50%; background: linear-gradient(145deg, #78afff, #2a6cdc); box-shadow: 10px 16px 25px rgba(3, 34, 98, 0.22), inset 4px 5px 7px rgba(255, 255, 255, 0.25), inset -7px -8px 12px rgba(9, 54, 143, 0.2); }
 .final-cta-clay span:nth-child(1) { left: 0; bottom: 0; width: 138px; height: 138px; }
@@ -1178,8 +1180,7 @@ h3 {
   .step-number { width: 44px; height: 44px; font-size: 1.05rem; }
   .step-body h3 { margin-top: 0; font-size: 1.3rem; }
   .ready-grid article { padding: 26px 20px; }
-  .final-cta-actions { flex-direction: column; align-items: stretch; width: 100%; }
-  .final-cta-actions .final-cta-link { justify-content: center; }
+  .final-cta .hero-actions { flex-direction: column; align-items: stretch; width: 100%; }
   .pilot-preview { padding-block: 64px 76px; }
   .plan-grid { grid-template-columns: 1fr; }
   .pilot-card, .standard-plan-card { min-height: 0; padding: 27px 23px; }
