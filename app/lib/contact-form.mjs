@@ -41,7 +41,7 @@ export function buildEmailPayload(values, pageUrl, submittedAt) {
     school_name: values.schoolName.trim(),
     contact_name: values.contactName.trim(),
     role: String(values.role ?? "").trim() || "Not given",
-    reply_to: String(values.email ?? "").trim() || "Not given",
+    reply_to: String(values.email ?? "").trim(),
     phone: values.phone.trim(),
     location: String(values.location ?? "").trim() || "Not given",
     student_strength: String(values.studentStrength ?? "").trim() || "Not given",

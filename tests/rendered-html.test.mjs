@@ -637,6 +637,10 @@ test("builds a fixed EmailJS payload and detects honeypot submissions", () => {
     school_name: "Riverdale School", contact_name: "Aditi", role: "Principal", reply_to: "admin@example.org", phone: "+91 99999 99999", location: "Pune, Maharashtra", student_strength: "701 to 1,700", plan_interest: "growth", message: "Improve admissions", consent_timestamp: "2026-08-02T12:00:00.000Z", page_url: "https://example.org/contact",
   });
   assert.equal(Object.hasOwn(payload, "recipient"), false);
+  const noEmail = buildEmailPayload({ ...values, email: "", role: "", location: "", studentStrength: "" }, "https://example.org/contact", "2026-08-02T12:00:00.000Z");
+  assert.equal(noEmail.reply_to, "");
+  assert.equal(noEmail.role, "Not given");
+  assert.equal(noEmail.location, "Not given");
   assert.equal(isLikelyBot(values), false);
   assert.equal(isLikelyBot({ ...values, website: "spam.example" }), true);
 });
