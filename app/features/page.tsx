@@ -1,7 +1,7 @@
 import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, CalendarRange, ClipboardCheck, FileCheck2, Landmark, MessagesSquare, UsersRound, WalletCards } from "lucide-react";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
-import { featureGroups, totalModuleCount } from "../data/site-content";
+import { featureGroups } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/features/");
@@ -65,16 +65,16 @@ export default function FeaturesPage() {
     <main id="main-content">
       <PageHero
         title={<>Every school workflow. <span>One connected system.</span></>}
-        lead={`${totalModuleCount} modules across six groups. Start with attendance and notices, and switch on the rest when the school is ready.`}
+        lead="Six areas of school life, organised by the work people actually do. Start with attendance and notices, and switch on the rest when the school is ready."
         aside={
-          <div className="features-platform-card" data-reveal aria-label={`${totalModuleCount} Unifloe modules across six groups`}>
+          <div className="features-platform-card" data-reveal aria-label="The six areas of Unifloe">
             <div className="features-platform-head">
               <span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/brand/logoUnifloeNoBG.png" width="30" height="30" alt="" />
                 Unifloe platform
               </span>
-              <strong>{totalModuleCount}<small>modules</small></strong>
+              <strong>6<small>areas</small></strong>
             </div>
             <div className="features-platform-grid">
               {featureGroups.map((group) => {

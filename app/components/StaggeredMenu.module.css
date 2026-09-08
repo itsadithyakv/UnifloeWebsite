@@ -48,6 +48,45 @@
   object-fit: contain;
 }
 
+.quickNav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: auto;
+  margin-right: 28px;
+}
+
+.quickNav a {
+  position: relative;
+  padding: 8px 2px;
+  color: #33425f;
+  font-size: 0.94rem;
+  font-weight: 700;
+  transition: color 160ms ease;
+}
+
+.quickNav a::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 99px;
+  background: var(--menu-accent);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.quickNav a:hover,
+.quickNav a[aria-current="page"] {
+  color: var(--menu-accent);
+}
+
+.quickNav a[aria-current="page"]::after {
+  opacity: 1;
+}
+
 .headerActions {
   display: flex;
   align-items: center;
@@ -331,10 +370,10 @@
   align-items: flex-start;
   padding: 8px 0;
   color: #0b1739;
-  font-size: clamp(2.5rem, 4.4vw, 4.4rem);
+  font-size: clamp(1.9rem, 2.9vw, 2.9rem);
   font-weight: 700;
-  letter-spacing: -0.065em;
-  line-height: 0.98;
+  letter-spacing: -0.05em;
+  line-height: 1.02;
   transition: color 200ms ease, transform 220ms ease;
 }
 
@@ -409,7 +448,8 @@
   }
 
   .signIn,
-  .startButton {
+  .startButton,
+  .quickNav {
     display: none;
   }
 

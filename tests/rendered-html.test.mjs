@@ -47,7 +47,7 @@ const routeCases = [
   ["/pricing", "Free for one class", "₹19,999", "School ERP Pricing &amp; Pilot Plans | Unifloe"],
   ["/get-started", "Start using Unifloe", "The seven steps to a live school", "Get Started with Unifloe | Unifloe"],
   ["/contact", "Start free", "Tell us about your school", "Book a School ERP Demo | Unifloe"],
-  ["/about", "built and operated by PaperKite", "Practical progress", "About Unifloe and PaperKite | Unifloe"],
+  ["/about", "built and operated by PaperKite", "Why we built Unifloe", "About Unifloe and PaperKite | Unifloe"],
   ["/school-erp-software-india", "School ERP software built", "Roll out the workflows", "School ERP Software for Indian Schools | Unifloe"],
   ["/school-lms", "school LMS connected", "Keep teaching and learning connected", "School LMS for Connected Learning | Unifloe"],
   ["/for-cbse-schools", "connected ERP and LMS for CBSE", "Nursery to Class 12", "ERP &amp; LMS for CBSE Schools | Unifloe"],
@@ -99,6 +99,15 @@ test("routes product entry points to the live application", async () => {
   assert.doesNotMatch(home, /Book a free demo/);
 });
 
+test("carries the chosen plan into the enquiry form", async () => {
+  const formSource = await readFile(new URL("app/components/ContactForm.tsx", root), "utf8");
+  assert.match(formSource, /new URLSearchParams\(window\.location\.search\)\.get\("interest"\)/);
+  assert.match(formSource, /interestOptions\.includes\(requested\)/);
+  const pricing = await render("/pricing").then((response) => response.text());
+  assert.match(pricing, /Request free setup/);
+  assert.match(pricing, /Over 2,100 students, or three campuses or more/);
+});
+
 test("tells the free plan story with no pilot, invite or floating bar language", async () => {
   const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
   const layout = await readFile(new URL("app/layout.tsx", root), "utf8");
@@ -119,7 +128,9 @@ test("renders the exact four plan pricing on the pricing and home pages", async 
     assert.match(pricing, new RegExp(value));
     assert.match(home, new RegExp(value));
   }
-  for (const value of ["WhatsApp channel, coming soon", "Admissions pipeline, coming soon", "Priority support", "Multi campus view", "Audit exports, coming soon", "Fee ledger and receipts", "Notices to parents"]) assert.match(pricing, new RegExp(value));
+  for (const value of ["WhatsApp channel", "Admissions pipeline", "Priority support", "Multi campus view", "Audit exports", "Fee ledger and receipts", "Notices to parents", "Coming soon"]) assert.match(pricing, new RegExp(value));
+  assert.doesNotMatch(pricing, /coming soon<\/li>/);
+  assert.match(pricing, /class="plan-soon"/);
   assert.doesNotMatch(`${pricing}\n${home}`, /₹8,000|₹30,000|₹80,000|₹300\/month|₹3,600|Founding|pilot-free|pilot-starter|interest=starter|interest=enterprise/);
   assert.match(pricing, /How do we pay/);
   assert.match(pricing, /no card details are stored/);
@@ -146,8 +157,8 @@ test("uses a stable blurred count-up treatment for displayed prices", async () =
   assert.match(counterSource, /duration:\s*0\.78/);
   assert.doesNotMatch(counterSource, /RollingNumber|useSpring|ResizeObserver/);
   assert.match(counterCss, /@keyframes count-up-speed/);
-  assert.match(counterCss, /filter:\s*blur\(5px\)/);
-  assert.match(counterCss, /transform:\s*translateY\(11px\)/);
+  assert.doesNotMatch(counterCss, /blur\(/);
+  assert.match(counterCss, /transform:\s*translateY\(8px\)/);
   assert.match(counterCss, /\.sizer\s*\{[\s\S]*?visibility:\s*hidden/);
   assert.match(counterCss, /font-size:\s*inherit\s*!important/);
   assert.match(globalCss, /\.plan-price\s*>\s*span/);
@@ -190,6 +201,8 @@ test("shows only the six primary pages in global navigation", async () => {
   const primaryNavigation = html.match(/<nav aria-label="Primary navigation">([\s\S]*?)<\/nav>/)?.[1] ?? "";
   const primaryHrefs = [...primaryNavigation.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
   assert.deepEqual(primaryHrefs, ["/", "/features", "/pricing", "/get-started", "/about", "/contact"]);
+  const quickNavigation = html.match(/<nav class="[^"]*" aria-label="Quick links">([\s\S]*?)<\/nav>/)?.[1] ?? "";
+  assert.deepEqual([...quickNavigation.matchAll(/href="([^"]+)"/g)].map((match) => match[1]), ["/features", "/pricing", "/about"]);
 
   const footerNavigation = html.match(/<nav class="footer-links"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? "";
   assert.match(footerNavigation, new RegExp(`href="${productApp}/demo"`));
@@ -280,8 +293,8 @@ test("uses the exact Unifloe brand and identifies its PaperKite relationship vis
   const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
   const publicHtml = pages.join("\n");
   assert.doesNotMatch(publicHtml, /\b(?:Uniflow|UniFlow|uniFlow|UNIFLOE|Uni Floe|uniFLOW)\b/);
-  assert.match(pages[0], /Unifloe is a modern school ERP and LMS built for Indian schools/);
-  assert.match(pages[5], /PaperKite creates and operates Unifloe, a school ERP and LMS built for Indian schools/);
+  assert.match(pages[0], /Attendance marked on a phone, report cards from marks entered once/);
+  assert.match(pages[5], /Unifloe is made by PaperKite, a small team in Bengaluru/);
 });
 
 test("describes only shipped product behaviour on the specialist pages", async () => {
@@ -384,7 +397,8 @@ test("renders the four-part home pitch and compact contact privacy treatment", a
     "Start with one class.", "Ten roles",
   ]) assert.match(home, new RegExp(value.replace(/[.]/g, "\\.")));
   assert.match(home, /₹0[\s\S]*?for one class[\s\S]*?up to 100 users/);
-  assert.match(home, /43(?:<!-- -->)?<\/strong>/);
+  assert.match(home, /<strong>6<\/strong>/);
+  assert.doesNotMatch(home, /43(?:<!-- -->)? modules/);
   assert.doesNotMatch(home, /APAAR certified|official APAAR certification|Five visual themes|65 registered/i);
   assert.doesNotMatch(home, /Data hosted in India|India-hosted|DPDP-aligned/i);
   assert.doesNotMatch(home, /Readiness-focused|Powerful without being expensive|Not another tool/);
@@ -472,7 +486,7 @@ test("uses one shared hero and one closing call to action on every inner page", 
     if (!["/contact", "/privacy-policy", "/terms"].includes(pathname)) {
       assert.match(html, /class="section-shell final-cta"/, `${pathname} closes with the shared call to action`);
       assert.match(html, /class="hero-actions"><a class="button" href="https:\/\/go\.unifloe\.app\/demo">Try the live demo/, `${pathname} hero leads with the demo`);
-      assert.match(html, /href="\/contact">Talk to PaperKite/, `${pathname} hero offers the contact link`);
+      assert.match(html, /href="\/contact">Talk to us/, `${pathname} hero offers the contact link`);
     }
     assert.doesNotMatch(html, /features-hero|seo-hero|start-hero|inline-cta/, `${pathname} carries no page specific hero`);
   }
@@ -485,7 +499,7 @@ test("gives pricing the feature hero art direction and a visual plan path", asyn
   ]);
   assert.match(pricingSource, /<PageHero/);
   assert.match(pricing, /Free to Growth/);
-  assert.match(pricing, /Two campuses or more/);
+  assert.match(pricing, /Over 2,100 students/);
   assert.match(pricing, /Compare the plans/);
 });
 
@@ -544,7 +558,7 @@ test("uses a purpose-built portrait layout instead of a compressed desktop hero"
   assert.match(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)[\s\S]*?\.hero\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?background:\s*#fff/);
   assert.match(globalCss, /\.hero-dot-grid,\s*\.hero::before,\s*\.hero-product-aura\s*\{\s*display:\s*none/);
   assert.match(globalCss, /\.trust-strip\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2/);
-  assert.match(globalCss, /\[data-reveal\]\.reveal-ready\s*\{[\s\S]*?filter:\s*blur\(5px\)/);
+  assert.match(globalCss, /\[data-reveal\]\.reveal-ready\s*\{[\s\S]*?filter:\s*blur\(3px\)/);
   assert.doesNotMatch(globalCss, /@media \(max-width: 1180px\) and \(orientation: portrait\)[\s\S]*?filter:\s*none/);
 });
 
@@ -563,8 +577,10 @@ test("renders the feature system hero, aligned selector, and animated disclosure
     readFile(new URL("app/globals.css", root), "utf8"),
   ]);
   assert.match(html, /Unifloe platform/);
-  assert.match(html, /43<small>modules/);
-  assert.match(html, /43(?:<!-- -->)? modules across six groups/);
+  assert.match(html, /6<small>areas/);
+  assert.doesNotMatch(html, /\d+ modules across/);
+  assert.equal((html.match(/<article><strong>Library<\/strong>/g) ?? []).length, 1);
+  assert.doesNotMatch(html, /<strong>(?:Catalogue|Loans|Returns|Borrowers)<\/strong>/);
   assert.doesNotMatch(html, /not listed|not built|payroll/i);
   assert.equal((html.match(/class="module-table"/g) ?? []).length, 6);
   assert.doesNotMatch(html, /module-summary|module-card/);

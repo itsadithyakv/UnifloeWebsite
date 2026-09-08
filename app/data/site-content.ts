@@ -33,6 +33,7 @@ export type PricingPlan = {
   yearly: string;
   priceNote: string;
   includes: string[];
+  comingSoon?: string[];
   cta: string;
   href: string;
   featured?: boolean;
@@ -62,7 +63,7 @@ export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> 
       { label: "Features", href: "/features" },
       { label: "Pricing", href: "/pricing" },
       { label: "About Unifloe", href: "/about" },
-      { label: "Talk to PaperKite", href: "/contact" },
+      { label: "Talk to us", href: "/contact" },
     ],
   },
   {
@@ -230,38 +231,8 @@ export const featureGroups: FeatureGroup[] = [
     modules: [
       {
         name: "Library",
-        summary: "Borrowing for students and faculty: requests, due dates, fines and borrower support.",
-        features: ["A borrow request becomes a loan when the librarian issues it", "Renewals, returns and reminders", "Overdue state raises a fine"],
-      },
-      {
-        name: "Catalogue",
-        summary: "The library catalogue and live availability.",
-        features: ["Search and availability", "Pending requests do not reduce available copies"],
-      },
-      {
-        name: "Loans",
-        summary: "Active loans, the issue flow and renewals for the librarian.",
-        features: ["Issue at the desk", "Renew and desk actions", "Unclaimed reservations expire automatically"],
-      },
-      {
-        name: "Returns",
-        summary: "Due today, returned and overdue.",
-        features: ["Return updates availability and history"],
-      },
-      {
-        name: "Fines",
-        summary: "Pending fines, payments, waivers and borrower history, settled through Finance.",
-        features: ["Waivers by the librarian", "Visible to the borrower", "Settles on the family statement"],
-      },
-      {
-        name: "Digital Library",
-        summary: "PDFs, papers and study archives with authorised file access.",
-        features: ["Private files, only for people who may see them", "No loan state"],
-      },
-      {
-        name: "Borrowers",
-        summary: "Borrower profiles, current loans and return history.",
-        features: ["Search borrowers", "Loan and return history"],
+        summary: "Catalogue, borrowing, loans, returns, fines, borrower history and a digital library in one desk.",
+        features: ["A borrow request becomes a loan when the librarian issues it", "Renewals, returns, reminders and overdue fines", "Fines settle on the family statement", "PDFs and papers with private file access"],
       },
       {
         name: "Hostel",
@@ -374,7 +345,7 @@ export const plans: PricingPlan[] = [
     yearly: "₹0",
     priceNote: "forever",
     includes: ["Attendance", "Homework", "Notices to parents", "Basic marks"],
-    cta: "Start free",
+    cta: "Request free setup",
     href: "/contact?interest=free",
   },
   {
@@ -399,7 +370,8 @@ export const plans: PricingPlan[] = [
     monthly: "₹1,999",
     yearly: "₹19,999",
     priceNote: "a month, or ₹19,999 a year",
-    includes: ["Everything in Junior", "WhatsApp channel, coming soon", "Library, hostel and inventory", "Branded documents", "Admissions pipeline, coming soon", "Priority support"],
+    includes: ["Everything in Junior", "Library, hostel and inventory", "Branded documents", "Priority support"],
+    comingSoon: ["WhatsApp channel", "Admissions pipeline"],
     cta: "Choose Standard",
     href: "/contact?interest=standard",
     featured: true,
@@ -413,7 +385,8 @@ export const plans: PricingPlan[] = [
     monthly: "₹5,999",
     yearly: "₹59,999",
     priceNote: "a month, or ₹59,999 a year",
-    includes: ["Everything in Standard", "Multi campus view", "Audit exports, coming soon"],
+    includes: ["Everything in Standard", "Multi campus view"],
+    comingSoon: ["Audit exports"],
     cta: "Choose Growth",
     href: "/contact?interest=growth",
   },

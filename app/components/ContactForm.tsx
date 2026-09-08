@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
 import { buildEmailPayload, interestOptions, isLikelyBot, validateContactForm } from "../lib/contact-form.mjs";
 
@@ -42,6 +42,16 @@ export function ContactForm({ initialInterest = "general-demo" }: { initialInter
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submission, setSubmission] = useState<SubmissionState>({ type: "idle", message: "" });
   const lastSubmittedAt = useRef(0);
+
+  useEffect(() => {
+    // The site is exported statically, so the plan a visitor clicked arrives
+    // only in the browser's own URL. Read it here so "Request free setup"
+    // lands on the Free option rather than the default.
+    const requested = new URLSearchParams(window.location.search).get("interest") ?? "";
+    if (!interestOptions.includes(requested)) return;
+    const timer = window.setTimeout(() => setValues((current) => ({ ...current, interest: requested })), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   function updateField(field: keyof ContactValues, value: string | boolean) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -91,7 +101,7 @@ export function ContactForm({ initialInterest = "general-demo" }: { initialInter
   const fieldError = (field: keyof ContactValues) => errors[field] ? <span className="field-error" id={`${field}-error`}>{errors[field]}</span> : null;
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate data-reveal>
+    <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="form-heading"><h2>Tell us about your school.</h2><p>Four fields. Nothing here is a commitment.</p></div>
       <div className="form-grid">
         <label><span>School name</span><input name="schoolName" value={values.schoolName} onChange={(event) => updateField("schoolName", event.target.value)} aria-invalid={Boolean(errors.schoolName)} aria-describedby={errors.schoolName ? "schoolName-error" : undefined} autoComplete="organization" placeholder="Demo Public School" />{fieldError("schoolName")}</label>

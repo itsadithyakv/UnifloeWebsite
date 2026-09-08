@@ -9,6 +9,7 @@ import {
   Boxes,
   Building2,
   Check,
+  Clock3,
   CloudCog,
   DatabaseZap,
   HeartHandshake,
@@ -23,7 +24,7 @@ import {
   UsersRound,
   WalletCards,
 } from "lucide-react";
-import { plans, productLinks, schoolProblems, totalModuleCount } from "./data/site-content";
+import { plans, productLinks, schoolProblems } from "./data/site-content";
 import { createPageMetadata, serializeJsonLd, siteOrigin } from "./lib/seo";
 
 const pitchModuleGroups = [
@@ -102,7 +103,7 @@ export default function Home() {
         />
         <div className="hero-copy" data-reveal>
           <h1>A modern school <span>ERP and LMS</span> built for Indian schools</h1>
-          <p className="hero-lead">Unifloe is a modern school ERP and LMS built for Indian schools. Attendance, marks, fees, guardians, library, hostel and front office run in one place at go.unifloe.app.</p>
+          <p className="hero-lead">Attendance marked on a phone, report cards from marks entered once, one fee ledger, and parents who can see all of it. Unifloe is the ERP and LMS for Indian schools, free for one class.</p>
           <div className="hero-actions">
             <a className="button" href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
             <Link className="text-link" href="/get-started">How to get started <ArrowRight aria-hidden="true" /></Link>
@@ -188,7 +189,7 @@ export default function Home() {
             <article className="pitch-card pitch-modules">
               <div className="modules-intro">
                 <div className="pitch-card-title"><span><Boxes aria-hidden="true" /></span><div><h3>Enable only what you need.</h3><p>Start with attendance and notices. Switch on fees, library, hostel or front office when the school is ready.</p></div></div>
-                <div className="module-count"><strong>{totalModuleCount}</strong><span>modules<br />in six groups</span></div>
+                <div className="module-count"><strong>6</strong><span>areas<br />switch on what you need</span></div>
                 <Link className="text-link" href="/features">Explore the platform <ArrowRight aria-hidden="true" /></Link>
               </div>
               <div className="module-family-list">
@@ -215,7 +216,7 @@ export default function Home() {
       <section className="section-shell pilot-preview" id="plans">
         <div className="section-heading centered-heading" data-reveal><h2>Start with one class.<br />Pay when the whole school comes on.</h2><p>Plans are priced by students on roll, monthly or yearly. Every paid plan has unlimited accounts.</p></div>
         <div className="plan-grid" data-reveal-group>
-          {plans.map((plan) => <article className={`pilot-card ${plan.featured ? "featured" : ""}`} key={plan.name}><p className="plan-name">{plan.name}</p><div className="plan-price"><strong><PriceCounter text={plan.monthly ?? plan.yearly} /></strong><span>{plan.priceNote}</span></div><p>{plan.audience}</p><div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div><div className="capacity-line plan-accounts"><KeyRound aria-hidden="true" />{plan.accounts}</div><ul>{plan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul><Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link></article>)}
+          {plans.map((plan) => <article className={`pilot-card ${plan.featured ? "featured" : ""}`} key={plan.name}><p className="plan-name">{plan.name}</p><div className="plan-price"><strong><PriceCounter text={plan.monthly ?? plan.yearly} /></strong><span>{plan.priceNote}</span></div><p>{plan.audience}</p><div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div><div className="capacity-line plan-accounts"><KeyRound aria-hidden="true" />{plan.accounts}</div><ul>{plan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul>{plan.comingSoon ? <div className="plan-soon"><span>Coming soon</span><ul>{plan.comingSoon.map((item) => <li key={item}><Clock3 aria-hidden="true" />{item}</li>)}</ul></div> : null}<Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link></article>)}
         </div>
         <p className="pilot-footnote">Enabled modules and rollout are confirmed with each school before onboarding.</p>
       </section>

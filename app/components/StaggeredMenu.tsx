@@ -24,6 +24,12 @@ type StaggeredMenuProps = {
 
 const openClassName = "menu-open";
 
+const quickLinks = [
+  { label: "Features", href: "/features" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
+];
+
 export function StaggeredMenu({
   position = "right",
   colors = ["#d8e6ff", "#72a7ff", "#185ee8"],
@@ -116,6 +122,12 @@ export function StaggeredMenu({
             <span>Unifloe</span>
           </Link>
 
+          <nav className={styles.quickNav} aria-label="Quick links">
+            {quickLinks.map((item) => (
+              <Link href={item.href} key={item.href} aria-current={pathname.startsWith(item.href) ? "page" : undefined} onClick={() => closeMenu()}>{item.label}</Link>
+            ))}
+          </nav>
+
           <div className={styles.headerActions}>
             <a className={styles.signIn} href={productLinks.signIn}>
               Sign in
@@ -168,7 +180,7 @@ export function StaggeredMenu({
         <div className={styles.productLinks}>
           <a className={styles.productPrimary} href={productLinks.demo} onClick={() => closeMenu()}>
             <span className={styles.productIcon} aria-hidden="true"><MonitorPlay /></span>
-            <span className={styles.productText}><strong>Try the live demo</strong><span>Any role, nothing saved</span></span>
+            <span className={styles.productText}><strong>Try the live demo</strong><span>Any role, changes stay in your browser</span></span>
             <ArrowRight aria-hidden="true" />
           </a>
           <a href={productLinks.signIn} onClick={() => closeMenu()}>

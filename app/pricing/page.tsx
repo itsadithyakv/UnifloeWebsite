@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, CircleHelp, KeyRound, UsersRound } from "lucide-react";
+import { ArrowRight, Check, CircleHelp, Clock3, KeyRound, UsersRound } from "lucide-react";
 import { PriceCounter } from "../components/Counter";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
@@ -27,7 +27,7 @@ export default function PricingPage() {
                 </article>
               ))}
             </div>
-            <Link className="pricing-path-foot" href="/contact"><span>Two campuses or more</span><strong>Talk to PaperKite about scope</strong><ArrowRight aria-hidden="true" /></Link>
+            <Link className="pricing-path-foot" href="/contact"><span>Over 2,100 students, or three campuses or more</span><strong>Ask us for a custom quote</strong><ArrowRight aria-hidden="true" /></Link>
           </div>
         }
       />
@@ -43,6 +43,7 @@ export default function PricingPage() {
               <div className="capacity-line"><UsersRound aria-hidden="true" />{plan.capacity}</div>
               <div className="capacity-line plan-accounts"><KeyRound aria-hidden="true" />{plan.accounts}</div>
               <ul>{plan.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul>
+              {plan.comingSoon ? <div className="plan-soon"><span>Coming soon</span><ul>{plan.comingSoon.map((item) => <li key={item}><Clock3 aria-hidden="true" />{item}</li>)}</ul></div> : null}
               <Link className={plan.featured ? "button" : "button button-secondary"} href={plan.href}>{plan.cta}<ArrowRight aria-hidden="true" /></Link>
             </article>
           ))}
@@ -66,7 +67,7 @@ export default function PricingPage() {
                     <td>{plan.accounts}</td>
                     <td>{plan.capacity}</td>
                     <td><strong>{plan.monthly ? <><PriceCounter text={plan.monthly} /> a month or <PriceCounter text={plan.yearly} /> a year</> : <><PriceCounter text={plan.yearly} />, forever</>}</strong></td>
-                    <td>{plan.includes.join(", ")}</td>
+                    <td>{plan.includes.join(", ")}{plan.comingSoon ? <><br /><small>Coming soon: {plan.comingSoon.join(", ")}</small></> : null}</td>
                   </tr>
                 ))}
               </tbody>

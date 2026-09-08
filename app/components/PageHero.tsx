@@ -16,7 +16,7 @@ export function HeroActions({ light = false }: { light?: boolean }) {
   return (
     <div className="hero-actions">
       <a className={light ? "button button-light" : "button"} href={productLinks.demo}>Try the live demo <ArrowRight aria-hidden="true" /></a>
-      <Link className={light ? "button button-ghost" : "button button-secondary"} href="/contact">Talk to PaperKite <ArrowRight aria-hidden="true" /></Link>
+      <Link className={light ? "button button-ghost" : "button button-secondary"} href="/contact">Talk to us <ArrowRight aria-hidden="true" /></Link>
     </div>
   );
 }
