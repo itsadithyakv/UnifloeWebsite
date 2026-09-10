@@ -1,4 +1,45 @@
-import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Building2, CalendarCheck2, CalendarRange, ClipboardCheck, FileCheck2, Landmark, MessagesSquare, UsersRound, WalletCards } from "lucide-react";
+import {
+  AlarmClock,
+  BadgeIndianRupee,
+  BarChart3,
+  BedDouble,
+  BookOpen,
+  BookOpenCheck,
+  Boxes,
+  BriefcaseBusiness,
+  Building2,
+  CalendarCheck2,
+  CalendarDays,
+  CalendarOff,
+  CalendarRange,
+  ClipboardCheck,
+  ClipboardList,
+  DoorOpen,
+  FileCheck2,
+  FileText,
+  FolderOpen,
+  GraduationCap,
+  IdCard,
+  Inbox,
+  KeyRound,
+  Landmark,
+  LayoutGrid,
+  Library,
+  ListChecks,
+  MessageSquareText,
+  MessagesSquare,
+  NotebookPen,
+  Presentation,
+  Receipt,
+  ReceiptText,
+  Settings2,
+  ToggleRight,
+  UserRound,
+  UserRoundCheck,
+  Users,
+  UsersRound,
+  WalletCards,
+} from "lucide-react";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
 import { featureGroups } from "../data/site-content";
@@ -13,6 +54,46 @@ const groupIcons = {
   campus: Building2,
   people: UsersRound,
   administration: Landmark,
+};
+
+const moduleIcons: Record<string, typeof BookOpen> = {
+  Teaching: Presentation,
+  Subjects: BookOpen,
+  Timetable: CalendarRange,
+  Attendance: CalendarCheck2,
+  Materials: FolderOpen,
+  Assignments: ClipboardList,
+  "Exams and Results": FileCheck2,
+  Marks: BarChart3,
+  "Report Cards": FileText,
+  "Lesson Plans": NotebookPen,
+  "Role Inbox": Inbox,
+  Calendar: CalendarDays,
+  "Notes and Tasks": ListChecks,
+  Requests: MessageSquareText,
+  Guardian: Users,
+  Chat: MessagesSquare,
+  Finance: WalletCards,
+  Payments: BadgeIndianRupee,
+  Dues: AlarmClock,
+  Receipts: Receipt,
+  Library: Library,
+  Hostel: BedDouble,
+  "Front Office": DoorOpen,
+  Inventory: Boxes,
+  Leave: CalendarOff,
+  HR: BriefcaseBusiness,
+  Students: GraduationCap,
+  Faculty: UserRoundCheck,
+  Staff: IdCard,
+  Classes: LayoutGrid,
+  Profile: UserRound,
+  Approvals: ClipboardCheck,
+  Modules: ToggleRight,
+  Permissions: KeyRound,
+  Settings: Settings2,
+  Billing: ReceiptText,
+  Reports: BarChart3,
 };
 
 const workflowDeepDives = [
@@ -85,12 +166,6 @@ export default function FeaturesPage() {
           </div>
         }
       />
-      <nav className="feature-jump section-shell" aria-label="Feature groups" data-reveal-group>
-        {featureGroups.map((group) => {
-          const Icon = groupIcons[group.icon];
-          return <a href={`#${group.icon}`} key={group.icon}><span className="feature-jump-icon"><Icon aria-hidden="true" /></span><span><strong>{group.title}</strong><small>{group.modules.length} modules</small></span><ArrowRight aria-hidden="true" /></a>;
-        })}
-      </nav>
       <section className="section-shell workflow-deep-dives" aria-labelledby="workflow-deep-dives-heading">
         <div className="section-heading" data-reveal>
           <h2 id="workflow-deep-dives-heading">How connected workflows operate</h2>
@@ -120,12 +195,16 @@ export default function FeaturesPage() {
                 <div><h2>{group.title}</h2><p>{group.description}</p></div>
               </div>
               <div className="module-table">
-                {group.modules.map((module) => (
-                  <article key={module.name}>
-                    <strong>{module.name}</strong>
-                    <p>{module.summary}</p>
-                  </article>
-                ))}
+                {group.modules.map((module) => {
+                  const ModuleIcon = moduleIcons[module.name] ?? Icon;
+                  return (
+                    <article key={module.name}>
+                      <span className="module-icon"><ModuleIcon aria-hidden="true" /></span>
+                      <strong>{module.name}</strong>
+                      <p>{module.summary}</p>
+                    </article>
+                  );
+                })}
               </div>
             </section>
           );

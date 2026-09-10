@@ -579,7 +579,7 @@ test("renders the feature system hero, aligned selector, and animated disclosure
   assert.match(html, /Unifloe platform/);
   assert.match(html, /6<small>areas/);
   assert.doesNotMatch(html, /\d+ modules across/);
-  assert.equal((html.match(/<article><strong>Library<\/strong>/g) ?? []).length, 1);
+  assert.equal((html.match(/<strong>Library<\/strong>/g) ?? []).length, 1);
   assert.doesNotMatch(html, /<strong>(?:Catalogue|Loans|Returns|Borrowers)<\/strong>/);
   assert.doesNotMatch(html, /not listed|not built|payroll/i);
   assert.equal((html.match(/class="module-table"/g) ?? []).length, 6);
@@ -595,7 +595,9 @@ test("renders the feature system hero, aligned selector, and animated disclosure
   assert.match(html, /id="guardian-workflows"/);
   assert.doesNotMatch(html, /65<small>modules|24<small>modules/);
   assert.doesNotMatch(pageSource, /<details/);
-  assert.match(globalCss, /\.feature-jump\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3/);
+  assert.doesNotMatch(globalCss, /\.feature-jump/);
+  assert.doesNotMatch(html, /feature-jump/);
+  assert.equal((html.match(/class="module-icon"/g) ?? []).length >= 30, true);
 });
 
 test("validates contact form values", () => {
