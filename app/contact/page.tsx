@@ -1,13 +1,14 @@
 import { Mail, MessageCircleMore, Phone } from "lucide-react";
 import { ContactForm } from "../components/ContactForm";
 import { PageHero } from "../components/PageHero";
+import { setupPromise } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/contact/");
 
 const nextSteps = [
   { title: "We call you back", copy: "Within a working day, to hear your board, your size and what is slowing the school down today." },
-  { title: "Your school is set up", copy: "PaperKite creates the school at go.unifloe.app with your logo, classes and sections, and hands you the Head Admin sign in." },
+  { title: "Your school is set up", copy: `PaperKite creates the school at go.unifloe.app with your logo, classes and sections, hands you the Head Admin sign in, and ${setupPromise}.` },
   { title: "You import and go", copy: "Fill the student workbook, activate parents with one link each, and take the first register. Free for one class, for as long as you like." },
 ];
 

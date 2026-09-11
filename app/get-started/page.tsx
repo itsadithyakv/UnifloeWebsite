@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Check, KeyRound, LogIn, MonitorPlay, Users } from "lucide-react";
 import { FinalCta } from "../components/FinalCta";
 import { PageHero } from "../components/PageHero";
-import { boardFormats, productLinks } from "../data/site-content";
+import { boardFormats, productLinks, setupPromise } from "../data/site-content";
 import { createPageMetadata } from "../lib/seo";
 
 export const metadata = createPageMetadata("/get-started/");
@@ -19,7 +19,7 @@ const entryPoints = [
   {
     Icon: KeyRound,
     title: "Start free",
-    copy: "One class, up to 100 users, at no cost for as long as you like. Tell us the school, we call back within a working day, and we set it up with you.",
+    copy: `One class, up to 100 users, at no cost for as long as you like. Tell us the school, we call back within a working day, and ${setupPromise}.`,
     href: "/contact?interest=free",
     label: "Start free",
     external: false,

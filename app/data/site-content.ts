@@ -76,6 +76,12 @@ export const footerNavigationGroups: Array<{ title: string; links: NavItem[] }> 
   },
 ];
 
+// TODO(human): the promise we make about how quickly a free school is set up
+// once we have called back. Keep it to one clause that follows "we call back
+// within a working day, and ...". It is read by the get started page and the
+// contact page so the two never disagree again.
+export const setupPromise = "we set it up with you";
+
 export const schoolProblems = [
   {
     heard: "Attendance is on paper, then typed up, and parents hear about an absence days later.",
