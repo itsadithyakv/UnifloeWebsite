@@ -44,7 +44,7 @@ function visibleText(html) {
 const routeCases = [
   ["/", "A modern school", "Try the live demo", "Unifloe | Modern School ERP &amp; LMS for Indian Schools"],
   ["/features", "Every school workflow", "Campus operations", "Features for School ERP &amp; LMS | Unifloe"],
-  ["/pricing", "Free for one class", "₹19,999", "School ERP Pricing &amp; Pilot Plans | Unifloe"],
+  ["/pricing", "Free for one class", "₹19,999", "School ERP Pricing &amp; Plans | Unifloe"],
   ["/get-started", "Start using Unifloe", "The seven steps to a live school", "Get Started with Unifloe | Unifloe"],
   ["/contact", "Start free", "Tell us about your school", "Book a School ERP Demo | Unifloe"],
   ["/about", "built and operated by PaperKite", "Why we built Unifloe", "About Unifloe and PaperKite | Unifloe"],
@@ -99,6 +99,16 @@ test("routes product entry points to the live application", async () => {
   assert.doesNotMatch(home, /Book a free demo/);
 });
 
+test("says each thing once per page", async () => {
+  const pages = await Promise.all(routeCases.map(([path]) => render(path).then((response) => response.text())));
+  for (const [index, html] of pages.entries()) {
+    const [pathname] = routeCases[index];
+    const text = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ");
+    assert.equal((text.match(/See it running before you decide/g) ?? []).length <= 1, true, `${pathname} repeats the closing line`);
+    assert.doesNotMatch(text, /nothing you change is saved|Pilot Plans|walk through first|Admissions pipeline|Audit exports\b|WhatsApp channel/i, `${pathname} carries stale wording`);
+  }
+});
+
 test("carries the chosen plan into the enquiry form", async () => {
   const formSource = await readFile(new URL("app/components/ContactForm.tsx", root), "utf8");
   assert.match(formSource, /new URLSearchParams\(window\.location\.search\)\.get\("interest"\)/);
@@ -126,9 +136,10 @@ test("renders the exact four plan pricing on the pricing and home pages", async 
   const [pricing, home] = await Promise.all([render("/pricing"), render("/")].map((request) => request.then((response) => response.text())));
   for (const value of ["₹0", "₹999", "₹9,999", "₹1,999", "₹19,999", "₹5,999", "₹59,999", "One class", "Up to 250", "Up to 700", "Up to 2,100", "Up to 100 users", "Unlimited accounts"]) {
     assert.match(pricing, new RegExp(value));
-    assert.match(home, new RegExp(value));
   }
-  for (const value of ["WhatsApp channel", "Admissions pipeline", "Priority support", "Multi campus view", "Audit exports", "Fee ledger and receipts", "Notices to parents", "Coming soon"]) assert.match(pricing, new RegExp(value));
+  for (const value of ["₹0", "₹999", "₹1,999", "₹5,999", "up to 100 users"]) assert.match(home, new RegExp(value));
+  assert.doesNotMatch(home, /class="plan-grid"/);
+  for (const value of ["WhatsApp notices to parents", "Online admissions", "Priority support", "Multi campus view", "Audit log exports", "Fee ledger and receipts", "Notices to parents", "Coming soon"]) assert.match(pricing, new RegExp(value));
   assert.doesNotMatch(pricing, /coming soon<\/li>/);
   assert.match(pricing, /class="plan-soon"/);
   assert.doesNotMatch(`${pricing}\n${home}`, /₹8,000|₹30,000|₹80,000|₹300\/month|₹3,600|Founding|pilot-free|pilot-starter|interest=starter|interest=enterprise/);
@@ -394,7 +405,7 @@ test("renders the four-part home pitch and compact contact privacy treatment", a
     "One place for every", "Your school. Your identity.", "What schools tell us.",
     "Enable only what you need.",
     "Default, Sculpt or Clay preset", "Free for one class. Forever.",
-    "Start with one class.", "Ten roles",
+    "Ten roles",
   ]) assert.match(home, new RegExp(value.replace(/[.]/g, "\\.")));
   assert.match(home, /₹0[\s\S]*?for one class[\s\S]*?up to 100 users/);
   assert.match(home, /<strong>6<\/strong>/);
@@ -564,7 +575,7 @@ test("uses a purpose-built portrait layout instead of a compressed desktop hero"
 
 test("keeps product and compliance language present and current", async () => {
   const [home, features] = await Promise.all([render("/").then((response) => response.text()), render("/features").then((response) => response.text())]);
-  for (const value of ["Guardian consent under the DPDP Act", "Free forever for one class", "What schools tell us"]) assert.match(home, new RegExp(value));
+  for (const value of ["Guardian consent under the DPDP Act", "Free for one class, paid plans from ₹999 a month", "What schools tell us"]) assert.match(home, new RegExp(value));
   assert.doesNotMatch(home, /DPDP-aligned|APAAR-ready|Data hosted in India|India-hosted/i);
   for (const value of ["Front Office", "Hostel", "Role Inbox", "Report Cards", "Approvals"]) assert.match(features, new RegExp(value));
   assert.doesNotMatch(features, /Core edition|optional set|Full edition|tenant/i);

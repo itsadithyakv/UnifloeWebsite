@@ -30,7 +30,7 @@ export const publicRoutes = [
   },
   {
     path: "/pricing/",
-    title: "School ERP Pricing & Pilot Plans | Unifloe",
+    title: "School ERP Pricing & Plans | Unifloe",
     description:
       "Unifloe pricing for Indian schools: free forever for one class with up to 100 users, then Junior, Standard and Growth by students on roll, monthly or yearly.",
     h1: "Free for one class. Clear plans for the whole school.",

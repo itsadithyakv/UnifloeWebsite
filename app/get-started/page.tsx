@@ -11,7 +11,7 @@ const entryPoints = [
   {
     Icon: MonitorPlay,
     title: "Look first",
-    copy: "Open the live demo as a principal, teacher, parent, librarian or warden. It has a guided tour, and nothing you change is saved.",
+    copy: "Open the live demo as a principal, teacher, parent, librarian or warden. It has a guided tour, and changes stay in your browser for 24 hours.",
     href: productLinks.demo,
     label: "Try the live demo",
     external: true,
@@ -19,7 +19,7 @@ const entryPoints = [
   {
     Icon: KeyRound,
     title: "Start free",
-    copy: "One class, up to 100 users, at no cost for as long as you like. Tell us the school and we set it up within a working day.",
+    copy: "One class, up to 100 users, at no cost for as long as you like. Tell us the school, we call back within a working day, and we set it up with you.",
     href: "/contact?interest=free",
     label: "Start free",
     external: false,
@@ -122,7 +122,7 @@ export default function GetStartedPage() {
       <section className="section-shell steps-section" aria-labelledby="steps-heading">
         <div className="section-heading" data-reveal>
           <h2 id="steps-heading">The seven steps to a live school</h2>
-          <p>Steps one to three happen with PaperKite. Steps four to seven are the Head Admin’s, with guidance inside the product.</p>
+          <p>Steps one and two are yours, step three is ours, and steps four to seven are the Head Admin’s, with guidance inside the product.</p>
         </div>
         <ol className="steps-list">
           {steps.map((step, index) => (

@@ -308,7 +308,7 @@ export const seoPages = {
           "Uploads size limited, type checked, private and re authorised on read",
           "Per request content security policy, no framing, rate limits before any lookup",
           "No card or bank details, no Aadhaar numbers, no biometrics",
-          "Encrypted backups with restore drills before a school is admitted",
+          "Encrypted backups, with a restore rehearsed before a school goes live",
         ],
       },
       {

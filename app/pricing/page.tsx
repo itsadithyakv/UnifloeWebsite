@@ -57,7 +57,7 @@ export default function PricingPage() {
           <div className="plan-table-wrap" data-reveal>
             <table className="plan-table">
               <thead>
-                <tr><th scope="col">Plan</th><th scope="col">For whom</th><th scope="col">Accounts</th><th scope="col">Students on roll</th><th scope="col">Price</th><th scope="col">Includes</th></tr>
+                <tr><th scope="col">Plan</th><th scope="col">For whom</th><th scope="col">Accounts</th><th scope="col">School size</th><th scope="col">Price</th><th scope="col">Includes</th></tr>
               </thead>
               <tbody>
                 {plans.map((plan) => (
